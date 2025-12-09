@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Post | Got It Motors</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+      ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .nav {
+        background: rgba(13, 13, 20, 0.7);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px) saturate(200%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme='dark'] .nav.scrolled {
+        background: rgba(13, 13, 20, 0.85);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span { color: var(--primary); }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .theme-toggle {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+        text-decoration: none;
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: var(--card-bg);
+        padding: 2rem;
+        border-bottom: 1px solid var(--card-border);
+        box-shadow: 0 10px 30px var(--shadow);
+        z-index: 999;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .mobile-menu a {
+        display: block;
+        padding: 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid var(--card-border);
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu a:hover {
+        color: var(--primary);
+        padding-left: 1.5rem;
+      }
+
+      /* Blog Post Header */
+      .blog-header {
+        padding: 140px 2rem 60px;
+        background: var(--bg-secondary);
+        position: relative;
+      }
+
+      .blog-header::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 0%, var(--primary-glow) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .blog-header-content {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        gap: 1rem;
+      }
+
+      .blog-header h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+
+      .blog-header-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .blog-header-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .blog-header-meta i {
+        color: var(--primary);
+      }
+
+      /* Blog Content */
+      .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+
+      .blog-featured-image {
+        width: 100%;
+        height: 400px;
+        background: var(--bg-tertiary);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 6rem;
+        color: var(--primary);
+        margin-bottom: 3rem;
+      }
+
+      .blog-content h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        margin: 2rem 0 1rem;
+        color: var(--text-primary);
+      }
+
+      .blog-content h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.4rem;
+        margin: 1.5rem 0 0.75rem;
+        color: var(--text-primary);
+      }
+
+      .blog-content p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+      }
+
+      .blog-content ul,
+      .blog-content ol {
+        margin: 1.5rem 0;
+        padding-left: 2rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      .blog-content li {
+        margin-bottom: 0.75rem;
+      }
+
+      .blog-content blockquote {
+        border-left: 4px solid var(--primary);
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        background: var(--bg-secondary);
+        border-radius: 0 10px 10px 0;
+        font-style: italic;
+        color: var(--text-secondary);
+      }
+
+      /* Share Section */
+      .share-section {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+      }
+
+      .share-section h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .share-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .share-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .share-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .share-btn.facebook { background: #1877f2; }
+      .share-btn.twitter { background: #1da1f2; }
+      .share-btn.linkedin { background: #0077b5; }
+      .share-btn.whatsapp { background: #25d366; }
+
+      /* Related Posts */
+      .related-posts {
+        background: var(--bg-secondary);
+        padding: 4rem 2rem;
+      }
+
+      .related-posts-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .related-posts h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .related-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .related-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px var(--shadow-strong);
+      }
+
+      .related-card-image {
+        height: 150px;
+        background: var(--bg-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--primary);
+      }
+
+      .related-card-content {
+        padding: 1.25rem;
+      }
+
+      .related-card h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .related-card:hover h3 {
+        color: var(--primary);
+      }
+
+      .related-card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .social-link {
+        width: 40px;
+        height: 40px;
+        background: var(--bg-secondary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px var(--primary-glow);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .footer-container {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-phone {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .mobile-menu {
+          display: block;
+        }
+
+        .blog-header h1 {
+          font-size: 2rem;
+        }
+
+        .blog-featured-image {
+          height: 250px;
+          font-size: 4rem;
+        }
+
+        .related-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .footer-links a {
+          justify-content: center;
+        }
+
+        .footer-contact-item {
+          justify-content: center;
+        }
+
+        .social-links {
+          justify-content: center;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buy-car.html">Buy Car</a></li>
+          <li><a href="sell-car.html">Sell Car</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="blogs.html" class="active">Blogs</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+          </button>
+          <a href="index.html#contact" class="nav-cta">Get Quote</a>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="buy-car.html">Buy Car</a>
+      <a href="sell-car.html">Sell Car</a>
+      <a href="index.html#services">Services</a>
+      <a href="blogs.html">Blogs</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+
+    <!-- Blog Header -->
+    <header class="blog-header">
+      <div class="blog-header-content">
+        <a href="blogs.html" class="back-link">
+          <i class="fas fa-arrow-left"></i> Back to Blogs
+        </a>
+        <h1 id="blogTitle">Top 10 Things to Check Before Buying a Used Car</h1>
+        <div class="blog-header-meta">
+          <span><i class="fas fa-calendar"></i> <span id="blogDate">Dec 5, 2024</span></span>
+          <span><i class="fas fa-user"></i> Got It Motors</span>
+          <span><i class="fas fa-clock"></i> <span id="blogReadTime">5 min read</span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Blog Content -->
+    <article class="blog-content">
+      <div class="blog-featured-image" id="blogIcon">
+        <i class="fas fa-car-side"></i>
+      </div>
+
+      <div id="blogBody">
+        <p>Buying a used car can be an excellent way to get value for your money, but it requires careful inspection to avoid costly mistakes. Whether you're a first-time buyer or a seasoned car enthusiast, these essential checks will help you make an informed decision.</p>
+
+        <h2>1. Check the Vehicle History Report</h2>
+        <p>Before anything else, obtain a comprehensive vehicle history report. This document reveals crucial information about the car's past, including previous accidents, ownership history, service records, and whether the car has ever been reported stolen or written off.</p>
+
+        <h2>2. Inspect the Exterior</h2>
+        <p>Walk around the car and look for signs of damage, rust, or mismatched paint that could indicate previous repairs. Check all panels for dents, scratches, and ensure gaps between body panels are consistent throughout the vehicle.</p>
+
+        <h2>3. Examine the Interior</h2>
+        <p>The condition of the interior can tell you a lot about how the previous owner treated the car. Check for:</p>
+        <ul>
+          <li>Wear on seats, steering wheel, and pedals</li>
+          <li>Proper functioning of all electronics</li>
+          <li>Air conditioning and heating systems</li>
+          <li>Any unusual smells that might indicate water damage or smoking</li>
+        </ul>
+
+        <h2>4. Check Under the Hood</h2>
+        <p>Even if you're not a mechanic, you can spot obvious issues. Look for oil leaks, corroded battery terminals, cracked hoses, and check the color of the oil and coolant. Clean, well-maintained components are a good sign.</p>
+
+        <h2>5. Test Drive the Vehicle</h2>
+        <p>A test drive is essential. Pay attention to how the car handles, accelerates, and brakes. Listen for any unusual noises from the engine, transmission, or suspension. Test the car on different road types if possible.</p>
+
+        <h2>6. Verify the Odometer Reading</h2>
+        <p>Compare the odometer reading with the service history and the overall condition of the car. Inconsistencies could indicate odometer tampering, which is illegal but still occurs.</p>
+
+        <h2>7. Check the Tyres</h2>
+        <p>Inspect all four tyres plus the spare for wear patterns. Uneven wear could indicate alignment issues or suspension problems. Also, check that all tyres are the same brand and size.</p>
+
+        <h2>8. Review Service Records</h2>
+        <p>A complete service history is invaluable. It shows the car has been properly maintained and can help you anticipate upcoming maintenance needs. Missing records should raise concerns.</p>
+
+        <h2>9. Get a Professional Inspection</h2>
+        <p>Before finalizing the purchase, have the car inspected by an independent mechanic. They can identify issues that might not be obvious to the untrained eye and give you an estimated cost of any necessary repairs.</p>
+
+        <h2>10. Verify Ownership and Documentation</h2>
+        <p>Ensure the seller is the registered owner and all documentation is in order. Check the VIN (Vehicle Identification Number) matches across all documents and the car itself.</p>
+
+        <blockquote>
+          "Taking the time to thoroughly inspect a used car before purchase can save you thousands of dollars in unexpected repairs and give you peace of mind."
+        </blockquote>
+
+        <h2>Ready to Find Your Perfect Used Car?</h2>
+        <p>At Got It Motors, we take the guesswork out of buying a used car. All our vehicles undergo rigorous inspection and come with complete service histories. Visit us in Werribee or call 1300 136 110 to explore our quality selection of pre-owned vehicles.</p>
+      </div>
+
+      <!-- Share Section -->
+      <div class="share-section">
+        <h4>Share this article</h4>
+        <div class="share-buttons">
+          <a href="#" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="share-btn linkedin"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+      <div class="related-posts-container">
+        <h2>Related Articles</h2>
+        <div class="related-grid">
+          <a href="blog-post.html?id=2" class="related-card">
+            <div class="related-card-image">
+              <i class="fas fa-tools"></i>
+            </div>
+            <div class="related-card-content">
+              <h3>Essential Car Maintenance Tips for Summer</h3>
+              <p>Nov 28, 2024</p>
+            </div>
+          </a>
+          <a href="blog-post.html?id=3" class="related-card">
+            <div class="related-card-image">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="related-card-content">
+              <h3>How to Get the Best Value When Selling Your Car</h3>
+              <p>Nov 20, 2024</p>
+            </div>
+          </a>
+          <a href="blog-post.html?id=4" class="related-card">
+            <div class="related-card-image">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="related-card-content">
+              <h3>Understanding Car Warranties: What You Need to Know</h3>
+              <p>Nov 15, 2024</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="buy-car.html"><i class="fas fa-chevron-right"></i> Buy Car</a></li>
+            <li><a href="sell-car.html"><i class="fas fa-chevron-right"></i> Sell Car</a></li>
+            <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Detailing</a></li>
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Tinting</a></li>
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Dash Camera Installation</a></li>
+            <li><a href="warranty.html"><i class="fas fa-chevron-right"></i> Warranty</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Blog data
+      const blogPosts = {
+        1: {
+          title: 'Top 10 Things to Check Before Buying a Used Car',
+          date: 'Dec 5, 2024',
+          readTime: '5 min read',
+          icon: 'fa-car-side',
+          content: `
+            <p>Buying a used car can be an excellent way to get value for your money, but it requires careful inspection to avoid costly mistakes. Whether you're a first-time buyer or a seasoned car enthusiast, these essential checks will help you make an informed decision.</p>
+
+            <h2>1. Check the Vehicle History Report</h2>
+            <p>Before anything else, obtain a comprehensive vehicle history report. This document reveals crucial information about the car's past, including previous accidents, ownership history, service records, and whether the car has ever been reported stolen or written off.</p>
+
+            <h2>2. Inspect the Exterior</h2>
+            <p>Walk around the car and look for signs of damage, rust, or mismatched paint that could indicate previous repairs. Check all panels for dents, scratches, and ensure gaps between body panels are consistent throughout the vehicle.</p>
+
+            <h2>3. Examine the Interior</h2>
+            <p>The condition of the interior can tell you a lot about how the previous owner treated the car. Check for:</p>
+            <ul>
+              <li>Wear on seats, steering wheel, and pedals</li>
+              <li>Proper functioning of all electronics</li>
+              <li>Air conditioning and heating systems</li>
+              <li>Any unusual smells that might indicate water damage or smoking</li>
+            </ul>
+
+            <h2>4. Check Under the Hood</h2>
+            <p>Even if you're not a mechanic, you can spot obvious issues. Look for oil leaks, corroded battery terminals, cracked hoses, and check the color of the oil and coolant. Clean, well-maintained components are a good sign.</p>
+
+            <h2>5. Test Drive the Vehicle</h2>
+            <p>A test drive is essential. Pay attention to how the car handles, accelerates, and brakes. Listen for any unusual noises from the engine, transmission, or suspension. Test the car on different road types if possible.</p>
+
+            <h2>6. Verify the Odometer Reading</h2>
+            <p>Compare the odometer reading with the service history and the overall condition of the car. Inconsistencies could indicate odometer tampering, which is illegal but still occurs.</p>
+
+            <h2>7. Check the Tyres</h2>
+            <p>Inspect all four tyres plus the spare for wear patterns. Uneven wear could indicate alignment issues or suspension problems. Also, check that all tyres are the same brand and size.</p>
+
+            <h2>8. Review Service Records</h2>
+            <p>A complete service history is invaluable. It shows the car has been properly maintained and can help you anticipate upcoming maintenance needs. Missing records should raise concerns.</p>
+
+            <h2>9. Get a Professional Inspection</h2>
+            <p>Before finalizing the purchase, have the car inspected by an independent mechanic. They can identify issues that might not be obvious to the untrained eye and give you an estimated cost of any necessary repairs.</p>
+
+            <h2>10. Verify Ownership and Documentation</h2>
+            <p>Ensure the seller is the registered owner and all documentation is in order. Check the VIN (Vehicle Identification Number) matches across all documents and the car itself.</p>
+
+            <blockquote>
+              "Taking the time to thoroughly inspect a used car before purchase can save you thousands of dollars in unexpected repairs and give you peace of mind."
+            </blockquote>
+
+            <h2>Ready to Find Your Perfect Used Car?</h2>
+            <p>At Got It Motors, we take the guesswork out of buying a used car. All our vehicles undergo rigorous inspection and come with complete service histories. Visit us in Werribee or call 1300 136 110 to explore our quality selection of pre-owned vehicles.</p>
+          `
+        },
+        2: {
+          title: 'Essential Car Maintenance Tips for Summer',
+          date: 'Nov 28, 2024',
+          readTime: '4 min read',
+          icon: 'fa-tools',
+          content: `
+            <p>The Australian summer can be brutal on your vehicle. High temperatures, dust, and long road trips put extra stress on your car. Here's how to keep your vehicle running smoothly during the hot months.</p>
+
+            <h2>Check Your Cooling System</h2>
+            <p>Your car's cooling system works overtime in summer. Ensure your coolant levels are topped up and the mixture is correct. Have your radiator inspected for leaks or blockages, and check that the cooling fans are working properly.</p>
+
+            <h2>Inspect Your Air Conditioning</h2>
+            <p>There's nothing worse than a broken air conditioner on a 40-degree day. Have your AC system checked before summer hits. Look for signs like weak airflow, strange noises, or unpleasant odors when the AC is running.</p>
+
+            <h2>Battery Health</h2>
+            <p>Heat is just as hard on batteries as cold. High temperatures can accelerate battery fluid evaporation and cause internal damage. Have your battery tested and ensure terminals are clean and connections are tight.</p>
+
+            <h2>Tyre Care</h2>
+            <p>Hot roads can increase tyre pressure and accelerate wear. Check your tyre pressure regularly, including the spare. Look for signs of cracking or bulging in the sidewalls, and ensure adequate tread depth for wet weather grip.</p>
+
+            <h2>Oil and Fluid Checks</h2>
+            <p>Summer heat can thin your engine oil, reducing its protective properties. Ensure you're using the correct oil grade for summer conditions. Also check brake fluid, power steering fluid, and windscreen washer fluid levels.</p>
+
+            <h2>Protect Your Interior</h2>
+            <p>Use a sunshade when parked and consider window tinting to reduce interior temperatures. This protects your dashboard and seats from UV damage and makes your car more comfortable to enter.</p>
+
+            <blockquote>
+              "A little preventive maintenance before summer can save you from being stranded on the side of a hot highway."
+            </blockquote>
+
+            <p>Need help preparing your car for summer? Visit Got It Motors for a comprehensive vehicle inspection. Call us on 1300 136 110 to book your service today.</p>
+          `
+        },
+        3: {
+          title: 'How to Get the Best Value When Selling Your Car',
+          date: 'Nov 20, 2024',
+          readTime: '5 min read',
+          icon: 'fa-money-bill-wave',
+          content: `
+            <p>Selling your car can be straightforward if you know how to present it well and understand the market. Follow these tips to maximize your return.</p>
+
+            <h2>Know Your Car's Value</h2>
+            <p>Research current market prices for your make, model, and year. Consider factors like mileage, condition, and any additional features. Online valuation tools and recent sales listings can help you set a realistic price.</p>
+
+            <h2>Gather All Documentation</h2>
+            <p>Having complete service records, registration papers, and any warranty information adds value and builds buyer confidence. Organized documentation suggests a well-maintained vehicle.</p>
+
+            <h2>Clean and Detail Your Car</h2>
+            <p>First impressions matter. A professional detail or thorough clean can significantly increase your car's appeal. Don't forget the engine bay, boot, and under the seats.</p>
+
+            <h2>Fix Minor Issues</h2>
+            <p>Small repairs like fixing stone chips, replacing worn wipers, or fixing that annoying rattle can make a big difference. Buyers notice these details and may use them to negotiate down your price.</p>
+
+            <h2>Take Quality Photos</h2>
+            <p>Good photos sell cars. Shoot in natural light, capture all angles, and highlight any special features. Include photos of the interior, engine bay, and any recent maintenance work.</p>
+
+            <h2>Write an Honest Description</h2>
+            <p>Be upfront about your car's condition. Mention any issues – buyers will find them anyway, and honesty builds trust. Highlight positive features like recent services or new tyres.</p>
+
+            <h2>Consider Your Selling Options</h2>
+            <p>Private sales typically get higher prices but take more effort. Dealers offer convenience but lower prices. Trade-ins simplify the buying process but may not maximize value.</p>
+
+            <blockquote>
+              "The best sale happens when both parties feel they've gotten a fair deal."
+            </blockquote>
+
+            <h2>Quick and Easy with Got It Motors</h2>
+            <p>Want to skip the hassle? Got It Motors offers fair prices and quick settlement for quality used vehicles. Get a free valuation by calling 1300 136 110 or visiting our Werribee dealership.</p>
+          `
+        },
+        4: {
+          title: 'Understanding Car Warranties: What You Need to Know',
+          date: 'Nov 15, 2024',
+          readTime: '4 min read',
+          icon: 'fa-shield-alt',
+          content: `
+            <p>A car warranty can provide peace of mind and financial protection, but it's important to understand what you're getting. Here's everything you need to know about car warranties.</p>
+
+            <h2>Types of Warranties</h2>
+            <p>There are several types of warranties available:</p>
+            <ul>
+              <li><strong>Manufacturer's Warranty:</strong> Covers new cars for a set period or mileage</li>
+              <li><strong>Dealer Warranty:</strong> Often offered on used cars by dealerships</li>
+              <li><strong>Extended Warranty:</strong> Additional coverage purchased separately</li>
+              <li><strong>Statutory Warranty:</strong> Required by law for used car dealers in Victoria</li>
+            </ul>
+
+            <h2>What's Typically Covered</h2>
+            <p>Most warranties cover major mechanical components like the engine, transmission, and drivetrain. Some also cover electrical systems, air conditioning, and other components. Always read the fine print to understand exactly what's included.</p>
+
+            <h2>What's Usually Not Covered</h2>
+            <p>Warranties typically exclude wear items like brake pads, tyres, and batteries. Regular maintenance services aren't covered, nor is damage from accidents, misuse, or modifications.</p>
+
+            <h2>Maintaining Your Warranty</h2>
+            <p>To keep your warranty valid, follow the manufacturer's service schedule and use approved parts and fluids. Keep all service records as proof of maintenance. Modifications can void your warranty.</p>
+
+            <h2>Making a Claim</h2>
+            <p>If something goes wrong, contact your warranty provider promptly. Document the issue and provide any requested information. Be patient – claims can take time to process.</p>
+
+            <blockquote>
+              "A warranty is only as good as the company standing behind it. Choose reputable dealers and insurers."
+            </blockquote>
+
+            <h2>Got It Motors Warranty</h2>
+            <p>All vehicles at Got It Motors come with comprehensive warranty options. We stand behind our cars because we've thoroughly inspected them. Ask about our warranty coverage when you visit or call 1300 136 110.</p>
+          `
+        },
+        5: {
+          title: 'Fuel Efficiency Tips: Save Money at the Pump',
+          date: 'Nov 8, 2024',
+          readTime: '4 min read',
+          icon: 'fa-gas-pump',
+          content: `
+            <p>With fuel prices always fluctuating, improving your car's fuel efficiency is more important than ever. Here are practical tips to help you save money at the pump.</p>
+
+            <h2>Smooth Driving Habits</h2>
+            <p>Aggressive acceleration and braking waste fuel. Accelerate gently, maintain steady speeds, and anticipate traffic to avoid unnecessary stops. Using cruise control on highways helps maintain consistent speed.</p>
+
+            <h2>Reduce Unnecessary Weight</h2>
+            <p>Extra weight means more fuel consumption. Remove roof racks when not in use, clear out your boot, and only carry what you need. Every 50kg of extra weight increases fuel consumption by about 2%.</p>
+
+            <h2>Check Tyre Pressure</h2>
+            <p>Under-inflated tyres increase rolling resistance and fuel consumption. Check your tyre pressure monthly and before long trips. Use the pressure recommended in your owner's manual or on the door placard.</p>
+
+            <h2>Regular Maintenance</h2>
+            <p>A well-maintained engine runs more efficiently. Keep up with oil changes, replace air filters as needed, and ensure your engine is properly tuned. A dirty air filter alone can increase fuel consumption by up to 10%.</p>
+
+            <h2>Use Air Conditioning Wisely</h2>
+            <p>Air conditioning significantly impacts fuel economy. At low speeds, open windows are more efficient. At highway speeds, AC is better due to wind resistance from open windows. Use the recirculate function to cool the car faster.</p>
+
+            <h2>Plan Your Trips</h2>
+            <p>Combine errands into one trip rather than multiple short journeys. Cold engines use more fuel, so fewer starts mean better overall efficiency. Use navigation to avoid traffic and find the most efficient route.</p>
+
+            <blockquote>
+              "Small changes in driving habits can add up to significant savings over time."
+            </blockquote>
+
+            <p>Looking for a fuel-efficient vehicle? Got It Motors has a range of economical options. Visit us in Werribee or call 1300 136 110 to find a car that suits your budget.</p>
+          `
+        },
+        6: {
+          title: 'Electric vs Hybrid: Which is Right for You?',
+          date: 'Nov 1, 2024',
+          readTime: '6 min read',
+          icon: 'fa-bolt',
+          content: `
+            <p>The automotive industry is shifting towards electrification, but choosing between electric (EV) and hybrid vehicles can be confusing. Let's break down the differences to help you decide.</p>
+
+            <h2>Understanding the Technology</h2>
+            <p><strong>Electric Vehicles (EVs)</strong> run entirely on battery power. They need to be plugged in to charge and produce zero direct emissions.</p>
+            <p><strong>Hybrid Vehicles</strong> combine a petrol engine with an electric motor. They charge their battery through regenerative braking and the petrol engine, so you never need to plug in.</p>
+            <p><strong>Plug-in Hybrids (PHEVs)</strong> offer the best of both worlds – a larger battery that can be charged externally, plus a petrol engine for longer trips.</p>
+
+            <h2>Running Costs</h2>
+            <p>EVs have the lowest running costs – electricity is cheaper than petrol, and they have fewer moving parts requiring maintenance. Hybrids still need regular oil changes and engine maintenance but use less fuel than conventional cars.</p>
+
+            <h2>Range Considerations</h2>
+            <p>Range anxiety is a common concern with EVs. Modern EVs typically offer 300-500km per charge, sufficient for daily driving. Hybrids have no range limitations as they can always use petrol. Consider your daily driving distance and access to charging when deciding.</p>
+
+            <h2>Charging Infrastructure</h2>
+            <p>If you can charge at home, an EV is very convenient – you start each day with a full "tank." Public charging networks are growing but aren't as widespread as petrol stations. Hybrids don't need charging infrastructure.</p>
+
+            <h2>Environmental Impact</h2>
+            <p>EVs produce zero tailpipe emissions, making them the greenest option, especially when charged with renewable energy. Hybrids produce fewer emissions than conventional cars but still burn fossil fuels.</p>
+
+            <h2>Upfront Costs</h2>
+            <p>EVs and hybrids typically cost more upfront than equivalent petrol cars, but lower running costs can offset this over time. Government incentives may help reduce the purchase price of electric vehicles.</p>
+
+            <h2>Which Should You Choose?</h2>
+            <p>Consider an EV if you:</p>
+            <ul>
+              <li>Can charge at home or work</li>
+              <li>Primarily drive short to medium distances</li>
+              <li>Want the lowest running costs and emissions</li>
+            </ul>
+            <p>Consider a hybrid if you:</p>
+            <ul>
+              <li>Frequently drive long distances</li>
+              <li>Don't have reliable charging access</li>
+              <li>Want better fuel economy without changing your habits</li>
+            </ul>
+
+            <blockquote>
+              "The best choice depends on your individual circumstances, driving habits, and priorities."
+            </blockquote>
+
+            <p>Interested in exploring your options? Got It Motors can help you find the right vehicle for your needs. Visit us in Werribee or call 1300 136 110 for expert advice.</p>
+          `
+        }
+      };
+
+      // Load blog content based on URL parameter
+      function loadBlogContent() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogId = urlParams.get('id') || '1';
+        const blog = blogPosts[blogId];
+
+        if (blog) {
+          document.getElementById('blogTitle').textContent = blog.title;
+          document.getElementById('blogDate').textContent = blog.date;
+          document.getElementById('blogReadTime').textContent = blog.readTime;
+          document.getElementById('blogIcon').innerHTML = `<i class="fas ${blog.icon}"></i>`;
+          document.getElementById('blogBody').innerHTML = blog.content;
+          document.title = `${blog.title} | Got It Motors`;
+        }
+      }
+
+      loadBlogContent();
+
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+      });
+
+      function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+
+      // Mobile Menu
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+      });
+
+      // Nav scroll effect
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.nav');
+        const scrollTop = document.getElementById('scrollTop');
+
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+
+        if (window.scrollY > 300) {
+          scrollTop.classList.add('visible');
+        } else {
+          scrollTop.classList.remove('visible');
+        }
+      });
+
+      // Scroll to top
+      document.getElementById('scrollTop').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    </script>
+  </body>
+</html>

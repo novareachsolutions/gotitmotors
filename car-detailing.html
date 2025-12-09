@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Detailing Services | Got It Motors - Professional Car Detailing in Melbourne</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+
+        /* Light theme */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(248, 250, 245, 0.95),
+          rgba(255, 255, 255, 0.9)
+        );
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(20, 20, 31, 0.95),
+          rgba(13, 13, 20, 0.9)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Three.js Canvas */
+      #three-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .nav {
+        background: rgba(13, 13, 20, 0.7);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme='dark'] .nav.scrolled {
+        background: rgba(13, 13, 20, 0.85);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links > li {
+        position: relative;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links > li > a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links > li > a:hover::after,
+      .nav-links > li > a.active::after {
+        width: 100%;
+      }
+
+      /* Dropdown Styles */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+      }
+
+      .dropdown-toggle i {
+        font-size: 0.7rem;
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown:hover .dropdown-toggle i {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        min-width: 220px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-radius: 16px;
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        padding: 0.75rem 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        margin-top: 15px;
+      }
+
+      [data-theme='dark'] .dropdown-menu {
+        background: rgba(26, 26, 40, 0.95);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+      }
+
+      [data-theme='dark'] .dropdown-menu::before {
+        border-bottom-color: rgba(26, 26, 40, 0.95);
+      }
+
+      .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .dropdown-menu li {
+        list-style: none;
+      }
+
+      .dropdown-menu a {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .dropdown-menu a:hover {
+        background: rgba(129, 215, 66, 0.1);
+        color: var(--primary);
+        padding-left: 1.5rem;
+      }
+
+      .dropdown-menu a i {
+        width: 20px;
+        color: var(--primary);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .theme-toggle {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.2);
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      [data-theme='dark'] .theme-toggle:hover {
+        background: rgba(26, 26, 40, 0.8);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Page Header */
+      .page-header {
+        padding: 160px 2rem 80px;
+        background: var(--bg-secondary);
+        position: relative;
+        z-index: 10;
+        text-align: center;
+      }
+
+      .page-header-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(129, 215, 66, 0.15);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.4);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .page-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .page-title .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      /* Main Content */
+      .main-content {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Service Intro Section */
+      .service-intro {
+        padding: 5rem 2rem;
+        background: var(--bg-primary);
+      }
+
+      .service-intro-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .service-intro-content h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .service-intro-content p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .service-intro-cta {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .service-intro-image {
+        position: relative;
+      }
+
+      .service-intro-image .image-placeholder {
+        width: 100%;
+        height: 400px;
+        background: var(--bg-tertiary);
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+        color: var(--primary);
+        opacity: 0.5;
+      }
+
+      /* Packages Section */
+      .packages-section {
+        padding: 5rem 2rem;
+        background: var(--bg-secondary);
+      }
+
+      .packages-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(129, 215, 66, 0.15);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.4);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .package-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+      }
+
+      [data-theme='dark'] .package-card {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .package-card.featured {
+        border: 2px solid var(--primary);
+      }
+
+      .package-card.featured::before {
+        content: 'Most Popular';
+        position: absolute;
+        top: 20px;
+        right: -35px;
+        background: var(--primary);
+        color: white;
+        padding: 0.3rem 2.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transform: rotate(45deg);
+      }
+
+      .package-header {
+        padding: 2rem 2rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+      }
+
+      .package-name {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .package-price {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .package-price span {
+        font-size: 1rem;
+        color: var(--text-muted);
+      }
+
+      .package-features {
+        padding: 2rem;
+      }
+
+      .package-features ul {
+        list-style: none;
+      }
+
+      .package-features li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .package-features li i {
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      .package-footer {
+        padding: 0 2rem 2rem;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border: none;
+        width: 100%;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        box-shadow: 0 4px 20px var(--primary-glow);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px var(--primary-glow);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        color: var(--text-primary);
+        border: 2px solid rgba(129, 215, 66, 0.3);
+      }
+
+      [data-theme='dark'] .btn-secondary {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.4);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* Booking Section */
+      .booking-section {
+        padding: 5rem 2rem;
+        background: var(--bg-primary);
+      }
+
+      .booking-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+
+      .booking-info h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .booking-info p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      .booking-features {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .booking-feature {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(129, 215, 66, 0.1);
+        border-radius: 12px;
+      }
+
+      .booking-feature i {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+
+      .booking-feature span {
+        font-weight: 500;
+      }
+
+      .booking-form-container {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+      }
+
+      [data-theme='dark'] .booking-form-container {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .booking-form h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .form-group input,
+      [data-theme='dark'] .form-group select,
+      [data-theme='dark'] .form-group textarea {
+        background: rgba(20, 20, 31, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(129, 215, 66, 0.15);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      /* Calendar Placeholder */
+      .calendar-placeholder {
+        background: var(--bg-tertiary);
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .calendar-placeholder i {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .calendar-placeholder p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      /* Time Slots */
+      .time-slots {
+        margin-bottom: 1.5rem;
+      }
+
+      .time-slots-label {
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+
+      .time-slots-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+
+      .time-slot {
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .time-slot {
+        background: rgba(20, 20, 31, 0.6);
+      }
+
+      .time-slot:hover,
+      .time-slot.selected {
+        border-color: var(--primary);
+        background: rgba(129, 215, 66, 0.1);
+        color: var(--primary);
+      }
+
+      /* FAQ Section */
+      .faq-section {
+        padding: 5rem 2rem;
+        background: var(--bg-secondary);
+      }
+
+      .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 16px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        margin-bottom: 1rem;
+        overflow: hidden;
+      }
+
+      [data-theme='dark'] .faq-item {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .faq-question {
+        width: 100%;
+        padding: 1.25rem 1.5rem;
+        background: transparent;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-align: left;
+      }
+
+      .faq-question i {
+        color: var(--primary);
+        transition: transform 0.3s ease;
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 500px;
+      }
+
+      .faq-answer p {
+        padding: 0 1.5rem 1.25rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      [data-theme='dark'] .social-link {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .social-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px var(--primary-glow);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        z-index: 9999;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .mobile-menu {
+        background: rgba(13, 13, 20, 0.95);
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .mobile-menu-close {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .mobile-menu-close {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+      }
+
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+
+      .mobile-nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .mobile-dropdown-menu {
+        padding-left: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .mobile-dropdown-menu a {
+        font-size: 1.1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      /* Loading Animation */
+      .loader {
+        position: fixed;
+        inset: 0;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-content {
+        text-align: center;
+      }
+
+      .loader-car {
+        font-size: 4rem;
+        color: var(--primary);
+        animation: carBounce 1s infinite;
+      }
+
+      @keyframes carBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .loader-text {
+        margin-top: 1rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .loader-bar {
+        width: 200px;
+        height: 4px;
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+        margin-top: 1rem;
+        overflow: hidden;
+      }
+
+      .loader-progress {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        animation: loadProgress 2s ease-out forwards;
+      }
+
+      @keyframes loadProgress {
+        from { width: 0; }
+        to { width: 100%; }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .packages-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .service-intro-container,
+        .booking-container {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-title {
+          font-size: 2.5rem;
+        }
+
+        .packages-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .nav-right {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <div class="loader-content">
+        <div class="loader-car"><i class="fas fa-car-side"></i></div>
+        <div class="loader-text">
+          Got It <span style="color: var(--primary)">Motors</span>
+        </div>
+        <div class="loader-bar">
+          <div class="loader-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three.js Background Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="buy-car.html">Buy Car</a></li>
+        <li><a href="index.html#sell">Sell Car</a></li>
+        <li>
+          <a href="#">Services</a>
+          <div class="mobile-dropdown-menu">
+            <a href="car-detailing.html"><i class="fas fa-spray-can-sparkles"></i> Car Detailing</a>
+            <a href="dash-camera.html"><i class="fas fa-video"></i> Dash Camera Installation</a>
+            <a href="car-tinting.html"><i class="fas fa-car-side"></i> Car Tinting</a>
+          </div>
+        </li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buy-car.html">Buy Car</a></li>
+          <li><a href="index.html#sell">Sell Car</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle active">Services <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="car-detailing.html"><i class="fas fa-spray-can-sparkles"></i> Car Detailing</a></li>
+              <li><a href="dash-camera.html"><i class="fas fa-video"></i> Dash Camera Installation</a></li>
+              <li><a href="car-tinting.html"><i class="fas fa-car-side"></i> Car Tinting</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="nav-cta">Get Quote</button>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-badge">
+          <i class="fas fa-spray-can-sparkles"></i> Professional Service
+        </div>
+        <h1 class="page-title">CAR <span class="highlight">DETAILING</span> SERVICES</h1>
+        <p class="page-subtitle">
+          Give your car the ultimate shine with our professional detailing packages. Whether it's a simple wash or a full interior and exterior makeover, our services are designed to protect your car and make it look brand new. Packages start from just $189!
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Service Intro -->
+      <section class="service-intro">
+        <div class="service-intro-container">
+          <div class="service-intro-content">
+            <h2>GOLD, SILVER, AND BRONZE PACKAGES</h2>
+            <p>
+              Our detailing packages offer something for every car owner. From a basic wash and vacuum to a complete buffing and waxing experience, we have the right package to suit your needs and budget. Protect your car and make it look its best.
+            </p>
+            <div class="service-intro-cta">
+              <a href="#booking" class="btn btn-primary">
+                <i class="fas fa-calendar-check"></i> Book Now
+              </a>
+              <a href="tel:1300136110" class="btn btn-secondary">
+                <i class="fas fa-phone"></i> Call Us
+              </a>
+            </div>
+          </div>
+          <div class="service-intro-image">
+            <div class="image-placeholder">
+              <i class="fas fa-spray-can-sparkles"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Packages Section -->
+      <section class="packages-section">
+        <div class="packages-container">
+          <div class="section-header">
+            <div class="section-badge">
+              <i class="fas fa-star"></i> This is what we do and we do it perfectly
+            </div>
+            <h2 class="section-title">OUR CAR DETAILING Packages</h2>
+          </div>
+
+          <div class="packages-grid">
+            <!-- Bronze Package -->
+            <div class="package-card">
+              <div class="package-header">
+                <h3 class="package-name">Bronze Package</h3>
+                <div class="package-price">$189</div>
+              </div>
+              <div class="package-features">
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Exterior Wash/Wax</li>
+                  <li><i class="fas fa-check-circle"></i> Interior Vacuum</li>
+                  <li><i class="fas fa-check-circle"></i> Rims/Tyre Shine</li>
+                  <li><i class="fas fa-check-circle"></i> Interior wipe down</li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="#booking" class="btn btn-secondary">Select Package</a>
+              </div>
+            </div>
+
+            <!-- Silver Package -->
+            <div class="package-card featured">
+              <div class="package-header">
+                <h3 class="package-name">Silver Package</h3>
+                <div class="package-price">$399</div>
+              </div>
+              <div class="package-features">
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Exterior Wash/Wax</li>
+                  <li><i class="fas fa-check-circle"></i> Interior Vacuum/Trim Protector</li>
+                  <li><i class="fas fa-check-circle"></i> Rims/Tyre Shine</li>
+                  <li><i class="fas fa-check-circle"></i> Interior deep clean</li>
+                  <li><i class="fas fa-check-circle"></i> Boot deep clean</li>
+                  <li><i class="fas fa-check-circle"></i> All door sleeves and cup holders cleaned</li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="#booking" class="btn btn-primary">Select Package</a>
+              </div>
+            </div>
+
+            <!-- Gold Package -->
+            <div class="package-card">
+              <div class="package-header">
+                <h3 class="package-name">Gold Package</h3>
+                <div class="package-price">$499</div>
+              </div>
+              <div class="package-features">
+                <ul>
+                  <li><i class="fas fa-check-circle"></i> Exterior paint correction</li>
+                  <li><i class="fas fa-check-circle"></i> Exterior Wash/Wax</li>
+                  <li><i class="fas fa-check-circle"></i> Interior Vacuum/Protector</li>
+                  <li><i class="fas fa-check-circle"></i> Seats/carpet Extracted</li>
+                  <li><i class="fas fa-check-circle"></i> Rims/Tyre Shine</li>
+                  <li><i class="fas fa-check-circle"></i> All door sleeves and cup holders cleaned</li>
+                  <li><i class="fas fa-check-circle"></i> Boot deep clean</li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="#booking" class="btn btn-secondary">Select Package</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking Section -->
+      <section class="booking-section" id="booking">
+        <div class="booking-container">
+          <div class="booking-info">
+            <h2>BOOK YOUR DETAILING SERVICE ONLINE</h2>
+            <p>
+              Schedule your car detailing service today using our easy online booking system. We'll have your vehicle looking showroom-ready in no time!
+            </p>
+            <div class="booking-features">
+              <div class="booking-feature">
+                <i class="fas fa-clock"></i>
+                <span>Flexible scheduling to fit your busy lifestyle</span>
+              </div>
+              <div class="booking-feature">
+                <i class="fas fa-shield-halved"></i>
+                <span>Professional service with quality guarantee</span>
+              </div>
+              <div class="booking-feature">
+                <i class="fas fa-star"></i>
+                <span>Premium products for lasting results</span>
+              </div>
+              <div class="booking-feature">
+                <i class="fas fa-location-dot"></i>
+                <span>Convenient location in Werribee</span>
+              </div>
+            </div>
+          </div>
+          <div class="booking-form-container">
+            <form class="booking-form">
+              <h3>Book Your Appointment</h3>
+
+              <!-- Calendar Placeholder -->
+              <div class="calendar-placeholder">
+                <i class="fas fa-calendar-alt"></i>
+                <p>Select your preferred date from the calendar</p>
+              </div>
+
+              <!-- Time Slots -->
+              <div class="time-slots">
+                <label class="time-slots-label">Time Slots*</label>
+                <div class="time-slots-grid">
+                  <div class="time-slot">9:00 AM - 10:00 AM</div>
+                  <div class="time-slot">10:00 AM - 11:00 AM</div>
+                  <div class="time-slot">11:00 AM - 12:00 PM</div>
+                  <div class="time-slot">12:00 PM - 1:00 PM</div>
+                  <div class="time-slot">1:00 PM - 2:00 PM</div>
+                  <div class="time-slot">2:00 PM - 3:00 PM</div>
+                  <div class="time-slot">3:00 PM - 4:00 PM</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+
+              <div class="form-group">
+                <label for="service">Service</label>
+                <select id="service" name="service">
+                  <option value="">Select a package</option>
+                  <option value="bronze">Bronze Package - $189</option>
+                  <option value="silver">Silver Package - $399</option>
+                  <option value="gold">Gold Package - $499</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Send
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="faq-container">
+          <div class="section-header">
+            <div class="section-badge">
+              <i class="fas fa-question-circle"></i> Got Questions?
+            </div>
+            <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+          </div>
+
+          <div class="faq-item active">
+            <button class="faq-question">
+              1. What is included in your car detailing services?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Our car detailing services include comprehensive interior and exterior cleaning. For the exterior, we offer services like hand washing, polishing, waxing, and ceramic coating for paint protection. For the interior, we provide vacuuming, steam cleaning, leather conditioning, and dashboard cleaning to ensure a fresh and spotless cabin.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              2. How long does professional car detailing take?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>The duration depends on the package you choose. Our Bronze package typically takes 1-2 hours, Silver package 2-3 hours, and Gold package 4-5 hours. We ensure thoroughness over speed to deliver the best results.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              3. Why should I choose professional car detailing over a regular car wash?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Professional detailing goes beyond a regular wash by addressing every detail of your vehicle. We use specialized products and techniques that protect your paint, restore shine, and maintain your car's value. A regular wash only cleans the surface, while detailing provides deep cleaning, protection, and restoration.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              4. How often should I get my car detailed?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>We recommend professional detailing every 3-6 months, depending on your driving habits and environment. If you frequently drive in harsh conditions or park outdoors, more frequent detailing may be beneficial to maintain your vehicle's appearance and protection.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              5. Do you use eco-friendly products for detailing?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, we are committed to using environmentally friendly products that are safe for your car and the environment. Our water-based products are biodegradable and free from harsh chemicals while still delivering exceptional cleaning and protection results.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              6. Can detailing improve my car's resale value?
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutely! Regular professional detailing helps maintain your car's appearance and condition, which can significantly impact its resale value. A well-maintained vehicle with a clean interior and protected exterior commands higher prices in the used car market.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="buy-car.html"><i class="fas fa-chevron-right"></i> Buy Car</a>
+            </li>
+            <li>
+              <a href="index.html#sell"><i class="fas fa-chevron-right"></i> Sell Car</a>
+            </li>
+            <li>
+              <a href="index.html#about"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="car-detailing.html"><i class="fas fa-chevron-right"></i> Car Detailing</a>
+            </li>
+            <li>
+              <a href="car-tinting.html"><i class="fas fa-chevron-right"></i> Car Tinting</a>
+            </li>
+            <li>
+              <a href="dash-camera.html"><i class="fas fa-chevron-right"></i> Dash Camera Installation</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links" style="margin-top: 1.5rem">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // ============ THREE.JS BACKGROUND ============
+      const canvas = document.getElementById('three-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const geometries = [];
+      const primaryColor = 0x81d742;
+
+      // Torus
+      const torusGeometry = new THREE.TorusGeometry(2, 0.5, 16, 100);
+      const torusMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.3 });
+      const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+      torus.position.set(-15, 5, -20);
+      scene.add(torus);
+      geometries.push({ mesh: torus, rotationSpeed: { x: 0.005, y: 0.01 } });
+
+      // Icosahedron
+      const icoGeometry = new THREE.IcosahedronGeometry(2, 0);
+      const icoMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.25 });
+      const ico = new THREE.Mesh(icoGeometry, icoMaterial);
+      ico.position.set(15, -5, -25);
+      scene.add(ico);
+      geometries.push({ mesh: ico, rotationSpeed: { x: 0.008, y: 0.005 } });
+
+      // Octahedron
+      const octGeometry = new THREE.OctahedronGeometry(1.5, 0);
+      const octMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.2 });
+      const oct = new THREE.Mesh(octGeometry, octMaterial);
+      oct.position.set(-10, -8, -15);
+      scene.add(oct);
+      geometries.push({ mesh: oct, rotationSpeed: { x: 0.01, y: 0.008 } });
+
+      // Sphere particles
+      const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+      const particleMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, transparent: true, opacity: 0.4 });
+
+      for (let i = 0; i < 30; i++) {
+        const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+        particle.position.set(
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 30 - 20
+        );
+        scene.add(particle);
+        geometries.push({
+          mesh: particle,
+          rotationSpeed: { x: 0, y: 0 },
+          floatSpeed: Math.random() * 0.02 + 0.01,
+          floatOffset: Math.random() * Math.PI * 2
+        });
+      }
+
+      camera.position.z = 5;
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        geometries.forEach((item) => {
+          item.mesh.rotation.x += item.rotationSpeed.x;
+          item.mesh.rotation.y += item.rotationSpeed.y;
+          if (item.floatSpeed) {
+            item.mesh.position.y += Math.sin(time + item.floatOffset) * 0.01;
+          }
+        });
+
+        camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
+        camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // ============ WINDOW RESIZE ============
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // ============ THEME TOGGLE ============
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+
+      themeToggle.addEventListener('click', () => {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+      });
+
+      // ============ NAVIGATION SCROLL ============
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // ============ MOBILE MENU ============
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+      });
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('active');
+      }
+
+      // ============ SCROLL TO TOP ============
+      const scrollTopBtn = document.getElementById('scrollTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ============ LOADER ============
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('loader').classList.add('hidden');
+        }, 1500);
+      });
+
+      // ============ FAQ ACCORDION ============
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+          faqItems.forEach(i => i.classList.remove('active'));
+          if (!isActive) {
+            item.classList.add('active');
+          }
+        });
+      });
+
+      // ============ TIME SLOT SELECTION ============
+      const timeSlots = document.querySelectorAll('.time-slot');
+      timeSlots.forEach(slot => {
+        slot.addEventListener('click', () => {
+          timeSlots.forEach(s => s.classList.remove('selected'));
+          slot.classList.add('selected');
+        });
+      });
+    </script>
+  </body>
+</html>

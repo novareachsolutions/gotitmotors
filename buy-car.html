@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Car | Got It Motors - Quality Used Cars in Melbourne</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+
+        /* Light theme */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(248, 250, 245, 0.95),
+          rgba(255, 255, 255, 0.9)
+        );
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(20, 20, 31, 0.95),
+          rgba(13, 13, 20, 0.9)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Three.js Canvas */
+      #three-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .nav {
+        background: rgba(13, 13, 20, 0.7);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme='dark'] .nav.scrolled {
+        background: rgba(13, 13, 20, 0.85);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links > li {
+        position: relative;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links > li > a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links > li > a:hover::after,
+      .nav-links > li > a.active::after {
+        width: 100%;
+      }
+
+      /* Dropdown Styles */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        cursor: pointer;
+      }
+
+      .dropdown-toggle i {
+        font-size: 0.7rem;
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown:hover .dropdown-toggle i {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        min-width: 220px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-radius: 16px;
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        padding: 0.75rem 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        margin-top: 15px;
+      }
+
+      [data-theme='dark'] .dropdown-menu {
+        background: rgba(26, 26, 40, 0.95);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+      }
+
+      [data-theme='dark'] .dropdown-menu::before {
+        border-bottom-color: rgba(26, 26, 40, 0.95);
+      }
+
+      .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .dropdown-menu li {
+        list-style: none;
+      }
+
+      .dropdown-menu a {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .dropdown-menu a:hover {
+        background: rgba(129, 215, 66, 0.1);
+        color: var(--primary);
+        padding-left: 1.5rem;
+      }
+
+      .dropdown-menu a i {
+        width: 20px;
+        color: var(--primary);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .theme-toggle {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.2);
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      [data-theme='dark'] .theme-toggle:hover {
+        background: rgba(26, 26, 40, 0.8);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Page Header */
+      .page-header {
+        padding: 140px 2rem 60px;
+        background: var(--bg-secondary);
+        position: relative;
+        z-index: 10;
+      }
+
+      .page-header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .page-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .page-title .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Main Content */
+      .main-content {
+        position: relative;
+        z-index: 10;
+        padding: 3rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .content-wrapper {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+      }
+
+      /* Sidebar Filters */
+      .sidebar {
+        position: sticky;
+        top: 120px;
+        height: fit-content;
+      }
+
+      .filter-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      [data-theme='dark'] .filter-card {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .filter-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .filter-title i {
+        color: var(--primary);
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 16px;
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--text-primary);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .search-input {
+        background: rgba(20, 20, 31, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 0 4px rgba(129, 215, 66, 0.15);
+      }
+
+      [data-theme='dark'] .search-input:focus {
+        background: rgba(20, 20, 31, 0.8);
+      }
+
+      .filter-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .filter-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .filter-label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .filter-select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .filter-select {
+        background: rgba(20, 20, 31, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .price-range {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .price-range input {
+        flex: 1;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+      }
+
+      [data-theme='dark'] .price-range input {
+        background: rgba(20, 20, 31, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .price-range input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        box-shadow: 0 4px 20px var(--primary-glow);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px var(--primary-glow);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        color: var(--text-primary);
+        border: 2px solid rgba(129, 215, 66, 0.3);
+      }
+
+      [data-theme='dark'] .btn-secondary {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.4);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .filter-btn {
+        width: 100%;
+        margin-top: 1rem;
+      }
+
+      .clear-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: transparent;
+        border: 1.5px solid rgba(129, 215, 66, 0.3);
+        border-radius: 12px;
+        color: var(--text-secondary);
+        font-family: inherit;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+      }
+
+      .clear-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      /* Cars Grid */
+      .cars-section {
+        flex: 1;
+      }
+
+      .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .results-count {
+        font-size: 1rem;
+        color: var(--text-secondary);
+      }
+
+      .results-count span {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .sort-select {
+        padding: 0.6rem 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        cursor: pointer;
+      }
+
+      [data-theme='dark'] .sort-select {
+        background: rgba(20, 20, 31, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .cars-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .car-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .car-card {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .car-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15),
+                    0 0 0 1px rgba(129, 215, 66, 0.25);
+      }
+
+      [data-theme='dark'] .car-card:hover {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(129, 215, 66, 0.35);
+      }
+
+      .car-image {
+        height: 200px;
+        background: var(--bg-tertiary);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .car-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .car-card:hover .car-image img {
+        transform: scale(1.05);
+      }
+
+      .car-placeholder {
+        font-size: 4rem;
+        color: var(--primary);
+        opacity: 0.5;
+      }
+
+      .car-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 0.4rem 0.8rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .car-badge.featured {
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+      }
+
+      .car-badge.new {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      }
+
+      .car-favorite {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .car-favorite i {
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+      }
+
+      .car-favorite:hover i,
+      .car-favorite.active i {
+        color: #e74c3c;
+      }
+
+      .car-content {
+        padding: 1.5rem;
+      }
+
+      .car-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .car-specs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .car-spec {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .car-spec i {
+        color: var(--primary);
+      }
+
+      .car-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(129, 215, 66, 0.15);
+      }
+
+      .car-price {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .car-price-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-weight: 400;
+      }
+
+      .car-btn {
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .car-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .gim-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        margin-top: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        background: rgba(129, 215, 66, 0.1);
+        border-radius: 20px;
+        width: fit-content;
+      }
+
+      .gim-badge i {
+        color: var(--primary);
+      }
+
+      .gim-badge span {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 3rem;
+      }
+
+      .pagination-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        color: var(--text-primary);
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      [data-theme='dark'] .pagination-btn {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .pagination-btn:hover,
+      .pagination-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        z-index: 9999;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .mobile-menu {
+        background: rgba(13, 13, 20, 0.95);
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .mobile-menu-close {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .mobile-menu-close {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .mobile-menu-close:hover {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: var(--primary);
+        transform: rotate(90deg);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+      }
+
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+
+      .mobile-nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Mobile Filter Toggle */
+      .mobile-filter-toggle {
+        display: none;
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 1rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      [data-theme='dark'] .social-link {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .social-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px var(--primary-glow);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Loading Animation */
+      .loader {
+        position: fixed;
+        inset: 0;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-content {
+        text-align: center;
+      }
+
+      .loader-car {
+        font-size: 4rem;
+        color: var(--primary);
+        animation: carBounce 1s infinite;
+      }
+
+      @keyframes carBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .loader-text {
+        margin-top: 1rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .loader-bar {
+        width: 200px;
+        height: 4px;
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+        margin-top: 1rem;
+        overflow: hidden;
+      }
+
+      .loader-progress {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        animation: loadProgress 2s ease-out forwards;
+      }
+
+      @keyframes loadProgress {
+        from { width: 0; }
+        to { width: 100%; }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .content-wrapper {
+          grid-template-columns: 280px 1fr;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .content-wrapper {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          display: none;
+        }
+
+        .sidebar.active {
+          display: block;
+        }
+
+        .mobile-filter-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+
+        .footer-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .cars-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .nav-right {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <div class="loader-content">
+        <div class="loader-car"><i class="fas fa-car-side"></i></div>
+        <div class="loader-text">
+          Got It <span style="color: var(--primary)">Motors</span>
+        </div>
+        <div class="loader-bar">
+          <div class="loader-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three.js Background Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="buy-car.html" onclick="closeMobileMenu()">Buy Car</a></li>
+        <li><a href="index.html#sell" onclick="closeMobileMenu()">Sell Car</a></li>
+        <li>
+          <a href="index.html#services" onclick="closeMobileMenu()">Services</a>
+          <div class="mobile-dropdown-menu" style="padding-left: 1.5rem; margin-top: 1rem;">
+            <a href="car-detailing.html" style="font-size: 1.1rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-spray-can-sparkles"></i> Car Detailing</a>
+            <a href="dash-camera.html" style="font-size: 1.1rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-video"></i> Dash Camera Installation</a>
+            <a href="car-tinting.html" style="font-size: 1.1rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-car-side"></i> Car Tinting</a>
+          </div>
+        </li>
+        <li><a href="index.html#about" onclick="closeMobileMenu()">About Us</a></li>
+        <li><a href="index.html#contact" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buy-car.html" class="active">Buy Car</a></li>
+          <li><a href="index.html#sell">Sell Car</a></li>
+          <li class="dropdown">
+            <a href="index.html#services" class="dropdown-toggle">Services <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="car-detailing.html"><i class="fas fa-spray-can-sparkles"></i> Car Detailing</a></li>
+              <li><a href="dash-camera.html"><i class="fas fa-video"></i> Dash Camera Installation</a></li>
+              <li><a href="car-tinting.html"><i class="fas fa-car-side"></i> Car Tinting</a></li>
+            </ul>
+          </li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="nav-cta">Get Quote</button>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <h1 class="page-title">Buy <span class="highlight">Used Cars</span> in Melbourne</h1>
+        <p class="page-subtitle">
+          Discover reliable, budget-friendly pre-owned vehicles backed by warranty and 150-point inspection.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <button class="mobile-filter-toggle" id="mobileFilterToggle">
+        <i class="fas fa-filter"></i> Show Filters
+      </button>
+
+      <div class="content-wrapper">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar" id="sidebar">
+          <!-- Search -->
+          <div class="filter-card">
+            <div class="filter-title">
+              <i class="fas fa-search"></i> Search
+            </div>
+            <input type="text" class="search-input" id="searchInput" placeholder="Search by make, model...">
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-card">
+            <div class="filter-title">
+              <i class="fas fa-sliders"></i> Filters
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Price Range</label>
+              <div class="price-range">
+                <input type="number" id="minPrice" placeholder="Min">
+                <span>-</span>
+                <input type="number" id="maxPrice" placeholder="Max">
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Brand</label>
+              <select class="filter-select" id="brandFilter">
+                <option value="">All Brands</option>
+                <option value="toyota">Toyota</option>
+                <option value="honda">Honda</option>
+                <option value="mazda">Mazda</option>
+                <option value="hyundai">Hyundai</option>
+                <option value="kia">Kia</option>
+                <option value="bmw">BMW</option>
+                <option value="mercedes">Mercedes-Benz</option>
+                <option value="audi">Audi</option>
+                <option value="ford">Ford</option>
+                <option value="holden">Holden</option>
+                <option value="mitsubishi">Mitsubishi</option>
+                <option value="nissan">Nissan</option>
+                <option value="subaru">Subaru</option>
+                <option value="volkswagen">Volkswagen</option>
+                <option value="mg">MG</option>
+                <option value="haval">Haval</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Year</label>
+              <select class="filter-select" id="yearFilter">
+                <option value="">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="older">2014 & Older</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Kilometers Driven</label>
+              <select class="filter-select" id="kmsFilter">
+                <option value="">Any Kilometers</option>
+                <option value="30000">Under 30,000 km</option>
+                <option value="60000">Under 60,000 km</option>
+                <option value="100000">Under 100,000 km</option>
+                <option value="150000">Under 150,000 km</option>
+                <option value="200000">Under 200,000 km</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Fuel Type</label>
+              <select class="filter-select" id="fuelFilter">
+                <option value="">All Fuel Types</option>
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="electric">Electric</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Body Type</label>
+              <select class="filter-select" id="bodyFilter">
+                <option value="">All Body Types</option>
+                <option value="sedan">Sedan</option>
+                <option value="suv">SUV</option>
+                <option value="hatchback">Hatchback</option>
+                <option value="wagon">Wagon</option>
+                <option value="ute">Ute</option>
+                <option value="van">Van</option>
+                <option value="coupe">Coupe</option>
+                <option value="convertible">Convertible</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label class="filter-label">Transmission</label>
+              <select class="filter-select" id="transmissionFilter">
+                <option value="">All Transmissions</option>
+                <option value="automatic">Automatic</option>
+                <option value="manual">Manual</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary filter-btn" id="applyFilters">
+              <i class="fas fa-search"></i> Apply Filters
+            </button>
+            <button class="clear-btn" id="clearFilters">
+              <i class="fas fa-times"></i> Clear All Filters
+            </button>
+          </div>
+        </aside>
+
+        <!-- Cars Grid -->
+        <section class="cars-section">
+          <div class="results-header">
+            <p class="results-count">Showing <span id="resultsCount">12</span> vehicles</p>
+            <select class="sort-select" id="sortSelect">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+              <option value="kms-low">Lowest Kilometers</option>
+            </select>
+          </div>
+
+          <div class="cars-grid" id="carsGrid">
+            <!-- Car cards will be dynamically generated -->
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination" id="pagination">
+            <button class="pagination-btn" id="prevPage">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn" id="nextPage">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="buy-car.html"><i class="fas fa-chevron-right"></i> Buy Car</a>
+            </li>
+            <li>
+              <a href="index.html#sell"><i class="fas fa-chevron-right"></i> Sell Car</a>
+            </li>
+            <li>
+              <a href="index.html#about"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Detailing</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Tinting</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Dash Camera Installation</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Warranty</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links" style="margin-top: 1.5rem">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // ============ CAR DATA ============
+      const carsData = [
+        {
+          id: 1,
+          title: '2023 Haval H6',
+          brand: 'haval',
+          year: 2023,
+          price: 28999,
+          kms: 74983,
+          fuel: 'hybrid',
+          body: 'suv',
+          transmission: 'automatic',
+          badge: 'Featured',
+          badgeClass: 'featured',
+          image: null
+        },
+        {
+          id: 2,
+          title: '2023 MG ZST',
+          brand: 'mg',
+          year: 2023,
+          price: 19999,
+          kms: 28434,
+          fuel: 'petrol',
+          body: 'suv',
+          transmission: 'automatic',
+          badge: 'New Arrival',
+          badgeClass: 'new',
+          image: null
+        },
+        {
+          id: 3,
+          title: '2022 BMW 5 Series',
+          brand: 'bmw',
+          year: 2022,
+          price: 35999,
+          kms: 185975,
+          fuel: 'diesel',
+          body: 'sedan',
+          transmission: 'automatic',
+          badge: 'Featured',
+          badgeClass: 'featured',
+          image: null
+        },
+        {
+          id: 4,
+          title: '2017 Kia Cerato',
+          brand: 'kia',
+          year: 2017,
+          price: 18801,
+          kms: 38350,
+          fuel: 'petrol',
+          body: 'sedan',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 5,
+          title: '2016 Kia Carnival',
+          brand: 'kia',
+          year: 2016,
+          price: 19888,
+          kms: 135900,
+          fuel: 'petrol',
+          body: 'van',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 6,
+          title: '2016 Hyundai i30',
+          brand: 'hyundai',
+          year: 2016,
+          price: 15888,
+          kms: 101500,
+          fuel: 'petrol',
+          body: 'hatchback',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 7,
+          title: '2016 Holden Calais',
+          brand: 'holden',
+          year: 2016,
+          price: 16717,
+          kms: 228500,
+          fuel: 'petrol',
+          body: 'sedan',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 8,
+          title: '2015 Honda HR-V',
+          brand: 'honda',
+          year: 2015,
+          price: 16488,
+          kms: 179481,
+          fuel: 'petrol',
+          body: 'suv',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 9,
+          title: '2015 Toyota Fortuner',
+          brand: 'toyota',
+          year: 2015,
+          price: 34888,
+          kms: 130900,
+          fuel: 'diesel',
+          body: 'suv',
+          transmission: 'automatic',
+          badge: 'Popular',
+          badgeClass: 'featured',
+          image: null
+        },
+        {
+          id: 10,
+          title: '2020 Mazda CX-5',
+          brand: 'mazda',
+          year: 2020,
+          price: 32999,
+          kms: 45000,
+          fuel: 'petrol',
+          body: 'suv',
+          transmission: 'automatic',
+          badge: 'New Arrival',
+          badgeClass: 'new',
+          image: null
+        },
+        {
+          id: 11,
+          title: '2019 Toyota Corolla',
+          brand: 'toyota',
+          year: 2019,
+          price: 22999,
+          kms: 55000,
+          fuel: 'hybrid',
+          body: 'sedan',
+          transmission: 'automatic',
+          badge: null,
+          image: null
+        },
+        {
+          id: 12,
+          title: '2021 Ford Ranger',
+          brand: 'ford',
+          year: 2021,
+          price: 45999,
+          kms: 65000,
+          fuel: 'diesel',
+          body: 'ute',
+          transmission: 'automatic',
+          badge: 'Featured',
+          badgeClass: 'featured',
+          image: null
+        }
+      ];
+
+      // ============ THREE.JS BACKGROUND ============
+      const canvas = document.getElementById('three-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const geometries = [];
+      const primaryColor = 0x81d742;
+
+      // Torus
+      const torusGeometry = new THREE.TorusGeometry(2, 0.5, 16, 100);
+      const torusMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.3 });
+      const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+      torus.position.set(-15, 5, -20);
+      scene.add(torus);
+      geometries.push({ mesh: torus, rotationSpeed: { x: 0.005, y: 0.01 } });
+
+      // Icosahedron
+      const icoGeometry = new THREE.IcosahedronGeometry(2, 0);
+      const icoMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.25 });
+      const ico = new THREE.Mesh(icoGeometry, icoMaterial);
+      ico.position.set(15, -5, -25);
+      scene.add(ico);
+      geometries.push({ mesh: ico, rotationSpeed: { x: 0.008, y: 0.005 } });
+
+      // Octahedron
+      const octGeometry = new THREE.OctahedronGeometry(1.5, 0);
+      const octMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, wireframe: true, transparent: true, opacity: 0.2 });
+      const oct = new THREE.Mesh(octGeometry, octMaterial);
+      oct.position.set(-10, -8, -15);
+      scene.add(oct);
+      geometries.push({ mesh: oct, rotationSpeed: { x: 0.01, y: 0.008 } });
+
+      // Sphere particles
+      const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+      const particleMaterial = new THREE.MeshBasicMaterial({ color: primaryColor, transparent: true, opacity: 0.4 });
+
+      for (let i = 0; i < 30; i++) {
+        const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+        particle.position.set(
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 30 - 20
+        );
+        scene.add(particle);
+        geometries.push({
+          mesh: particle,
+          rotationSpeed: { x: 0, y: 0 },
+          floatSpeed: Math.random() * 0.02 + 0.01,
+          floatOffset: Math.random() * Math.PI * 2
+        });
+      }
+
+      camera.position.z = 5;
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        geometries.forEach((item) => {
+          item.mesh.rotation.x += item.rotationSpeed.x;
+          item.mesh.rotation.y += item.rotationSpeed.y;
+          if (item.floatSpeed) {
+            item.mesh.position.y += Math.sin(time + item.floatOffset) * 0.01;
+          }
+        });
+
+        camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
+        camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // ============ WINDOW RESIZE ============
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // ============ THEME TOGGLE ============
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+
+      themeToggle.addEventListener('click', () => {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+      });
+
+      // ============ NAVIGATION SCROLL ============
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // ============ MOBILE MENU ============
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+      });
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('active');
+      }
+
+      // ============ MOBILE FILTER TOGGLE ============
+      const mobileFilterToggle = document.getElementById('mobileFilterToggle');
+      const sidebar = document.getElementById('sidebar');
+
+      mobileFilterToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        if (sidebar.classList.contains('active')) {
+          mobileFilterToggle.innerHTML = '<i class="fas fa-times"></i> Hide Filters';
+        } else {
+          mobileFilterToggle.innerHTML = '<i class="fas fa-filter"></i> Show Filters';
+        }
+      });
+
+      // ============ SCROLL TO TOP ============
+      const scrollTopBtn = document.getElementById('scrollTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ============ LOADER ============
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('loader').classList.add('hidden');
+        }, 1500);
+      });
+
+      // ============ RENDER CARS ============
+      const carsGrid = document.getElementById('carsGrid');
+      const resultsCount = document.getElementById('resultsCount');
+
+      function formatPrice(price) {
+        return '$' + price.toLocaleString();
+      }
+
+      function formatKms(kms) {
+        return kms.toLocaleString() + ' km';
+      }
+
+      function getFuelLabel(fuel) {
+        const labels = {
+          petrol: 'Petrol',
+          diesel: 'Diesel',
+          hybrid: 'Hybrid',
+          electric: 'Electric'
+        };
+        return labels[fuel] || fuel;
+      }
+
+      function renderCars(cars) {
+        carsGrid.innerHTML = '';
+        resultsCount.textContent = cars.length;
+
+        cars.forEach(car => {
+          const carCard = document.createElement('div');
+          carCard.className = 'car-card';
+          carCard.innerHTML = `
+            <div class="car-image">
+              ${car.image ? `<img src="${car.image}" alt="${car.title}">` : `<span class="car-placeholder"><i class="fas fa-car"></i></span>`}
+              ${car.badge ? `<span class="car-badge ${car.badgeClass || ''}">${car.badge}</span>` : ''}
+              <button class="car-favorite" onclick="toggleFavorite(this)">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="car-content">
+              <h3 class="car-title">${car.title}</h3>
+              <div class="car-specs">
+                <span class="car-spec"><i class="fas fa-gauge-high"></i> ${formatKms(car.kms)}</span>
+                <span class="car-spec"><i class="fas fa-gas-pump"></i> ${getFuelLabel(car.fuel)}</span>
+                <span class="car-spec"><i class="fas fa-cog"></i> ${car.transmission === 'automatic' ? 'Auto' : 'Manual'}</span>
+              </div>
+              <div class="gim-badge">
+                <i class="fas fa-shield-halved"></i>
+                <span>GIM Assured</span>
+              </div>
+              <div class="car-footer">
+                <div>
+                  <div class="car-price">${formatPrice(car.price)}</div>
+                  <div class="car-price-label">Drive Away</div>
+                </div>
+                <button class="car-btn">View Details</button>
+              </div>
+            </div>
+          `;
+          carsGrid.appendChild(carCard);
+        });
+      }
+
+      function toggleFavorite(btn) {
+        btn.classList.toggle('active');
+        const icon = btn.querySelector('i');
+        if (btn.classList.contains('active')) {
+          icon.className = 'fas fa-heart';
+        } else {
+          icon.className = 'far fa-heart';
+        }
+      }
+
+      // ============ FILTER FUNCTIONALITY ============
+      const searchInput = document.getElementById('searchInput');
+      const brandFilter = document.getElementById('brandFilter');
+      const yearFilter = document.getElementById('yearFilter');
+      const kmsFilter = document.getElementById('kmsFilter');
+      const fuelFilter = document.getElementById('fuelFilter');
+      const bodyFilter = document.getElementById('bodyFilter');
+      const transmissionFilter = document.getElementById('transmissionFilter');
+      const minPrice = document.getElementById('minPrice');
+      const maxPrice = document.getElementById('maxPrice');
+      const sortSelect = document.getElementById('sortSelect');
+      const applyFiltersBtn = document.getElementById('applyFilters');
+      const clearFiltersBtn = document.getElementById('clearFilters');
+
+      function filterCars() {
+        let filteredCars = [...carsData];
+
+        // Search filter
+        const searchTerm = searchInput.value.toLowerCase();
+        if (searchTerm) {
+          filteredCars = filteredCars.filter(car =>
+            car.title.toLowerCase().includes(searchTerm)
+          );
+        }
+
+        // Brand filter
+        if (brandFilter.value) {
+          filteredCars = filteredCars.filter(car => car.brand === brandFilter.value);
+        }
+
+        // Year filter
+        if (yearFilter.value) {
+          if (yearFilter.value === 'older') {
+            filteredCars = filteredCars.filter(car => car.year <= 2014);
+          } else {
+            filteredCars = filteredCars.filter(car => car.year === parseInt(yearFilter.value));
+          }
+        }
+
+        // KMs filter
+        if (kmsFilter.value) {
+          filteredCars = filteredCars.filter(car => car.kms <= parseInt(kmsFilter.value));
+        }
+
+        // Fuel filter
+        if (fuelFilter.value) {
+          filteredCars = filteredCars.filter(car => car.fuel === fuelFilter.value);
+        }
+
+        // Body filter
+        if (bodyFilter.value) {
+          filteredCars = filteredCars.filter(car => car.body === bodyFilter.value);
+        }
+
+        // Transmission filter
+        if (transmissionFilter.value) {
+          filteredCars = filteredCars.filter(car => car.transmission === transmissionFilter.value);
+        }
+
+        // Price filter
+        if (minPrice.value) {
+          filteredCars = filteredCars.filter(car => car.price >= parseInt(minPrice.value));
+        }
+        if (maxPrice.value) {
+          filteredCars = filteredCars.filter(car => car.price <= parseInt(maxPrice.value));
+        }
+
+        // Sort
+        switch (sortSelect.value) {
+          case 'price-low':
+            filteredCars.sort((a, b) => a.price - b.price);
+            break;
+          case 'price-high':
+            filteredCars.sort((a, b) => b.price - a.price);
+            break;
+          case 'newest':
+            filteredCars.sort((a, b) => b.year - a.year);
+            break;
+          case 'kms-low':
+            filteredCars.sort((a, b) => a.kms - b.kms);
+            break;
+          default:
+            // Featured - keep original order
+            break;
+        }
+
+        renderCars(filteredCars);
+      }
+
+      applyFiltersBtn.addEventListener('click', filterCars);
+
+      clearFiltersBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        brandFilter.value = '';
+        yearFilter.value = '';
+        kmsFilter.value = '';
+        fuelFilter.value = '';
+        bodyFilter.value = '';
+        transmissionFilter.value = '';
+        minPrice.value = '';
+        maxPrice.value = '';
+        sortSelect.value = 'featured';
+        renderCars(carsData);
+      });
+
+      sortSelect.addEventListener('change', filterCars);
+
+      // Search on Enter key
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          filterCars();
+        }
+      });
+
+      // Initial render
+      renderCars(carsData);
+    </script>
+  </body>
+</html>

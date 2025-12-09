@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warranty | Got It Motors</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+
+        /* Light theme */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(248, 250, 245, 0.95),
+          rgba(255, 255, 255, 0.9)
+        );
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(20, 20, 31, 0.95),
+          rgba(13, 13, 20, 0.9)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .nav {
+        background: rgba(13, 13, 20, 0.7);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme='dark'] .nav.scrolled {
+        background: rgba(13, 13, 20, 0.85);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .theme-toggle {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.2);
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      [data-theme='dark'] .theme-toggle:hover {
+        background: rgba(26, 26, 40, 0.8);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Page Header */
+      .page-header {
+        padding: 150px 2rem 80px;
+        background: var(--bg-secondary);
+        text-align: center;
+        position: relative;
+      }
+
+      .page-header h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .page-header h1 .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Section Styles */
+      .section {
+        padding: 5rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Warranty Table Styles */
+      .warranty-table-container {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin-bottom: 3rem;
+      }
+
+      [data-theme='dark'] .warranty-table-container {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      .warranty-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+
+      .warranty-table th,
+      .warranty-table td {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .warranty-table th {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .warranty-table th:first-child {
+        text-align: left;
+        padding-left: 1.5rem;
+      }
+
+      .warranty-table td:first-child {
+        text-align: left;
+        padding-left: 1.5rem;
+        font-weight: 500;
+      }
+
+      .warranty-table tbody tr:hover {
+        background: rgba(129, 215, 66, 0.05);
+      }
+
+      .warranty-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-section-header {
+        background: var(--bg-secondary);
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .table-section-header td {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* Benefits Section */
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 16px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .benefit-item {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .benefit-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.15);
+      }
+
+      .benefit-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .benefit-text {
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      /* Roadside Table */
+      .roadside-section {
+        margin-top: 4rem;
+      }
+
+      .roadside-section h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .roadside-section h3 i {
+        color: var(--primary);
+      }
+
+      .surcharge-note {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: rgba(129, 215, 66, 0.1);
+        border-radius: 12px;
+        margin-top: 1.5rem;
+        font-weight: 500;
+      }
+
+      .surcharge-note i {
+        color: var(--primary);
+        font-size: 1.2rem;
+      }
+
+      .disclaimer {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Buying Section */
+      .buying-section {
+        background: var(--bg-secondary);
+      }
+
+      .buying-steps {
+        display: grid;
+        gap: 3rem;
+      }
+
+      .buying-step {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .buying-step:nth-child(even) {
+        direction: rtl;
+      }
+
+      .buying-step:nth-child(even) > * {
+        direction: ltr;
+      }
+
+      .step-content h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+
+      .step-content p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      .step-image {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: var(--primary);
+      }
+
+      [data-theme='dark'] .step-image {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* Newsletter */
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        text-decoration: none;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .social-link {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+      }
+
+      .social-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: var(--primary);
+        color: white;
+        transform: translateY(-3px) scale(1.05);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px var(--primary-glow);
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        z-index: 9999;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .mobile-menu {
+        background: rgba(13, 13, 20, 0.95);
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .mobile-menu-close {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      [data-theme='dark'] .mobile-menu-close {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .mobile-menu-close:hover {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: var(--primary);
+        transform: rotate(90deg) scale(1.1);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+      }
+
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+
+      .mobile-nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Responsive */
+      @media (max-width: 1024px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .footer-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .buying-step {
+          grid-template-columns: 1fr;
+        }
+
+        .buying-step:nth-child(even) {
+          direction: ltr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 1.8rem;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .nav-right {
+          display: none;
+        }
+
+        .warranty-table {
+          font-size: 0.8rem;
+        }
+
+        .warranty-table th,
+        .warranty-table td {
+          padding: 0.6rem 0.4rem;
+        }
+
+        .warranty-table th:first-child,
+        .warranty-table td:first-child {
+          padding-left: 0.6rem;
+        }
+
+        .benefits-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Table responsive wrapper */
+      .table-responsive {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="index.html#vehicles" onclick="closeMobileMenu()">Buy Car</a></li>
+        <li><a href="index.html#sell" onclick="closeMobileMenu()">Sell Car</a></li>
+        <li><a href="index.html#services" onclick="closeMobileMenu()">Services</a></li>
+        <li><a href="index.html#about" onclick="closeMobileMenu()">About Us</a></li>
+        <li><a href="index.html#contact" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#vehicles">Buy Car</a></li>
+          <li><a href="index.html#sell">Sell Car</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle theme"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="nav-cta">Get Quote</button>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1>ENDURANCE <span class="highlight">Warranty</span></h1>
+      <p>Comprehensive coverage for your peace of mind. Any vehicle, regardless of age and distance travelled.</p>
+    </section>
+
+    <!-- Warranty Pricelist Section -->
+    <section class="section">
+      <div class="section-container">
+        <h2 class="section-title">ENDURANCE Pricelist</h2>
+        <p class="section-subtitle">Choose the plan that fits your needs. All prices include GST.</p>
+
+        <!-- Coverage Table -->
+        <div class="warranty-table-container">
+          <div class="table-responsive">
+            <table class="warranty-table">
+              <thead>
+                <tr>
+                  <th>Covered Components & Parts</th>
+                  <th>Plan A</th>
+                  <th>Plan B</th>
+                  <th>Plan C</th>
+                  <th>Plan D</th>
+                  <th>Plan E</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-section-header">
+                  <td colspan="6">Warranty Claim Limit - Major Components</td>
+                </tr>
+                <tr>
+                  <td>Engine</td>
+                  <td>$1,000</td>
+                  <td>$2,000</td>
+                  <td>$3,000</td>
+                  <td>$5,000</td>
+                  <td>$7,000</td>
+                </tr>
+                <tr>
+                  <td>Differential</td>
+                  <td>$1,000</td>
+                  <td>$2,000</td>
+                  <td>$3,000</td>
+                  <td>$5,000</td>
+                  <td>$7,000</td>
+                </tr>
+                <tr>
+                  <td>Gearbox/Transmission</td>
+                  <td>$1,000</td>
+                  <td>$2,000</td>
+                  <td>$3,000</td>
+                  <td>$5,000</td>
+                  <td>$7,000</td>
+                </tr>
+                <tr>
+                  <td>Turbo/Super Charger</td>
+                  <td>$1,000</td>
+                  <td>$2,000</td>
+                  <td>$3,000</td>
+                  <td>$5,000</td>
+                  <td>$7,000</td>
+                </tr>
+                <tr class="table-section-header">
+                  <td colspan="6">Warranty Claim Limit - Other Components</td>
+                </tr>
+                <tr>
+                  <td>ABS Brake System</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Air Conditioning</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Brakes</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Clutch</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Cooling System</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Computers</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Cylinder Head & Gasket</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Driveshaft & Universals</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Electrical</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Fuel System</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Ignition System</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Power Windows</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Radiator</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Steering</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Suspension</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+                <tr>
+                  <td>Transmission Computer</td>
+                  <td>$350</td>
+                  <td>$750</td>
+                  <td>$1,250</td>
+                  <td>$1,500</td>
+                  <td>$2,500</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pricing Table -->
+        <div class="warranty-table-container">
+          <div class="table-responsive">
+            <table class="warranty-table">
+              <thead>
+                <tr>
+                  <th>Duration</th>
+                  <th>Plan A</th>
+                  <th>Plan B</th>
+                  <th>Plan C</th>
+                  <th>Plan D</th>
+                  <th>Plan E</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12 months</td>
+                  <td>$870</td>
+                  <td>$1,155</td>
+                  <td>$1,485</td>
+                  <td>$2,100</td>
+                  <td>$2,685</td>
+                </tr>
+                <tr>
+                  <td>36 months</td>
+                  <td>$1,290</td>
+                  <td>$1,485</td>
+                  <td>$2,085</td>
+                  <td>$2,490</td>
+                  <td>$3,150</td>
+                </tr>
+                <tr>
+                  <td>60 months</td>
+                  <td>$1,620</td>
+                  <td>$1,785</td>
+                  <td>$2,385</td>
+                  <td>$3,150</td>
+                  <td>$3,750</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Benefits -->
+        <h3 class="section-title" style="font-size: 1.8rem; margin-top: 3rem;">ENDURANCE Warranty Benefits</h3>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Begins when the Manufacturer's warranty expires</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Unlimited claims</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Unlimited kilometres</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Parts and labour cover – Australia-wide</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Accommodation allowance</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Car hire allowance</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Simple 'no forms' claims process</span>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon"><i class="fas fa-check"></i></div>
+            <span class="benefit-text">Fully transferable</span>
+          </div>
+        </div>
+
+        <!-- Roadside Assistance -->
+        <div class="roadside-section">
+          <h3><i class="fas fa-road"></i> Emergency Breakdown Assistance</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">24/7 breakdown service, towing, fuel, flat battery, flat tyre, and locksmith available.</p>
+
+          <div class="warranty-table-container">
+            <div class="table-responsive">
+              <table class="warranty-table">
+                <thead>
+                  <tr>
+                    <th>Roadside Options</th>
+                    <th>3 Star</th>
+                    <th>5 Star</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1 Year</td>
+                    <td>$88</td>
+                    <td>$154</td>
+                  </tr>
+                  <tr>
+                    <td>2 Years</td>
+                    <td>$176</td>
+                    <td>$300</td>
+                  </tr>
+                  <tr>
+                    <td>3 Years</td>
+                    <td>$264</td>
+                    <td>$398</td>
+                  </tr>
+                  <tr>
+                    <td>4 Years</td>
+                    <td>$352</td>
+                    <td>$510</td>
+                  </tr>
+                  <tr>
+                    <td>5 Years</td>
+                    <td>$440</td>
+                    <td>$610</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="surcharge-note">
+            <i class="fas fa-info-circle"></i>
+            <span><strong>Surcharges:</strong> 4WD / AWD vehicles - $110 additional</span>
+          </div>
+
+          <div class="disclaimer">
+            * Conditions apply - please refer to Warranty Terms & Conditions for full details. All prices include GST.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buying Section -->
+    <section class="section buying-section">
+      <div class="section-container">
+        <h2 class="section-title">BUYING YOUR GOT IT ASSURED® CAR</h2>
+        <p class="section-subtitle">Choose from our handpicked cars at Got It Motors</p>
+
+        <div class="buying-steps">
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Personalize Your Search</h3>
+              <p>Personalize your search with filters – from price range to body type, there's a Got It Motors certified car for you. Explore high-definition images of each car and enjoy a virtual test-drive experience with Got It Motors 360 to help you make the right choice.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Get Into Every Detail</h3>
+              <p>Check out our detailed 150-point inspection report, features and specs, price, financing and buyback options for each car.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+          </div>
+
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Your Test Drive, Your Way</h3>
+              <p>Test-drive any of our cars at your home or at a Got It car hub near you. Have a chat about any aspect of the car, our experts know each car inside-out. Enjoy your time with it, see if it's what you've always wanted.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-car-side"></i>
+            </div>
+          </div>
+
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Warranty Coverage, Guaranteed</h3>
+              <p>We stand by the quality of our vehicles. Every Got It Assured® car comes with a comprehensive warranty for your peace of mind. Enjoy worry-free driving with coverage options tailored to keep you protected, no matter where the road takes you.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+          </div>
+
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Complete All Payments Online</h3>
+              <p>We support most National and International banking partners and accept payments through major credit cards, debit cards and online banking systems.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-credit-card"></i>
+            </div>
+          </div>
+
+          <div class="buying-step">
+            <div class="step-content">
+              <h3>Delivery Day – A Day to Remember</h3>
+              <p>Your gleaming, professionally polished Got It Assured® car – serviced, dry-cleaned and waxed is home-delivered in an eye-catching ceremony.</p>
+            </div>
+            <div class="step-image">
+              <i class="fas fa-truck"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="index.html#vehicles"><i class="fas fa-chevron-right"></i> Buy Car</a>
+            </li>
+            <li>
+              <a href="index.html#sell"><i class="fas fa-chevron-right"></i> Sell Car</a>
+            </li>
+            <li>
+              <a href="index.html#about"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Detailing</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Tinting</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Dash Camera Installation</a>
+            </li>
+            <li>
+              <a href="warranty.html"><i class="fas fa-chevron-right"></i> Warranty</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p
+            style="
+              color: var(--text-secondary);
+              margin-bottom: 1rem;
+              font-size: 0.95rem;
+            "
+          >
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // ============ THEME TOGGLE ============
+      const themeToggle = document.getElementById('themeToggle')
+      const html = document.documentElement
+
+      themeToggle.addEventListener('click', () => {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme')
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>'
+        } else {
+          html.setAttribute('data-theme', 'dark')
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
+        }
+      })
+
+      // ============ NAVIGATION SCROLL ============
+      const nav = document.getElementById('nav')
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          nav.classList.add('scrolled')
+        } else {
+          nav.classList.remove('scrolled')
+        }
+      })
+
+      // ============ MOBILE MENU ============
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn')
+      const mobileMenu = document.getElementById('mobileMenu')
+      const mobileMenuClose = document.getElementById('mobileMenuClose')
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active')
+      })
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active')
+      })
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('active')
+      }
+
+      // ============ SCROLL TO TOP ============
+      const scrollTopBtn = document.getElementById('scrollTop')
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible')
+        } else {
+          scrollTopBtn.classList.remove('visible')
+        }
+      })
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+    </script>
+  </body>
+</html>

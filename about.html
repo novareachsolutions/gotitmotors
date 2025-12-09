@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Got It Motors - Quality Used Cars in Werribee</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+
+        /* Light theme */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(248, 250, 245, 0.95),
+          rgba(255, 255, 255, 0.9)
+        );
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(20, 20, 31, 0.95),
+          rgba(13, 13, 20, 0.9)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .nav {
+        background: rgba(13, 13, 20, 0.7);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.2);
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+
+      [data-theme='dark'] .nav.scrolled {
+        background: rgba(13, 13, 20, 0.85);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--primary);
+      }
+
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .theme-toggle {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.3);
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.2);
+        transform: rotate(180deg) scale(1.05);
+      }
+
+      [data-theme='dark'] .theme-toggle:hover {
+        background: rgba(26, 26, 40, 0.8);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Page Header */
+      .page-header {
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 120px 2rem 4rem;
+        background: var(--bg-secondary);
+        overflow: hidden;
+      }
+
+      .page-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--primary-glow), transparent);
+        border-radius: 50%;
+      }
+
+      .page-header-content {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .page-header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(129, 215, 66, 0.15);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.4);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+
+      [data-theme='dark'] .page-header-badge {
+        background: rgba(129, 215, 66, 0.2);
+        border-color: rgba(129, 215, 66, 0.5);
+        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .page-header-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .page-header-title .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .page-header-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      /* Section Styles */
+      .section {
+        padding: 6rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+      }
+
+      .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(129, 215, 66, 0.15);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.4);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+
+      [data-theme='dark'] .section-badge {
+        background: rgba(129, 215, 66, 0.2);
+        border-color: rgba(129, 215, 66, 0.5);
+        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* About Content Section */
+      .about-content-section {
+        background: var(--bg-primary);
+      }
+
+      .about-content-container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .about-text {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .about-highlight {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        padding: 2rem;
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        margin: 3rem 0;
+        text-align: center;
+      }
+
+      [data-theme='dark'] .about-highlight {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .about-highlight p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+      }
+
+      .about-highlight .highlight-text {
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      /* Features Grid */
+      .features-section {
+        background: var(--bg-secondary);
+      }
+
+      .features-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        padding: 2rem;
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      [data-theme='dark'] .feature-card {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(40px) saturate(200%);
+        -webkit-backdrop-filter: blur(40px) saturate(200%);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                    0 0 0 1px rgba(129, 215, 66, 0.3);
+      }
+
+      [data-theme='dark'] .feature-card:hover {
+        background: rgba(26, 26, 40, 0.85);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                    0 0 0 1px rgba(129, 215, 66, 0.4);
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary-glow), transparent);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.8rem;
+        color: var(--primary);
+        transition: all 0.4s ease;
+      }
+
+      .feature-card:hover .feature-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        transform: rotateY(180deg);
+      }
+
+      .feature-card h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .feature-card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Contact Section */
+      .contact-section {
+        background: var(--bg-tertiary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--primary-glow), transparent);
+        border-radius: 50%;
+      }
+
+      .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .contact-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        padding: 2rem;
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .contact-card {
+        background: rgba(26, 26, 40, 0.7);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .contact-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                    0 0 0 1px rgba(129, 215, 66, 0.3);
+      }
+
+      [data-theme='dark'] .contact-card:hover {
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                    0 0 0 1px rgba(129, 215, 66, 0.4);
+      }
+
+      .contact-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.8rem;
+        color: white;
+        box-shadow: 0 8px 24px var(--primary-glow);
+      }
+
+      .contact-card h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+      }
+
+      .contact-card p {
+        font-size: 1rem;
+        color: var(--text-secondary);
+      }
+
+      .contact-card a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .contact-card a:hover {
+        color: var(--primary-dark);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* Newsletter */
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Social Links */
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+      }
+
+      [data-theme='dark'] .social-link {
+        background: rgba(26, 26, 40, 0.6);
+        border-color: rgba(129, 215, 66, 0.25);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .social-link:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-color: var(--primary);
+        color: white;
+        box-shadow: 0 8px 24px rgba(129, 215, 66, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transform: translateY(-3px) scale(1.05);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px var(--primary-glow);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(50px) saturate(200%);
+        -webkit-backdrop-filter: blur(50px) saturate(200%);
+        z-index: 9999;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .mobile-menu {
+        background: rgba(13, 13, 20, 0.95);
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .mobile-menu-close {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1.5px solid rgba(129, 215, 66, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme='dark'] .mobile-menu-close {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.3);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .mobile-menu-close:hover {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: var(--primary);
+        transform: rotate(90deg) scale(1.1);
+      }
+
+      [data-theme='dark'] .mobile-menu-close:hover {
+        background: rgba(26, 26, 40, 0.9);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+      }
+
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+
+      .mobile-nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Animations */
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .page-header-title {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-phone {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-header-title {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .footer-links a {
+          justify-content: center;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .social-links {
+          justify-content: center;
+        }
+
+        .newsletter-form {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav {
+          padding: 0.8rem 1rem;
+        }
+
+        .nav-cta {
+          display: none;
+        }
+
+        .page-header {
+          padding: 100px 1rem 3rem;
+        }
+
+        .section {
+          padding: 4rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="buy-car.html" onclick="closeMobileMenu()">Buy Car</a></li>
+        <li><a href="sell-car.html" onclick="closeMobileMenu()">Sell Car</a></li>
+        <li><a href="index.html#services" onclick="closeMobileMenu()">Services</a></li>
+        <li><a href="about.html" onclick="closeMobileMenu()">About Us</a></li>
+        <li><a href="index.html#contact" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buy-car.html">Buy Car</a></li>
+          <li><a href="sell-car.html">Sell Car</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="about.html" class="active">About Us</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle theme"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="nav-cta">Get Quote</button>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-header-badge">
+          <i class="fas fa-info-circle"></i>
+          Learn More About Us
+        </div>
+        <h1 class="page-header-title">
+          About <span class="highlight">Got It Motors</span>
+        </h1>
+        <p class="page-header-subtitle">
+          Your trusted used car dealer in Western Metro, just 30 minutes from the CBD
+        </p>
+      </div>
+    </section>
+
+    <!-- About Content Section -->
+    <section class="section about-content-section">
+      <div class="about-content-container">
+        <p class="about-text animate-on-scroll">
+          Got It Motors is a well-known used car dealer in Western Metro, just 30 minutes from the CBD. We have a carefully curated selection of pre-owned cars that meet the highest standards of quality and reliability.
+        </p>
+        <p class="about-text animate-on-scroll">
+          We are proud of our extensive customer service and reputation as a dependable car dealership that makes the process of purchasing and selling cars straightforward.
+        </p>
+        <div class="about-highlight animate-on-scroll">
+          <p>
+            <span class="highlight-text">Complimentary delivery within a 15km radius!</span> Yes, that includes Geelong, Werribee, Tarniet, Hoppers Crossing, Altona, Williamstown, and Truganina. Elevate your experience with the convenience of free delivery to your doorstep!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features-section">
+      <div class="section-header">
+        <span class="section-badge">
+          <i class="fas fa-star"></i>
+          Why Choose Us
+        </span>
+        <h2 class="section-title">What Makes Us Different</h2>
+        <p class="section-subtitle">
+          Experience the Got It Motors difference with our commitment to quality, service, and customer satisfaction.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-car-side"></i>
+          </div>
+          <h3>All Brands</h3>
+          <p>With over 50 cars in stock, buyers have plenty of options to find the right vehicle that fits their needs and budget.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>Free Support</h3>
+          <p>With over 50 cars in stock, buyers have plenty of options to find the right vehicle that fits their needs and budget.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-building"></i>
+          </div>
+          <h3>Dealership</h3>
+          <p>Customers who buy from your dealership are contributing to the local economy and supporting a business that gives back to the community.</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <h3>Affordable</h3>
+          <p>Buying used often means lower prices and less depreciation compared to new cars, allowing customers to get more value for their money.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section">
+      <div class="section-header">
+        <span class="section-badge">
+          <i class="fas fa-envelope"></i>
+          Get In Touch
+        </span>
+        <h2 class="section-title">We'd Love to Hear From You</h2>
+        <p class="section-subtitle">
+          Let's get in touch! Visit us, give us a call, or send us an email.
+        </p>
+      </div>
+      <div class="contact-container">
+        <div class="contact-card animate-on-scroll">
+          <div class="contact-icon">
+            <i class="fas fa-location-dot"></i>
+          </div>
+          <h3>Address</h3>
+          <p>115-117 Railway Ave Werribee</p>
+        </div>
+        <div class="contact-card animate-on-scroll">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h3>Phone</h3>
+          <p><a href="tel:1300136110">1300 136 110</a></p>
+        </div>
+        <div class="contact-card animate-on-scroll">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email</h3>
+          <p><a href="mailto:enquiries@gotitmotors.com.au">enquiries@gotitmotors.com.au</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="buy-car.html"><i class="fas fa-chevron-right"></i> Buy Car</a>
+            </li>
+            <li>
+              <a href="sell-car.html"><i class="fas fa-chevron-right"></i> Sell Car</a>
+            </li>
+            <li>
+              <a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Detailing</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Tinting</a>
+            </li>
+            <li>
+              <a href="index.html#services"><i class="fas fa-chevron-right"></i> Dash Camera Installation</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Warranty</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p
+            style="
+              color: var(--text-secondary);
+              margin-bottom: 1rem;
+              font-size: 0.95rem;
+            "
+          >
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      // Check for saved theme preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+      });
+
+      function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+
+      // Mobile Menu
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+      });
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('active');
+      }
+
+      // Nav scroll effect
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // Scroll to Top
+      const scrollTopBtn = document.getElementById('scrollTop');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Animate on Scroll
+      const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      animateElements.forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>

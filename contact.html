@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Got It Motors - Get in Touch</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(135deg, rgba(248, 250, 245, 0.95), rgba(255, 255, 255, 0.9));
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(135deg, rgba(20, 20, 31, 0.95), rgba(13, 13, 20, 0.9));
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+      ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 5px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+      /* Navigation */
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-bottom: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      [data-theme='dark'] .nav { background: rgba(13, 13, 20, 0.7); border-bottom: 1px solid rgba(129, 215, 66, 0.2); }
+      .nav.scrolled { padding: 0.7rem 2rem; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(50px) saturate(200%); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); }
+      [data-theme='dark'] .nav.scrolled { background: rgba(13, 13, 20, 0.85); }
+      .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+      .logo { display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+      .logo span { color: var(--primary); }
+      .logo-icon { width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 15px var(--primary-glow); }
+      .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+      .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; }
+      .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
+      .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+      .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+      .nav-right { display: flex; align-items: center; gap: 1rem; }
+      .theme-toggle { width: 50px; height: 50px; border-radius: 50%; border: 1.5px solid rgba(129, 215, 66, 0.2); background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px) saturate(180%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--text-primary); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+      [data-theme='dark'] .theme-toggle { background: rgba(26, 26, 40, 0.6); border-color: rgba(129, 215, 66, 0.3); }
+      .theme-toggle:hover { border-color: var(--primary); background: rgba(255, 255, 255, 0.8); box-shadow: 0 8px 24px rgba(129, 215, 66, 0.2); transform: rotate(180deg) scale(1.05); }
+      .nav-phone { display: flex; align-items: center; gap: 0.5rem; color: var(--primary); font-weight: 600; font-size: 1.1rem; }
+      .nav-cta { padding: 0.8rem 1.5rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px var(--primary-glow); text-decoration: none; }
+      .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 25px var(--primary-glow); }
+      .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+      .mobile-menu-btn span { width: 25px; height: 3px; background: var(--text-primary); border-radius: 3px; transition: all 0.3s ease; }
+
+      /* Hero */
+      .hero { min-height: 50vh; display: flex; align-items: center; position: relative; padding: 140px 2rem 4rem; overflow: hidden; background: var(--bg-tertiary); }
+      .hero-bg { position: absolute; inset: 0; background: var(--gradient-overlay); z-index: 1; }
+      .hero::before { content: ''; position: absolute; top: -30%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, var(--primary-glow), transparent); border-radius: 50%; z-index: 0; }
+      .hero-container { max-width: 1200px; margin: 0 auto; text-align: center; position: relative; z-index: 10; }
+      .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: rgba(129, 215, 66, 0.15); backdrop-filter: blur(20px); border: 1.5px solid rgba(129, 215, 66, 0.4); border-radius: 50px; color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 1.5rem; }
+      .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; }
+      .hero-title .highlight { background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .hero-subtitle { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+      /* Contact Section */
+      .contact-section { padding: 6rem 2rem; background: var(--bg-primary); }
+      .contact-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+      .contact-form-wrapper {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        padding: 3rem;
+        border-radius: 32px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+      [data-theme='dark'] .contact-form-wrapper { background: rgba(26, 26, 40, 0.7); border: 1px solid rgba(129, 215, 66, 0.2); }
+      .form-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+      .form-subtitle { color: var(--text-secondary); margin-bottom: 2rem; }
+      .form-group { margin-bottom: 1.5rem; }
+      .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+      .form-group label span { color: var(--primary); }
+      .form-input { width: 100%; padding: 1rem 1.25rem; background: var(--bg-secondary); border: 2px solid var(--card-border); border-radius: 16px; font-family: inherit; font-size: 1rem; color: var(--text-primary); transition: all 0.3s ease; }
+      .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+      .form-input::placeholder { color: var(--text-muted); }
+      textarea.form-input { min-height: 150px; resize: vertical; }
+      .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+      .btn { padding: 1rem 2rem; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border: none; }
+      .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 20px var(--primary-glow); width: 100%; justify-content: center; }
+      .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px var(--primary-glow); }
+
+      /* Contact Info */
+      .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+      .info-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        padding: 1.5rem;
+        border-radius: 24px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      [data-theme='dark'] .info-card { background: rgba(26, 26, 40, 0.7); border: 1px solid rgba(129, 215, 66, 0.2); }
+      .info-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); }
+      .info-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: white; flex-shrink: 0; }
+      .info-content h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+      .info-content p { color: var(--text-secondary); line-height: 1.6; }
+      .info-content a { color: var(--primary); text-decoration: none; }
+      .info-content a:hover { text-decoration: underline; }
+
+      /* Hours Section */
+      .hours-section { padding: 6rem 2rem; background: var(--bg-tertiary); position: relative; overflow: hidden; }
+      .hours-section::before { content: ''; position: absolute; top: -30%; left: -10%; width: 500px; height: 500px; background: radial-gradient(circle, var(--primary-glow), transparent); border-radius: 50%; }
+      .hours-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+      .hours-content {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        padding: 3rem;
+        border-radius: 32px;
+        border: 1px solid rgba(129, 215, 66, 0.15);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      }
+      [data-theme='dark'] .hours-content { background: rgba(26, 26, 40, 0.7); border: 1px solid rgba(129, 215, 66, 0.2); }
+      .hours-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+      .hours-title i { color: var(--primary); }
+      .hours-list { display: flex; flex-direction: column; gap: 0.75rem; }
+      .hours-item { display: flex; justify-content: space-between; padding: 1rem 1.5rem; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--card-border); transition: all 0.3s ease; }
+      .hours-item:hover { border-color: var(--primary); transform: translateX(5px); }
+      .hours-item.highlight { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border-color: transparent; }
+      .hours-item.highlight .hours-time { color: white; }
+      .hours-day { font-weight: 600; }
+      .hours-time { color: var(--text-secondary); }
+
+      .map-wrapper { border-radius: 32px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); height: 100%; min-height: 450px; }
+      .map-wrapper iframe { width: 100%; height: 100%; min-height: 450px; border: none; }
+
+      /* Quick Contact */
+      .quick-contact { padding: 4rem 2rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); position: relative; overflow: hidden; }
+      .quick-contact::before { content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; }
+      .quick-contact-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 2rem; position: relative; z-index: 1; }
+      .quick-item { display: flex; align-items: center; gap: 1rem; color: white; }
+      .quick-icon { width: 60px; height: 60px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+      .quick-text h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+      .quick-text p { font-size: 1rem; opacity: 0.9; }
+      .quick-text a { color: white; text-decoration: none; }
+
+      /* Footer */
+      .footer { background: var(--bg-tertiary); padding: 4rem 2rem 2rem; }
+      .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+      .footer-brand p { color: var(--text-secondary); margin: 1rem 0 1.5rem; line-height: 1.7; }
+      .footer-contact-item { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+      .footer-contact-item i { color: var(--primary); }
+      .footer-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; }
+      .footer-links { list-style: none; }
+      .footer-links li { margin-bottom: 0.8rem; }
+      .footer-links a { color: var(--text-secondary); text-decoration: none; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+      .footer-links a:hover { color: var(--primary); transform: translateX(5px); }
+      .footer-bottom { max-width: 1200px; margin: 3rem auto 0; padding-top: 2rem; border-top: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+      .footer-bottom p { color: var(--text-muted); font-size: 0.9rem; }
+      .footer-bottom a { color: var(--primary); text-decoration: none; }
+      .newsletter-form { display: flex; gap: 0.5rem; }
+      .newsletter-form input { flex: 1; padding: 0.8rem 1rem; background: var(--bg-secondary); border: 2px solid var(--card-border); border-radius: 10px; font-family: inherit; color: var(--text-primary); }
+      .newsletter-form input:focus { outline: none; border-color: var(--primary); }
+      .newsletter-form button { padding: 0.8rem 1.2rem; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; }
+      .newsletter-form button:hover { background: var(--primary-dark); }
+      .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+      .social-link { width: 45px; height: 45px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1.5px solid rgba(129, 215, 66, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-primary); font-size: 1.2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; }
+      [data-theme='dark'] .social-link { background: rgba(26, 26, 40, 0.6); }
+      .social-link:hover { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-color: var(--primary); color: white; transform: translateY(-3px) scale(1.05); }
+
+      .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 5px 20px var(--primary-glow); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 999; }
+      .scroll-top.visible { opacity: 1; visibility: visible; }
+      .scroll-top:hover { transform: translateY(-5px); }
+
+      /* Mobile Menu */
+      .mobile-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(50px); z-index: 9999; padding: 2rem; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+      [data-theme='dark'] .mobile-menu { background: rgba(13, 13, 20, 0.95); }
+      .mobile-menu.active { transform: translateX(0); }
+      .mobile-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+      .mobile-menu-close { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.7); border: 1.5px solid rgba(129, 215, 66, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); transition: all 0.3s ease; }
+      .mobile-menu-close:hover { border-color: var(--primary); transform: rotate(90deg); }
+      .mobile-nav-links { list-style: none; }
+      .mobile-nav-links li { margin-bottom: 1.5rem; }
+      .mobile-nav-links a { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); text-decoration: none; transition: color 0.3s ease; }
+      .mobile-nav-links a:hover { color: var(--primary); }
+
+      .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+      .animate-on-scroll.animated { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 1200px) {
+        .hero-title { font-size: 3rem; }
+        .contact-container, .hours-container { gap: 2rem; }
+      }
+      @media (max-width: 992px) {
+        .nav-links { display: none; }
+        .mobile-menu-btn { display: flex; }
+        .contact-container, .hours-container { grid-template-columns: 1fr; }
+        .footer-container { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .hero-title { font-size: 2.5rem; }
+        .form-row { grid-template-columns: 1fr; }
+        .footer-container { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+        .nav-right { display: none; }
+        .quick-contact-container { flex-direction: column; text-align: center; }
+        .quick-item { flex-direction: column; }
+        .contact-form-wrapper, .hours-content { padding: 2rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="buy-car.html" onclick="closeMobileMenu()">Buy Car</a></li>
+        <li><a href="sell-car.html" onclick="closeMobileMenu()">Sell Car</a></li>
+        <li><a href="index.html#services" onclick="closeMobileMenu()">Services</a></li>
+        <li><a href="index.html#about" onclick="closeMobileMenu()">About Us</a></li>
+        <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="buy-car.html">Buy Car</a></li>
+          <li><a href="sell-car.html">Sell Car</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <a href="tel:1300136110" class="nav-cta">Call Now</a>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-container">
+        <div class="hero-badge">
+          <i class="fas fa-envelope"></i>
+          We'd Love to Hear From You
+        </div>
+        <h1 class="hero-title">
+          Let's Get in <span class="highlight">Touch!</span>
+        </h1>
+        <p class="hero-subtitle">
+          Have a question about buying or selling a car? Our friendly team is here to help. Reach out to us and we'll respond as soon as possible.
+        </p>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="contact-container">
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper animate-on-scroll">
+          <h2 class="form-title">Send Us a Message</h2>
+          <p class="form-subtitle">Fill out the form below and we'll get back to you shortly.</p>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name <span>*</span></label>
+                <input type="text" id="firstName" class="form-input" placeholder="John" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name <span>*</span></label>
+                <input type="text" id="lastName" class="form-input" placeholder="Doe" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address <span>*</span></label>
+              <input type="email" id="email" class="form-input" placeholder="john@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number <span>*</span></label>
+              <input type="tel" id="phone" class="form-input" placeholder="0400 000 000" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" class="form-input" placeholder="How can we help you?" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message <span>*</span></label>
+              <textarea id="message" class="form-input" placeholder="Tell us more about your enquiry..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Info Cards -->
+        <div class="contact-info">
+          <div class="info-card animate-on-scroll">
+            <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+            <div class="info-content">
+              <h3>Visit Our Showroom</h3>
+              <p>115-117 Railway Ave<br />Werribee VIC 3030</p>
+            </div>
+          </div>
+          <div class="info-card animate-on-scroll">
+            <div class="info-icon"><i class="fas fa-phone"></i></div>
+            <div class="info-content">
+              <h3>Call Us</h3>
+              <p><a href="tel:1300136110">1300 136 110</a></p>
+              <p>Available during business hours</p>
+            </div>
+          </div>
+          <div class="info-card animate-on-scroll">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="info-content">
+              <h3>Email Us</h3>
+              <p><a href="mailto:enquiries@gotitmotors.com.au">enquiries@gotitmotors.com.au</a></p>
+              <p>We respond within 24 hours</p>
+            </div>
+          </div>
+          <div class="info-card animate-on-scroll">
+            <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="info-content">
+              <h3>WhatsApp</h3>
+              <p>Message us for quick responses</p>
+              <p><a href="#">Chat with us</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Contact Strip -->
+    <section class="quick-contact">
+      <div class="quick-contact-container">
+        <div class="quick-item">
+          <div class="quick-icon"><i class="fas fa-headset"></i></div>
+          <div class="quick-text">
+            <h4>Customer Support</h4>
+            <p>We're here to help</p>
+          </div>
+        </div>
+        <div class="quick-item">
+          <div class="quick-icon"><i class="fas fa-clock"></i></div>
+          <div class="quick-text">
+            <h4>Quick Response</h4>
+            <p>Within 24 hours</p>
+          </div>
+        </div>
+        <div class="quick-item">
+          <div class="quick-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="quick-text">
+            <h4>Secure & Trusted</h4>
+            <p>Licensed dealer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Opening Hours & Map -->
+    <section class="hours-section">
+      <div class="hours-container">
+        <div class="hours-content animate-on-scroll">
+          <h2 class="hours-title"><i class="fas fa-clock"></i> Opening Hours</h2>
+          <div class="hours-list">
+            <div class="hours-item">
+              <span class="hours-day">Monday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Tuesday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Wednesday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Thursday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Friday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item highlight">
+              <span class="hours-day">Saturday</span>
+              <span class="hours-time">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="hours-item">
+              <span class="hours-day">Sunday</span>
+              <span class="hours-time">11:00 AM - 2:00 PM</span>
+            </div>
+          </div>
+        </div>
+        <div class="map-wrapper animate-on-scroll">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3148.8!2d144.6616!3d-37.9021!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad68f477f000001%3A0x1234567890abcdef!2s115%20Railway%20Ave%2C%20Werribee%20VIC%203030!5e0!3m2!1sen!2sau!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>Got It Motors is committed to establishing long-term relationships with customers by providing exceptional service and treating each customer as if they were a guest in our home.</p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="buy-car.html"><i class="fas fa-chevron-right"></i> Buy Car</a></li>
+            <li><a href="sell-car.html"><i class="fas fa-chevron-right"></i> Sell Car</a></li>
+            <li><a href="index.html#about"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Detailing</a></li>
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Car Tinting</a></li>
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Dash Cam Install</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Warranty</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">Get the latest updates on new arrivals and special offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+      themeToggle.addEventListener('click', () => {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme');
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+          html.setAttribute('data-theme', 'dark');
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+      });
+
+      const nav = document.getElementById('nav');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 100);
+      });
+
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuClose = document.getElementById('mobileMenuClose');
+      mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+      mobileMenuClose.addEventListener('click', () => mobileMenu.classList.remove('active'));
+      function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+
+      const scrollTopBtn = document.getElementById('scrollTop');
+      window.addEventListener('scroll', () => {
+        scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+      });
+      scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('animated');
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+
+      document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you shortly.');
+        e.target.reset();
+      });
+    </script>
+  </body>
+</html>
