@@ -1,0 +1,2976 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Got It Motors | Quality Used Cars in Werribee</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      :root {
+        --primary: #81d742;
+        --primary-dark: #6bc234;
+        --primary-light: #a5e873;
+        --primary-glow: rgba(129, 215, 66, 0.3);
+
+        /* Light theme */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8faf5;
+        --bg-tertiary: #eef5e6;
+        --text-primary: #1a1a2e;
+        --text-secondary: #4a4a5a;
+        --text-muted: #7a7a8a;
+        --card-bg: #ffffff;
+        --card-border: rgba(129, 215, 66, 0.2);
+        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-strong: rgba(0, 0, 0, 0.15);
+        --nav-bg: rgba(255, 255, 255, 0.9);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(248, 250, 245, 0.95),
+          rgba(255, 255, 255, 0.9)
+        );
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #0d0d14;
+        --bg-secondary: #14141f;
+        --bg-tertiary: #1a1a28;
+        --text-primary: #f0f0f5;
+        --text-secondary: #b0b0c0;
+        --text-muted: #707080;
+        --card-bg: #1a1a28;
+        --card-border: rgba(129, 215, 66, 0.3);
+        --shadow: rgba(0, 0, 0, 0.3);
+        --shadow-strong: rgba(0, 0, 0, 0.5);
+        --nav-bg: rgba(13, 13, 20, 0.95);
+        --gradient-overlay: linear-gradient(
+          135deg,
+          rgba(20, 20, 31, 0.95),
+          rgba(13, 13, 20, 0.9)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        transition: background 0.5s ease, color 0.5s ease;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Three.js Canvas */
+      #three-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 2rem;
+        background: var(--nav-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--card-border);
+        transition: all 0.3s ease;
+      }
+
+      .nav.scrolled {
+        padding: 0.7rem 2rem;
+        box-shadow: 0 4px 30px var(--shadow);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--primary);
+      }
+
+      .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid var(--card-border);
+        background: var(--card-bg);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        transform: rotate(180deg);
+      }
+
+      .nav-phone {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .nav-cta {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .mobile-menu-btn span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 120px 2rem 4rem;
+        overflow: hidden;
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background: var(--gradient-overlay);
+        z-index: 1;
+      }
+
+      .hero-particles {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: float 15s infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.3;
+        }
+        90% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .hero-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .hero-content {
+        animation: slideInLeft 1s ease-out;
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--primary-glow);
+        border: 1px solid var(--primary);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 var(--primary-glow);
+        }
+        50% {
+          box-shadow: 0 0 0 10px transparent;
+        }
+      }
+
+      .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-title .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background: var(--card-bg);
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 10px 40px var(--shadow);
+      }
+
+      .stat {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        box-shadow: 0 4px 20px var(--primary-glow);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px var(--primary-glow);
+      }
+
+      .btn-secondary {
+        background: var(--card-bg);
+        color: var(--text-primary);
+        border: 2px solid var(--card-border);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      .hero-visual {
+        position: relative;
+        animation: slideInRight 1s ease-out;
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .hero-image-container {
+        position: relative;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px var(--shadow-strong);
+      }
+
+      .hero-image-container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--primary-glow), transparent);
+        z-index: 1;
+      }
+
+      .hero-3d-container {
+        width: 100%;
+        height: 500px;
+        background: var(--bg-tertiary);
+        border-radius: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      #hero-three {
+        width: 100%;
+        height: 100%;
+      }
+
+      .floating-card {
+        position: absolute;
+        background: var(--card-bg);
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px var(--shadow);
+        border: 1px solid var(--card-border);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: floatCard 3s ease-in-out infinite;
+        z-index: 20;
+      }
+
+      @keyframes floatCard {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .floating-card.card-1 {
+        top: 20px;
+        right: -20px;
+        animation-delay: 0s;
+      }
+
+      .floating-card.card-2 {
+        bottom: 40px;
+        left: -20px;
+        animation-delay: 0.5s;
+      }
+
+      .floating-card-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .floating-card-text h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .floating-card-text p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* Why Choose Us Section */
+      .section {
+        padding: 6rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto 4rem;
+      }
+
+      .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--primary-glow);
+        border: 1px solid var(--primary);
+        border-radius: 50px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .why-choose {
+        background: var(--bg-secondary);
+      }
+
+      .features-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px var(--shadow);
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--primary-glow), transparent);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 1.8rem;
+        color: var(--primary);
+        transition: all 0.4s ease;
+      }
+
+      .feature-card:hover .feature-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        transform: rotateY(180deg);
+      }
+
+      .feature-card h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .feature-card p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Vehicles Section */
+      .vehicles-section {
+        background: var(--bg-primary);
+      }
+
+      .vehicles-showcase {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .vehicle-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .vehicle-card {
+        background: var(--card-bg);
+        border-radius: 25px;
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+        transition: all 0.4s ease;
+        position: relative;
+      }
+
+      .vehicle-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px var(--shadow);
+      }
+
+      .vehicle-image {
+        height: 200px;
+        background: var(--bg-tertiary);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .vehicle-image::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, var(--primary-glow), transparent);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .vehicle-card:hover .vehicle-image::before {
+        opacity: 1;
+      }
+
+      .vehicle-placeholder {
+        font-size: 4rem;
+        color: var(--primary);
+        opacity: 0.5;
+      }
+
+      .vehicle-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 0.4rem 0.8rem;
+        background: var(--primary);
+        color: white;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .vehicle-content {
+        padding: 1.5rem;
+      }
+
+      .vehicle-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .vehicle-specs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .vehicle-spec {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .vehicle-spec i {
+        color: var(--primary);
+      }
+
+      .vehicle-price {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .explore-btn {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+      }
+
+      /* Sell Your Car Section */
+      .sell-section {
+        background: var(--bg-tertiary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .sell-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, var(--primary-glow), transparent);
+        border-radius: 50%;
+      }
+
+      .sell-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .sell-benefits {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .benefit-card {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+        display: flex;
+        gap: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .benefit-card:hover {
+        transform: translateX(10px);
+        box-shadow: 0 10px 30px var(--shadow);
+      }
+
+      .benefit-icon {
+        width: 55px;
+        height: 55px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+      }
+
+      .benefit-content h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+      }
+
+      .benefit-content p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .sell-cta {
+        text-align: center;
+      }
+
+      .sell-cta h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .sell-cta p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      /* Services Section */
+      .services-section {
+        background: var(--bg-primary);
+      }
+
+      .services-grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .service-card {
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 25px;
+        border: 1px solid var(--card-border);
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px var(--shadow);
+      }
+
+      .service-card:hover::after {
+        transform: scaleX(1);
+      }
+
+      .service-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-glow),
+          var(--bg-tertiary)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: var(--primary);
+        transition: all 0.4s ease;
+      }
+
+      .service-card:hover .service-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        transform: scale(1.1);
+      }
+
+      .service-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .service-card p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+      }
+
+      /* Testimonials Section */
+      .testimonials-section {
+        background: var(--bg-secondary);
+        position: relative;
+      }
+
+      .testimonials-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .testimonial-slider {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .testimonial-card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 25px;
+        border: 1px solid var(--card-border);
+        position: relative;
+        transition: all 0.4s ease;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px var(--shadow);
+      }
+
+      .testimonial-quote {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 3rem;
+        color: var(--primary);
+        opacity: 0.2;
+      }
+
+      .testimonial-stars {
+        color: #ffc107;
+        margin-bottom: 1rem;
+      }
+
+      .testimonial-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      .author-info h4 {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .author-info p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      /* FAQ Section */
+      .faq-section {
+        background: var(--bg-primary);
+      }
+
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 15px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .faq-item:hover {
+        box-shadow: 0 10px 30px var(--shadow);
+      }
+
+      .faq-question {
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.05rem;
+      }
+
+      .faq-question i {
+        color: var(--primary);
+        transition: transform 0.3s ease;
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        padding: 0 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        max-height: 500px;
+      }
+
+      .faq-answer p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* Contact Section */
+      .contact-section {
+        background: var(--bg-tertiary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-section::before {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, var(--primary-glow), transparent);
+        border-radius: 50%;
+      }
+
+      .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .contact-info h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .contact-info > p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      .contact-details {
+        display: grid;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .contact-icon {
+        width: 55px;
+        height: 55px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .contact-item-content h4 {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+      }
+
+      .contact-item-content p {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .contact-item-content a {
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-item-content a:hover {
+        color: var(--primary);
+      }
+
+      .opening-hours {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+      }
+
+      .opening-hours h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .opening-hours h3 i {
+        color: var(--primary);
+      }
+
+      .hours-list {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .hours-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .hours-row:last-child {
+        border-bottom: none;
+      }
+
+      .hours-row span:first-child {
+        font-weight: 500;
+      }
+
+      .hours-row span:last-child {
+        color: var(--text-muted);
+      }
+
+      .contact-form-container {
+        background: var(--card-bg);
+        padding: 2.5rem;
+        border-radius: 25px;
+        border: 1px solid var(--card-border);
+        box-shadow: 0 20px 50px var(--shadow);
+      }
+
+      .contact-form-container h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: 1rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--primary-glow);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      /* About Section */
+      .about-section {
+        background: var(--bg-secondary);
+      }
+
+      .about-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .about-text {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--bg-tertiary);
+        padding: 4rem 2rem 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .footer-brand p {
+        color: var(--text-secondary);
+        margin: 1rem 0 1.5rem;
+        line-height: 1.7;
+      }
+
+      .footer-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-contact-item i {
+        color: var(--primary);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        transform: translateX(5px);
+      }
+
+      .footer-bottom {
+        max-width: 1200px;
+        margin: 3rem auto 0;
+        padding-top: 2rem;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .footer-bottom p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .footer-bottom a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      /* Newsletter */
+      .newsletter-form {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        background: var(--bg-secondary);
+        border: 2px solid var(--card-border);
+        border-radius: 10px;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+
+      .newsletter-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-form button {
+        padding: 0.8rem 1.2rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Scroll to Top */
+      .scroll-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 20px var(--primary-glow);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .scroll-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-top:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Animations on Scroll */
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .hero-title {
+          font-size: 3rem;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .vehicle-gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: flex;
+        }
+
+        .hero-container {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .hero-stats {
+          justify-content: center;
+        }
+
+        .hero-buttons {
+          justify-content: center;
+        }
+
+        .hero-visual {
+          display: none;
+        }
+
+        .sell-container,
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+
+        .testimonial-slider {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .features-grid,
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .vehicle-gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-stats {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .footer-container {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .nav-right {
+          display: none;
+        }
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg-primary);
+        z-index: 9999;
+        padding: 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+      }
+
+      .mobile-menu-close {
+        width: 40px;
+        height: 40px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+      }
+
+      .mobile-nav-links li {
+        margin-bottom: 1.5rem;
+      }
+
+      .mobile-nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Loading Animation */
+      .loader {
+        position: fixed;
+        inset: 0;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .loader-content {
+        text-align: center;
+      }
+
+      .loader-car {
+        font-size: 4rem;
+        color: var(--primary);
+        animation: carBounce 1s infinite;
+      }
+
+      @keyframes carBounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .loader-text {
+        margin-top: 1rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .loader-bar {
+        width: 200px;
+        height: 4px;
+        background: var(--bg-tertiary);
+        border-radius: 2px;
+        margin-top: 1rem;
+        overflow: hidden;
+      }
+
+      .loader-progress {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        animation: loadProgress 2s ease-out forwards;
+      }
+
+      @keyframes loadProgress {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <div class="loader-content">
+        <div class="loader-car"><i class="fas fa-car-side"></i></div>
+        <div class="loader-text">
+          Got It <span style="color: var(--primary)">Motors</span>
+        </div>
+        <div class="loader-bar">
+          <div class="loader-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three.js Background Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <a href="#" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <button class="mobile-menu-close" id="mobileMenuClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+        <li><a href="#vehicles" onclick="closeMobileMenu()">Buy Car</a></li>
+        <li><a href="#sell" onclick="closeMobileMenu()">Sell Car</a></li>
+        <li><a href="#services" onclick="closeMobileMenu()">Services</a></li>
+        <li><a href="#about" onclick="closeMobileMenu()">About Us</a></li>
+        <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <div class="logo-icon"><i class="fas fa-car"></i></div>
+          Got It <span>Motors</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#vehicles">Buy Car</a></li>
+          <li><a href="#sell">Sell Car</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle theme"
+          >
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="nav-phone">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+          <button class="nav-cta">Get Quote</button>
+        </div>
+        <div class="mobile-menu-btn" id="mobileMenuBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-particles" id="particles"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="fas fa-award"></i>
+            Trusted Dealership • LMCT: 12258
+          </div>
+          <h1 class="hero-title">
+            New Beginnings in a <span class="highlight">Car of Your Own</span>
+          </h1>
+          <p class="hero-subtitle">
+            Your trusted dealership for quality, affordable cars with unbeatable
+            customer service and after-sales support. More than 100+ happy
+            customers and counting.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number">100+</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">150</div>
+              <div class="stat-label">Points Inspected</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">1000+</div>
+              <div class="stat-label">Licensed Buyers</div>
+            </div>
+          </div>
+          <div class="hero-buttons">
+            <a href="#vehicles" class="btn btn-primary">
+              <i class="fas fa-car"></i> Buy Now
+            </a>
+            <a href="#sell" class="btn btn-secondary">
+              <i class="fas fa-hand-holding-dollar"></i> Sell Your Car
+            </a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-3d-container">
+            <canvas id="hero-three"></canvas>
+          </div>
+          <div class="floating-card card-1">
+            <div class="floating-card-icon">
+              <i class="fas fa-shield-halved"></i>
+            </div>
+            <div class="floating-card-text">
+              <h4>Warranty Included</h4>
+              <p>Peace of mind guaranteed</p>
+            </div>
+          </div>
+          <div class="floating-card card-2">
+            <div class="floating-card-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="floating-card-text">
+              <h4>150-Point Inspection</h4>
+              <p>Quality assured vehicles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="section why-choose" id="why-choose">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <i class="fas fa-star"></i> Why Choose Us
+        </div>
+        <h2 class="section-title">Why Got It Motors?</h2>
+        <p class="section-subtitle">
+          Your trusted dealership for quality, affordable cars with unbeatable
+          customer service and after-sales support.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <h3>Warranty</h3>
+          <p>Comprehensive warranty coverage for your peace of mind</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-tags"></i>
+          </div>
+          <h3>Affordable Prices</h3>
+          <p>Best value deals you won't find anywhere else</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-car-side"></i>
+          </div>
+          <h3>Wide Selection</h3>
+          <p>Extensive inventory of quality pre-owned vehicles</p>
+        </div>
+        <div class="feature-card animate-on-scroll">
+          <div class="feature-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <h3>150-Points Inspected</h3>
+          <p>Rigorous quality checks on every vehicle</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section class="section vehicles-section" id="vehicles">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge"><i class="fas fa-car"></i> Our Vehicles</div>
+        <h2 class="section-title">Discover Your Perfect Ride</h2>
+        <p class="section-subtitle">
+          Discover reliable, budget-friendly pre-owned vehicles tailored to your
+          needs.
+        </p>
+      </div>
+      <div class="vehicles-showcase">
+        <div class="vehicle-gallery">
+          <div class="vehicle-card animate-on-scroll">
+            <div class="vehicle-image">
+              <span class="vehicle-placeholder"
+                ><i class="fas fa-car"></i
+              ></span>
+              <span class="vehicle-badge">Featured</span>
+            </div>
+            <div class="vehicle-content">
+              <h3 class="vehicle-title">Quality Sedan</h3>
+              <div class="vehicle-specs">
+                <span class="vehicle-spec"
+                  ><i class="fas fa-gauge-high"></i> Low KMs</span
+                >
+                <span class="vehicle-spec"
+                  ><i class="fas fa-gas-pump"></i> Fuel Efficient</span
+                >
+              </div>
+              <div class="vehicle-price">Contact for Price</div>
+            </div>
+          </div>
+          <div class="vehicle-card animate-on-scroll">
+            <div class="vehicle-image">
+              <span class="vehicle-placeholder"
+                ><i class="fas fa-truck-pickup"></i
+              ></span>
+              <span class="vehicle-badge">Popular</span>
+            </div>
+            <div class="vehicle-content">
+              <h3 class="vehicle-title">Family SUV</h3>
+              <div class="vehicle-specs">
+                <span class="vehicle-spec"
+                  ><i class="fas fa-users"></i> 7 Seater</span
+                >
+                <span class="vehicle-spec"
+                  ><i class="fas fa-shield-halved"></i> Warranty</span
+                >
+              </div>
+              <div class="vehicle-price">Contact for Price</div>
+            </div>
+          </div>
+          <div class="vehicle-card animate-on-scroll">
+            <div class="vehicle-image">
+              <span class="vehicle-placeholder"
+                ><i class="fas fa-car-rear"></i
+              ></span>
+              <span class="vehicle-badge">New Arrival</span>
+            </div>
+            <div class="vehicle-content">
+              <h3 class="vehicle-title">Compact Hatch</h3>
+              <div class="vehicle-specs">
+                <span class="vehicle-spec"
+                  ><i class="fas fa-leaf"></i> Eco-Friendly</span
+                >
+                <span class="vehicle-spec"
+                  ><i class="fas fa-check"></i> Inspected</span
+                >
+              </div>
+              <div class="vehicle-price">Contact for Price</div>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn-primary explore-btn">
+          <i class="fas fa-th-large"></i> Explore All Cars
+        </a>
+      </div>
+    </section>
+
+    <!-- Sell Your Car Section -->
+    <section class="section sell-section" id="sell">
+      <div class="sell-container">
+        <div class="sell-cta animate-on-scroll">
+          <div class="section-badge">
+            <i class="fas fa-hand-holding-dollar"></i> Sell Your Car
+          </div>
+          <h2>Why Sell Your Car With Got It?</h2>
+          <p>
+            Sell your car fast for the best trade-in price, without the hassle.
+            Sit back while we negotiate for you.
+          </p>
+          <a href="#contact" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Get Your Quote
+          </a>
+        </div>
+        <div class="sell-benefits">
+          <div class="benefit-card animate-on-scroll">
+            <div class="benefit-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Sell Your Car Fast</h3>
+              <p>
+                Genuine offers can be received within hours of listing with
+                quick payment. No roadworthy required.
+              </p>
+            </div>
+          </div>
+          <div class="benefit-card animate-on-scroll">
+            <div class="benefit-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Get The Best Price</h3>
+              <p>
+                Access more than 1000 serious licensed buyers ready to buy now.
+                Stress free, we handle the negotiations.
+              </p>
+            </div>
+          </div>
+          <div class="benefit-card animate-on-scroll">
+            <div class="benefit-icon">
+              <i class="fas fa-couch"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Hassle-Free Experience</h3>
+              <p>
+                Simple contactless online process and local customer support.
+                Sell from the comfort of your home.
+              </p>
+            </div>
+          </div>
+          <div class="benefit-card animate-on-scroll">
+            <div class="benefit-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="benefit-content">
+              <h3>Safe & Secure</h3>
+              <p>
+                Avoid scammers and strangers visiting your home. Trusted
+                licensed buyers only.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services-section" id="services">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <i class="fas fa-wrench"></i> Awesome Services
+        </div>
+        <h2 class="section-title">Our Premium Services</h2>
+        <p class="section-subtitle">
+          Professional automotive services to keep your car looking and
+          performing its best.
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">
+            <i class="fas fa-spray-can-sparkles"></i>
+          </div>
+          <h3>Car Detailing</h3>
+          <p>
+            Professional interior and exterior detailing to make your car shine
+            like new.
+          </p>
+        </div>
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">
+            <i class="fas fa-sun"></i>
+          </div>
+          <h3>Car Tinting</h3>
+          <p>Premium window tinting for style, privacy, and UV protection.</p>
+        </div>
+        <div class="service-card animate-on-scroll">
+          <div class="service-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Dash Camera Installation</h3>
+          <p>
+            Expert installation of dash cameras for safety and security on the
+            road.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials-section" id="testimonials">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <i class="fas fa-comments"></i> Testimonials
+        </div>
+        <h2 class="section-title">What Our Happy Clients Say</h2>
+        <p class="section-subtitle">
+          Don't just take our word for it. Here's what our satisfied customers
+          have to say about their experience with Got It Motors.
+        </p>
+      </div>
+      <div class="testimonials-container">
+        <div class="testimonial-slider">
+          <div class="testimonial-card animate-on-scroll">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-right"></i>
+            </div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              "Excellent service from start to finish. The team was professional
+              and helped me find the perfect car within my budget. Highly
+              recommended!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JD</div>
+              <div class="author-info">
+                <h4>John D.</h4>
+                <p>Werribee</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card animate-on-scroll">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-right"></i>
+            </div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              "Sold my car in just 2 days! The process was smooth and I got a
+              better price than I expected. Will definitely use Got It Motors
+              again."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SM</div>
+              <div class="author-info">
+                <h4>Sarah M.</h4>
+                <p>Point Cook</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card animate-on-scroll">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-right"></i>
+            </div>
+            <div class="testimonial-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              "Great selection of quality used cars. The 150-point inspection
+              gave me confidence in my purchase. Fantastic after-sales support
+              too!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">MK</div>
+              <div class="author-info">
+                <h4>Michael K.</h4>
+                <p>Hoppers Crossing</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+      <div class="about-container animate-on-scroll">
+        <div class="section-badge">
+          <i class="fas fa-building"></i> About Us
+        </div>
+        <h2 class="section-title">About Got It Motors</h2>
+        <p class="about-text">
+          Got It Motors is committed to establishing long-term relationships
+          with customers by providing exceptional service and treating each
+          customer as if they were a guest in our home. We're renowned for our
+          extensive inventory of quality used cars, transparent pricing, and
+          exceptional customer service. We go the extra mile to ensure every
+          vehicle meets the highest standards, providing peace of mind to our
+          customers.
+        </p>
+        <a href="#contact" class="btn btn-primary">
+          <i class="fas fa-phone"></i> Talk With Our Experts
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq-section" id="faq">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <i class="fas fa-circle-question"></i> FAQ
+        </div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-container">
+        <div class="faq-item active animate-on-scroll">
+          <div class="faq-question">
+            <span
+              >1. What makes Got It Motors the best used car dealership?</span
+            >
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Got It Motors is renowned for its extensive inventory of quality
+              used cars, transparent pricing, and exceptional customer service.
+              We go the extra mile to ensure every vehicle meets the highest
+              standards, providing peace of mind to our customers.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question">
+            <span
+              >2. Why should I choose a used car dealership over a private
+              seller?</span
+            >
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Buying from a dealership offers numerous benefits including
+              warranty protection, thorough vehicle inspections, proper
+              documentation, and consumer protection laws that don't apply to
+              private sales.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question">
+            <span
+              >3. What types of vehicles are available at your second-hand car
+              dealership?</span
+            >
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              We offer a wide selection of vehicles including sedans, SUVs,
+              hatchbacks, utes, and more. Our inventory is constantly updated
+              with quality pre-owned vehicles to suit all budgets and
+              preferences.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question">
+            <span>4. Is it safe to buy a used car from a dealership?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Absolutely! At Got It Motors, every vehicle undergoes a
+              comprehensive 150-point inspection. We provide complete vehicle
+              history reports and offer warranty coverage for your peace of
+              mind.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question">
+            <span
+              >5. How does Got It Motors ensure the quality of its used cars for
+              sale?</span
+            >
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Every vehicle in our inventory goes through a rigorous 150-point
+              inspection process covering mechanical, electrical, and cosmetic
+              aspects. Only vehicles that meet our high standards make it to our
+              showroom floor.
+            </p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <div class="faq-question">
+            <span
+              >6. Can I test drive a vehicle before purchasing it at your car
+              dealership?</span
+            >
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Yes, absolutely! We encourage all our customers to test drive any
+              vehicle they're interested in. Simply contact us to book a test
+              drive at your convenience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+      <div class="contact-container">
+        <div class="contact-info animate-on-scroll">
+          <div class="section-badge">
+            <i class="fas fa-envelope"></i> Get In Touch
+          </div>
+          <h2>We'd Love to Hear From You</h2>
+          <p>
+            Have questions or ready to find your perfect car? Reach out to our
+            friendly team today.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-location-dot"></i>
+              </div>
+              <div class="contact-item-content">
+                <h4>Address</h4>
+                <p>115-117 Railway Ave Werribee 3030</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-item-content">
+                <h4>Phone</h4>
+                <p><a href="tel:1300136110">1300 136 110</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-item-content">
+                <h4>Email</h4>
+                <p>
+                  <a href="mailto:enquiries@gotitmotors.com.au"
+                    >enquiries@gotitmotors.com.au</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="opening-hours">
+            <h3><i class="fas fa-clock"></i> Opening Hours</h3>
+            <div class="hours-list">
+              <div class="hours-row">
+                <span>Monday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Tuesday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Wednesday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Thursday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Friday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Saturday</span>
+                <span>9:00 AM - 5:00 PM</span>
+              </div>
+              <div class="hours-row">
+                <span>Sunday</span>
+                <span>11:00 AM - 2:00 PM</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <div class="contact-form-container animate-on-scroll">
+          <h3>Send Us a Message</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" placeholder="John Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="04XX XXX XXX" />
+            </div>
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea
+                id="message"
+                placeholder="How can we help you?"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            Got It <span>Motors</span>
+          </a>
+          <p>
+            Got It Motors is committed to establishing long-term relationships
+            with customers by providing exceptional service and treating each
+            customer as if they were a guest in our home.
+          </p>
+          <div class="footer-contact-item">
+            <i class="fas fa-location-dot"></i>
+            115-117 Railway Ave Werribee 3030
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone"></i>
+            1300 136 110
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="#vehicles"
+                ><i class="fas fa-chevron-right"></i> Buy Car</a
+              >
+            </li>
+            <li>
+              <a href="#sell"><i class="fas fa-chevron-right"></i> Sell Car</a>
+            </li>
+            <li>
+              <a href="#about"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="#contact"
+                ><i class="fas fa-chevron-right"></i> Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="#services"
+                ><i class="fas fa-chevron-right"></i> Car Detailing</a
+              >
+            </li>
+            <li>
+              <a href="#services"
+                ><i class="fas fa-chevron-right"></i> Car Tinting</a
+              >
+            </li>
+            <li>
+              <a href="#services"
+                ><i class="fas fa-chevron-right"></i> Dash Camera
+                Installation</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Warranty</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Subscribe</h4>
+          <p
+            style="
+              color: var(--text-secondary);
+              margin-bottom: 1rem;
+              font-size: 0.95rem;
+            "
+          >
+            Get the latest updates on new arrivals and special offers.
+          </p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="social-links" style="margin-top: 1.5rem">
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; Copyright 2024 Got It Motors. All Rights Are Reserved.</p>
+        <p>Designed & Developed By <a href="#">Novareach Solutions</a></p>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+      // ============ THREE.JS BACKGROUND ============
+      const canvas = document.getElementById('three-canvas')
+      const scene = new THREE.Scene()
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      )
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+      })
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+      // Create floating geometric shapes
+      const geometries = []
+      const primaryColor = 0x81d742
+
+      // Torus
+      const torusGeometry = new THREE.TorusGeometry(2, 0.5, 16, 100)
+      const torusMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3,
+      })
+      const torus = new THREE.Mesh(torusGeometry, torusMaterial)
+      torus.position.set(-15, 5, -20)
+      scene.add(torus)
+      geometries.push({ mesh: torus, rotationSpeed: { x: 0.005, y: 0.01 } })
+
+      // Icosahedron
+      const icoGeometry = new THREE.IcosahedronGeometry(2, 0)
+      const icoMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.25,
+      })
+      const ico = new THREE.Mesh(icoGeometry, icoMaterial)
+      ico.position.set(15, -5, -25)
+      scene.add(ico)
+      geometries.push({ mesh: ico, rotationSpeed: { x: 0.008, y: 0.005 } })
+
+      // Octahedron
+      const octGeometry = new THREE.OctahedronGeometry(1.5, 0)
+      const octMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.2,
+      })
+      const oct = new THREE.Mesh(octGeometry, octMaterial)
+      oct.position.set(-10, -8, -15)
+      scene.add(oct)
+      geometries.push({ mesh: oct, rotationSpeed: { x: 0.01, y: 0.008 } })
+
+      // Dodecahedron
+      const dodGeometry = new THREE.DodecahedronGeometry(1.8, 0)
+      const dodMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.22,
+      })
+      const dod = new THREE.Mesh(dodGeometry, dodMaterial)
+      dod.position.set(12, 8, -18)
+      scene.add(dod)
+      geometries.push({ mesh: dod, rotationSpeed: { x: 0.006, y: 0.009 } })
+
+      // Box
+      const boxGeometry = new THREE.BoxGeometry(2, 2, 2)
+      const boxMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.18,
+      })
+      const box = new THREE.Mesh(boxGeometry, boxMaterial)
+      box.position.set(0, 10, -22)
+      scene.add(box)
+      geometries.push({ mesh: box, rotationSpeed: { x: 0.007, y: 0.006 } })
+
+      // Sphere particles
+      const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8)
+      const particleMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        transparent: true,
+        opacity: 0.4,
+      })
+
+      for (let i = 0; i < 50; i++) {
+        const particle = new THREE.Mesh(particleGeometry, particleMaterial)
+        particle.position.set(
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 50,
+          (Math.random() - 0.5) * 30 - 20
+        )
+        scene.add(particle)
+        geometries.push({
+          mesh: particle,
+          rotationSpeed: { x: 0, y: 0 },
+          floatSpeed: Math.random() * 0.02 + 0.01,
+          floatOffset: Math.random() * Math.PI * 2,
+        })
+      }
+
+      camera.position.z = 5
+
+      // Mouse movement effect
+      let mouseX = 0,
+        mouseY = 0
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2
+      })
+
+      // Animation loop
+      let time = 0
+      function animate() {
+        requestAnimationFrame(animate)
+        time += 0.01
+
+        geometries.forEach((item, index) => {
+          item.mesh.rotation.x += item.rotationSpeed.x
+          item.mesh.rotation.y += item.rotationSpeed.y
+
+          if (item.floatSpeed) {
+            item.mesh.position.y += Math.sin(time + item.floatOffset) * 0.01
+          }
+        })
+
+        camera.position.x += (mouseX * 2 - camera.position.x) * 0.02
+        camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02
+        camera.lookAt(scene.position)
+
+        renderer.render(scene, camera)
+      }
+      animate()
+
+      // ============ HERO THREE.JS ============
+      const heroCanvas = document.getElementById('hero-three')
+      const heroScene = new THREE.Scene()
+      const heroCamera = new THREE.PerspectiveCamera(
+        75,
+        heroCanvas.clientWidth / heroCanvas.clientHeight,
+        0.1,
+        1000
+      )
+      const heroRenderer = new THREE.WebGLRenderer({
+        canvas: heroCanvas,
+        alpha: true,
+        antialias: true,
+      })
+      heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight)
+
+      // Create a stylized car-like shape
+      const carGroup = new THREE.Group()
+
+      // Car body
+      const bodyGeometry = new THREE.BoxGeometry(4, 1.2, 2)
+      const bodyMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6,
+      })
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
+      carGroup.add(body)
+
+      // Car top
+      const topGeometry = new THREE.BoxGeometry(2, 0.8, 1.8)
+      const topMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6,
+      })
+      const carTop = new THREE.Mesh(topGeometry, topMaterial)
+      carTop.position.set(-0.3, 0.9, 0)
+      carGroup.add(carTop)
+
+      // Wheels
+      const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 16)
+      const wheelMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.8,
+      })
+
+      const wheelPositions = [
+        { x: 1.3, y: -0.5, z: 1 },
+        { x: 1.3, y: -0.5, z: -1 },
+        { x: -1.3, y: -0.5, z: 1 },
+        { x: -1.3, y: -0.5, z: -1 },
+      ]
+
+      wheelPositions.forEach((pos) => {
+        const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial)
+        wheel.rotation.x = Math.PI / 2
+        wheel.position.set(pos.x, pos.y, pos.z)
+        carGroup.add(wheel)
+      })
+
+      heroScene.add(carGroup)
+
+      // Add floating rings
+      const ringGeometry = new THREE.TorusGeometry(3, 0.05, 16, 100)
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: primaryColor,
+        transparent: true,
+        opacity: 0.3,
+      })
+
+      for (let i = 0; i < 3; i++) {
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+        ring.rotation.x = Math.PI / 2
+        ring.position.y = -1 + i * 0.5
+        ring.scale.setScalar(1 + i * 0.2)
+        heroScene.add(ring)
+      }
+
+      heroCamera.position.set(3, 2, 5)
+      heroCamera.lookAt(0, 0, 0)
+
+      function animateHero() {
+        requestAnimationFrame(animateHero)
+        carGroup.rotation.y += 0.005
+        heroRenderer.render(heroScene, heroCamera)
+      }
+      animateHero()
+
+      // ============ WINDOW RESIZE ============
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+
+        if (heroCanvas.clientWidth > 0) {
+          heroCamera.aspect = heroCanvas.clientWidth / heroCanvas.clientHeight
+          heroCamera.updateProjectionMatrix()
+          heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight)
+        }
+      })
+
+      // ============ THEME TOGGLE ============
+      const themeToggle = document.getElementById('themeToggle')
+      const html = document.documentElement
+
+      themeToggle.addEventListener('click', () => {
+        if (html.getAttribute('data-theme') === 'dark') {
+          html.removeAttribute('data-theme')
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>'
+        } else {
+          html.setAttribute('data-theme', 'dark')
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>'
+        }
+      })
+
+      // ============ NAVIGATION SCROLL ============
+      const nav = document.getElementById('nav')
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          nav.classList.add('scrolled')
+        } else {
+          nav.classList.remove('scrolled')
+        }
+      })
+
+      // ============ MOBILE MENU ============
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn')
+      const mobileMenu = document.getElementById('mobileMenu')
+      const mobileMenuClose = document.getElementById('mobileMenuClose')
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active')
+      })
+
+      mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active')
+      })
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('active')
+      }
+
+      // ============ FAQ ACCORDION ============
+      const faqItems = document.querySelectorAll('.faq-item')
+      faqItems.forEach((item) => {
+        const question = item.querySelector('.faq-question')
+        question.addEventListener('click', () => {
+          const isActive = item.classList.contains('active')
+          faqItems.forEach((i) => i.classList.remove('active'))
+          if (!isActive) {
+            item.classList.add('active')
+          }
+        })
+      })
+
+      // ============ SCROLL TO TOP ============
+      const scrollTopBtn = document.getElementById('scrollTop')
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+          scrollTopBtn.classList.add('visible')
+        } else {
+          scrollTopBtn.classList.remove('visible')
+        }
+      })
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+
+      // ============ ANIMATE ON SCROLL ============
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated')
+          }
+        })
+      }, observerOptions)
+
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el)
+      })
+
+      // ============ PARTICLES ============
+      const particlesContainer = document.getElementById('particles')
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div')
+        particle.className = 'particle'
+        particle.style.left = Math.random() * 100 + '%'
+        particle.style.animationDelay = Math.random() * 15 + 's'
+        particle.style.animationDuration = Math.random() * 10 + 10 + 's'
+        particlesContainer.appendChild(particle)
+      }
+
+      // ============ LOADER ============
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('loader').classList.add('hidden')
+        }, 2000)
+      })
+
+      // ============ CONTACT FORM ============
+      document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault()
+        alert('Thank you for your message! We will get back to you soon.')
+        e.target.reset()
+      })
+
+      // ============ SMOOTH SCROLL ============
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault()
+          const target = document.querySelector(this.getAttribute('href'))
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            })
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
