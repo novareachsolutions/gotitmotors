@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <title>Dash Camera Installation | Got It Motors - Professional Dash Cam Installation in Melbourne</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -176,6 +179,23 @@
         color: white;
         font-size: 1.2rem;
         box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .logo-img {
+        height: 42px;
+        width: auto;
+        display: block;
+      }
+
+      [data-theme='dark'] .logo-img {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 4px 8px;
+      }
+
+      .footer-brand .logo-img,
+      .mobile-menu-header .logo-img {
+        height: 48px;
       }
 
       .nav-links {
@@ -496,17 +516,63 @@
         position: relative;
       }
 
-      .service-intro-image .image-placeholder {
+      .service-intro-image .service-media {
+        position: relative;
         width: 100%;
         height: 400px;
-        background: var(--bg-tertiary);
         border-radius: 24px;
+        overflow: hidden;
+        background: var(--bg-tertiary);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.14);
+      }
+
+      .service-intro-image .service-media img,
+      .service-intro-image .service-media video,
+      .service-intro-image .service-media iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: none;
+      }
+
+      .video-play-btn {
+        position: absolute;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 5rem;
-        color: var(--primary);
-        opacity: 0.5;
+        border: none;
+        background: rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .video-play-btn:hover {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .video-play-btn span {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        transition: transform 0.3s ease;
+      }
+
+      .video-play-btn:hover span {
+        transform: scale(1.08);
       }
 
       /* Services Table Section */
@@ -1251,65 +1317,6 @@
         margin-bottom: 0.75rem;
       }
 
-      /* Loading Animation */
-      .loader {
-        position: fixed;
-        inset: 0;
-        background: var(--bg-primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-      }
-
-      .loader.hidden {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .loader-content {
-        text-align: center;
-      }
-
-      .loader-car {
-        font-size: 4rem;
-        color: var(--primary);
-        animation: carBounce 1s infinite;
-      }
-
-      @keyframes carBounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-      }
-
-      .loader-text {
-        margin-top: 1rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-
-      .loader-bar {
-        width: 200px;
-        height: 4px;
-        background: var(--bg-tertiary);
-        border-radius: 2px;
-        margin-top: 1rem;
-        overflow: hidden;
-      }
-
-      .loader-progress {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--primary-light));
-        animation: loadProgress 2s ease-out forwards;
-      }
-
-      @keyframes loadProgress {
-        from { width: 0; }
-        to { width: 100%; }
-      }
-
       /* Responsive Design */
       @media (max-width: 992px) {
         .nav-links {
@@ -1355,19 +1362,6 @@
     </style>
   </head>
   <body>
-    <!-- Loader -->
-    <div class="loader" id="loader">
-      <div class="loader-content">
-        <div class="loader-car"><i class="fas fa-car-side"></i></div>
-        <div class="loader-text">
-          Got It <span style="color: var(--primary)">Motors</span>
-        </div>
-        <div class="loader-bar">
-          <div class="loader-progress"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Three.js Background Canvas -->
     <canvas id="three-canvas"></canvas>
 
@@ -1375,8 +1369,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-header">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <button class="mobile-menu-close" id="mobileMenuClose">
           <i class="fas fa-times"></i>
@@ -1403,8 +1396,7 @@
     <nav class="nav" id="nav">
       <div class="nav-container">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -1474,8 +1466,11 @@
             </div>
           </div>
           <div class="service-intro-image">
-            <div class="image-placeholder">
-              <i class="fas fa-video"></i>
+            <div class="service-media">
+              <img
+                src="assets/service-dashcam.jpg"
+                alt="Dash cam and reverse camera installation by Got It Motors"
+              />
             </div>
           </div>
         </div>
@@ -1765,8 +1760,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon"><i class="fas fa-car"></i></div>
-            Got It <span>Motors</span>
+            <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
           </a>
           <p>
             Got It Motors is committed to establishing long-term relationships
@@ -1988,13 +1982,6 @@
 
       scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // ============ LOADER ============
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.getElementById('loader').classList.add('hidden');
-        }, 1500);
       });
 
       // ============ FAQ ACCORDION ============

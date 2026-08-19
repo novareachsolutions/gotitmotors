@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <title>Sell Your Car | Got It Motors - Best Trade-In Price</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -164,6 +167,23 @@
         color: white;
         font-size: 1.2rem;
         box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .logo-img {
+        height: 42px;
+        width: auto;
+        display: block;
+      }
+
+      [data-theme='dark'] .logo-img {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 4px 8px;
+      }
+
+      .footer-brand .logo-img,
+      .mobile-menu-header .logo-img {
+        height: 48px;
       }
 
       .nav-links {
@@ -388,11 +408,8 @@
 
       /* Hero Section */
       .hero {
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
         position: relative;
-        padding: 140px 2rem 4rem;
+        padding: 120px 2rem 3rem;
         overflow: hidden;
         background: var(--bg-tertiary);
       }
@@ -417,11 +434,63 @@
       }
 
       .hero-container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
         text-align: center;
         position: relative;
         z-index: 10;
+      }
+
+      /* Valuation form (left) + brand video (right) */
+      .hero-split {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 2rem;
+        align-items: stretch;
+        margin-top: 2.25rem;
+        text-align: left;
+      }
+
+      .hero-form-panel,
+      .hero-video-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(30px) saturate(180%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%);
+        border: 1px solid rgba(129, 215, 66, 0.2);
+        border-radius: 24px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        overflow: hidden;
+      }
+
+      [data-theme='dark'] .hero-form-panel,
+      [data-theme='dark'] .hero-video-panel {
+        background: rgba(26, 26, 40, 0.7);
+        border-color: rgba(129, 215, 66, 0.3);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      }
+
+      .valuation-frame {
+        display: block;
+        width: 100%;
+        height: 620px;
+        border: none;
+        background: transparent;
+      }
+
+      .hero-video-panel {
+        position: relative;
+        min-height: 340px;
+        padding: 0;
+      }
+
+      .hero-video {
+        width: 100%;
+        height: 100%;
+        min-height: 340px;
+        object-fit: cover;
+        display: block;
       }
 
       .hero-badge {
@@ -1169,6 +1238,15 @@
       }
 
       @media (max-width: 992px) {
+        .hero-split {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-video-panel,
+        .hero-video {
+          min-height: 260px;
+        }
+
         .nav-links {
           display: none;
         }
@@ -1185,6 +1263,10 @@
       @media (max-width: 768px) {
         .hero-title {
           font-size: 2.5rem;
+        }
+
+        .valuation-frame {
+          height: 680px;
         }
 
         .section-title {
@@ -1229,8 +1311,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-header">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <button class="mobile-menu-close" id="mobileMenuClose">
           <i class="fas fa-times"></i>
@@ -1250,8 +1331,7 @@
     <nav class="nav" id="nav">
       <div class="nav-container">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -1301,14 +1381,33 @@
           1000+ Licensed Buyers Ready
         </div>
         <h1 class="hero-title">
-          Why Sell Your Car with <span class="highlight">Got It Motors?</span>
+          Sell Your Car For The <span class="highlight">Best Price</span>
         </h1>
         <p class="hero-subtitle">
-          Sell your car fast for the best trade-in price, without the hassle. Sit back while we negotiate for you.
+          Get an instant online offer for your car. Enter your rego below, and
+          sit back while we negotiate the best price for you.
         </p>
-        <a href="#get-started" class="btn btn-primary">
-          <i class="fas fa-paper-plane"></i> Get Started Now
-        </a>
+        <div class="hero-split">
+          <div class="hero-form-panel">
+            <iframe
+              class="valuation-frame"
+              src="https://offer.autograb.com.au/?api_key=66f27857c59f2f1574"
+              title="Get an instant valuation for your car"
+            ></iframe>
+          </div>
+          <div class="hero-video-panel">
+            <video
+              class="hero-video"
+              src="https://gotitmotors.com.au/wp-content/uploads/2025/01/Got-It-Motor-HD.mp4"
+              autoplay
+              loop
+              muted
+              playsinline
+              preload="metadata"
+              controlsList="nodownload"
+            ></video>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1491,8 +1590,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon"><i class="fas fa-car"></i></div>
-            Got It <span>Motors</span>
+            <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
           </a>
           <p>
             Got It Motors is committed to establishing long-term relationships

@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <title>Contact Us | Got It Motors - Get in Touch</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -80,6 +83,23 @@
       .logo { display: flex; align-items: center; gap: 0.5rem; font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
       .logo span { color: var(--primary); }
       .logo-icon { width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 15px var(--primary-glow); }
+
+      .logo-img {
+        height: 42px;
+        width: auto;
+        display: block;
+      }
+
+      [data-theme='dark'] .logo-img {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 4px 8px;
+      }
+
+      .footer-brand .logo-img,
+      .mobile-menu-header .logo-img {
+        height: 48px;
+      }
       .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
       .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; position: relative; }
       .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
@@ -278,8 +298,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-header">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <button class="mobile-menu-close" id="mobileMenuClose">
           <i class="fas fa-times"></i>
@@ -299,8 +318,7 @@
     <nav class="nav" id="nav">
       <div class="nav-container">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -503,8 +521,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon"><i class="fas fa-car"></i></div>
-            Got It <span>Motors</span>
+            <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
           </a>
           <p>Got It Motors is committed to establishing long-term relationships with customers by providing exceptional service and treating each customer as if they were a guest in our home.</p>
           <div class="footer-contact-item">

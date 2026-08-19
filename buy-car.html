@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <title>Buy Car | Got It Motors - Quality Used Cars in Melbourne</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -176,6 +179,23 @@
         color: white;
         font-size: 1.2rem;
         box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .logo-img {
+        height: 42px;
+        width: auto;
+        display: block;
+      }
+
+      [data-theme='dark'] .logo-img {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 4px 8px;
+      }
+
+      .footer-brand .logo-img,
+      .mobile-menu-header .logo-img {
+        height: 48px;
       }
 
       .nav-links {
@@ -1215,65 +1235,6 @@
         transform: translateY(-5px);
       }
 
-      /* Loading Animation */
-      .loader {
-        position: fixed;
-        inset: 0;
-        background: var(--bg-primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-      }
-
-      .loader.hidden {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .loader-content {
-        text-align: center;
-      }
-
-      .loader-car {
-        font-size: 4rem;
-        color: var(--primary);
-        animation: carBounce 1s infinite;
-      }
-
-      @keyframes carBounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-      }
-
-      .loader-text {
-        margin-top: 1rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-
-      .loader-bar {
-        width: 200px;
-        height: 4px;
-        background: var(--bg-tertiary);
-        border-radius: 2px;
-        margin-top: 1rem;
-        overflow: hidden;
-      }
-
-      .loader-progress {
-        height: 100%;
-        background: linear-gradient(90deg, var(--primary), var(--primary-light));
-        animation: loadProgress 2s ease-out forwards;
-      }
-
-      @keyframes loadProgress {
-        from { width: 0; }
-        to { width: 100%; }
-      }
-
       /* Responsive Design */
       @media (max-width: 1200px) {
         .content-wrapper {
@@ -1340,19 +1301,6 @@
     </style>
   </head>
   <body>
-    <!-- Loader -->
-    <div class="loader" id="loader">
-      <div class="loader-content">
-        <div class="loader-car"><i class="fas fa-car-side"></i></div>
-        <div class="loader-text">
-          Got It <span style="color: var(--primary)">Motors</span>
-        </div>
-        <div class="loader-bar">
-          <div class="loader-progress"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Three.js Background Canvas -->
     <canvas id="three-canvas"></canvas>
 
@@ -1360,8 +1308,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-header">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <button class="mobile-menu-close" id="mobileMenuClose">
           <i class="fas fa-times"></i>
@@ -1390,8 +1337,7 @@
     <nav class="nav" id="nav">
       <div class="nav-container">
         <a href="index.html" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -1605,8 +1551,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <a href="index.html" class="logo">
-            <div class="logo-icon"><i class="fas fa-car"></i></div>
-            Got It <span>Motors</span>
+            <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
           </a>
           <p>
             Got It Motors is committed to establishing long-term relationships
@@ -2010,13 +1955,6 @@
 
       scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // ============ LOADER ============
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.getElementById('loader').classList.add('hidden');
-        }, 1500);
       });
 
       // ============ RENDER CARS ============

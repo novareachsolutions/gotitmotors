@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
     <title>Got It Motors | Quality Used Cars in Werribee</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -176,6 +179,23 @@
         color: white;
         font-size: 1.2rem;
         box-shadow: 0 4px 15px var(--primary-glow);
+      }
+
+      .logo-img {
+        height: 42px;
+        width: auto;
+        display: block;
+      }
+
+      [data-theme='dark'] .logo-img {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 4px 8px;
+      }
+
+      .footer-brand .logo-img,
+      .mobile-menu-header .logo-img {
+        height: 48px;
       }
 
       .nav-links {
@@ -395,187 +415,170 @@
         transition: all 0.3s ease;
       }
 
-      /* Hero Section */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        position: relative;
-        padding: 120px 2rem 4rem;
-        overflow: hidden;
-      }
-
-      .hero-bg {
-        position: absolute;
-        inset: 0;
-        background: var(--gradient-overlay);
-        z-index: 1;
-      }
-
-      .hero-particles {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        overflow: hidden;
-      }
-
-      .particle {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: var(--primary);
-        border-radius: 50%;
-        opacity: 0.3;
-        animation: float 15s infinite;
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(100vh) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.3;
-        }
-        90% {
-          opacity: 0.3;
-        }
-        100% {
-          transform: translateY(-100vh) rotate(720deg);
-          opacity: 0;
-        }
-      }
-
-      .hero-container {
-        max-width: 1400px;
-        margin: 0 auto;
+      /* Hero Section - Split Panels */
+      .hero-split {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: center;
         position: relative;
         z-index: 10;
       }
 
-      .hero-content {
-        animation: slideInLeft 1s ease-out;
+      .hero-panel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 56vh;
+        padding: 130px 3.5rem 3.5rem;
+        overflow: hidden;
+        text-decoration: none;
+        color: #ffffff;
       }
 
-      @keyframes slideInLeft {
+      .hero-panel-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        transform: scale(1.02);
+        transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
+      }
+
+      .hero-panel-buy .hero-panel-bg {
+        background-image: url('assets/hero-buy.webp');
+      }
+
+      .hero-panel-sell .hero-panel-bg {
+        background-image: url('assets/hero-sell.webp');
+      }
+
+      .hero-panel:hover .hero-panel-bg {
+        transform: scale(1.09);
+      }
+
+      .hero-panel::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          115deg,
+          rgba(6, 24, 4, 0.88) 0%,
+          rgba(22, 62, 14, 0.62) 48%,
+          rgba(129, 215, 66, 0.32) 100%
+        );
+        transition: opacity 0.4s ease;
+      }
+
+      .hero-panel-sell::after {
+        background: linear-gradient(
+          115deg,
+          rgba(6, 16, 20, 0.9) 0%,
+          rgba(14, 44, 26, 0.64) 48%,
+          rgba(129, 215, 66, 0.26) 100%
+        );
+      }
+
+      .hero-panel:hover::after {
+        opacity: 0.82;
+      }
+
+      .hero-panel-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 560px;
+        animation: heroFadeUp 1s ease-out both;
+      }
+
+      .hero-panel-sell .hero-panel-inner {
+        animation-delay: 0.15s;
+      }
+
+      @keyframes heroFadeUp {
         from {
           opacity: 0;
-          transform: translateX(-50px);
+          transform: translateY(30px);
         }
         to {
           opacity: 1;
-          transform: translateX(0);
+          transform: translateY(0);
         }
       }
 
-      .hero-badge {
+      .hero-panel-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: clamp(2rem, 3.1vw, 3.3rem);
+        font-weight: 700;
+        line-height: 1.12;
+        color: #ffffff;
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+      }
+
+      .hero-panel-sub {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.6;
+        margin-bottom: 2.25rem;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+      }
+
+      .hero-panel-btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: rgba(129, 215, 66, 0.15);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-        border: 1.5px solid rgba(129, 215, 66, 0.4);
-        border-radius: 50px;
-        color: var(--primary);
-        font-weight: 600;
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.15),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        animation: pulse 2s infinite;
-      }
-
-      [data-theme='dark'] .hero-badge {
-        background: rgba(129, 215, 66, 0.2);
-        border-color: rgba(129, 215, 66, 0.5);
-        box-shadow: 0 4px 16px rgba(129, 215, 66, 0.2),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          box-shadow: 0 0 0 0 var(--primary-glow);
-        }
-        50% {
-          box-shadow: 0 0 0 10px transparent;
-        }
-      }
-
-      .hero-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 4rem;
-        font-weight: 700;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-      }
-
-      .hero-title .highlight {
+        gap: 0.6rem;
+        padding: 0.95rem 2.6rem;
         background: linear-gradient(
           135deg,
           var(--primary),
-          var(--primary-light)
+          var(--primary-dark)
         );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .hero-subtitle {
-        font-size: 1.25rem;
-        color: var(--text-secondary);
-        margin-bottom: 2rem;
-        line-height: 1.7;
-      }
-
-      .hero-stats {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 2.5rem;
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(30px) saturate(180%);
-        -webkit-backdrop-filter: blur(30px) saturate(180%);
-        border-radius: 24px;
-        border: 1px solid rgba(129, 215, 66, 0.15);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-      }
-
-      [data-theme='dark'] .hero-stats {
-        background: rgba(26, 26, 40, 0.7);
-        border: 1px solid rgba(129, 215, 66, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-
-      .stat {
-        text-align: center;
-      }
-
-      .stat-number {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 2.5rem;
+        color: #ffffff;
         font-weight: 700;
-        color: var(--primary);
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
       }
 
-      .stat-label {
-        font-size: 0.9rem;
-        color: var(--text-muted);
+      .hero-panel:hover .hero-panel-btn {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 36px rgba(129, 215, 66, 0.45);
       }
 
-      .hero-buttons {
+      .hero-scroll-cue {
+        position: absolute;
+        bottom: 26px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 20;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
         display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        text-decoration: none;
+        animation: heroCue 2s ease-in-out infinite;
+      }
+
+      @keyframes heroCue {
+        0%,
+        100% {
+          transform: translate(-50%, 0);
+        }
+        50% {
+          transform: translate(-50%, 8px);
+        }
       }
 
       .btn {
@@ -639,123 +642,6 @@
         background: rgba(26, 26, 40, 0.9);
         box-shadow: 0 8px 24px rgba(129, 215, 66, 0.25),
                     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      }
-
-      .hero-visual {
-        position: relative;
-        animation: slideInRight 1s ease-out;
-      }
-
-      @keyframes slideInRight {
-        from {
-          opacity: 0;
-          transform: translateX(50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      .hero-image-container {
-        position: relative;
-        border-radius: 30px;
-        overflow: hidden;
-        box-shadow: 0 30px 60px var(--shadow-strong);
-      }
-
-      .hero-image-container::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, var(--primary-glow), transparent);
-        z-index: 1;
-      }
-
-      .hero-3d-container {
-        width: 100%;
-        height: 500px;
-        background: var(--bg-tertiary);
-        border-radius: 30px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      #hero-three {
-        width: 100%;
-        height: 100%;
-      }
-
-      .floating-card {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(30px) saturate(180%);
-        -webkit-backdrop-filter: blur(30px) saturate(180%);
-        padding: 1rem 1.5rem;
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        border: 1px solid rgba(129, 215, 66, 0.15);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        animation: floatCard 3s ease-in-out infinite;
-        z-index: 20;
-      }
-
-      [data-theme='dark'] .floating-card {
-        background: rgba(26, 26, 40, 0.8);
-        border: 1px solid rgba(129, 215, 66, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-
-      @keyframes floatCard {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      .floating-card.card-1 {
-        top: 20px;
-        right: -20px;
-        animation-delay: 0s;
-      }
-
-      .floating-card.card-2 {
-        bottom: 40px;
-        left: -20px;
-        animation-delay: 0.5s;
-      }
-
-      .floating-card-icon {
-        width: 45px;
-        height: 45px;
-        background: linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary-dark)
-        );
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.2rem;
-      }
-
-      .floating-card-text h4 {
-        font-size: 0.9rem;
-        font-weight: 600;
-      }
-
-      .floating-card-text p {
-        font-size: 0.8rem;
-        color: var(--text-muted);
       }
 
       /* Why Choose Us Section */
@@ -1927,8 +1813,8 @@
 
       /* Responsive Design */
       @media (max-width: 1200px) {
-        .hero-title {
-          font-size: 3rem;
+        .hero-panel {
+          padding: 140px 2.5rem 4rem;
         }
 
         .features-grid {
@@ -1941,6 +1827,10 @@
       }
 
       @media (max-width: 992px) {
+        .nav {
+          padding: 0.8rem 1rem;
+        }
+
         .nav-links {
           display: none;
         }
@@ -1949,21 +1839,17 @@
           display: flex;
         }
 
-        .hero-container {
+        .hero-split {
           grid-template-columns: 1fr;
-          text-align: center;
         }
 
-        .hero-stats {
-          justify-content: center;
+        .hero-panel {
+          min-height: 42vh;
+          padding: 3rem 2rem;
         }
 
-        .hero-buttons {
-          justify-content: center;
-        }
-
-        .hero-visual {
-          display: none;
+        .hero-panel-buy {
+          padding-top: 140px;
         }
 
         .sell-container,
@@ -1981,8 +1867,8 @@
       }
 
       @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.5rem;
+        .hero-panel-title {
+          font-size: 2rem;
         }
 
         .section-title {
@@ -1996,11 +1882,6 @@
 
         .vehicle-gallery {
           grid-template-columns: 1fr;
-        }
-
-        .hero-stats {
-          flex-direction: column;
-          gap: 1rem;
         }
 
         .footer-container {
@@ -2125,27 +2006,31 @@
         text-align: center;
       }
 
-      .loader-car {
-        font-size: 4rem;
-        color: var(--primary);
-        animation: carBounce 1s infinite;
+      .loader-logo {
+        width: 220px;
+        max-width: 62vw;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        animation: loaderPulse 1.6s ease-in-out infinite;
       }
 
-      @keyframes carBounce {
+      [data-theme='dark'] .loader-logo {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 12px 18px;
+      }
+
+      @keyframes loaderPulse {
         0%,
         100% {
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
+          opacity: 1;
         }
         50% {
-          transform: translateY(-20px);
+          transform: translateY(-10px) scale(1.03);
+          opacity: 0.85;
         }
-      }
-
-      .loader-text {
-        margin-top: 1rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.5rem;
-        font-weight: 600;
       }
 
       .loader-bar {
@@ -2181,15 +2066,27 @@
     <!-- Loader -->
     <div class="loader" id="loader">
       <div class="loader-content">
-        <div class="loader-car"><i class="fas fa-car-side"></i></div>
-        <div class="loader-text">
-          Got It <span style="color: var(--primary)">Motors</span>
-        </div>
+        <img src="assets/logo.png" alt="Got It Motors" class="loader-logo" />
         <div class="loader-bar">
           <div class="loader-progress"></div>
         </div>
       </div>
     </div>
+
+    <!-- Loader is dismissed from its own script so a stalled CDN asset
+         can never leave the landing page stuck behind it -->
+    <script>
+      ;(function () {
+        var loaderEl = document.getElementById('loader')
+        var hideLoader = function () {
+          loaderEl.classList.add('hidden')
+        }
+        window.addEventListener('load', function () {
+          setTimeout(hideLoader, 1200)
+        })
+        setTimeout(hideLoader, 4000)
+      })()
+    </script>
 
     <!-- Three.js Background Canvas -->
     <canvas id="three-canvas"></canvas>
@@ -2198,8 +2095,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <div class="mobile-menu-header">
         <a href="#" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <button class="mobile-menu-close" id="mobileMenuClose">
           <i class="fas fa-times"></i>
@@ -2228,8 +2124,7 @@
     <nav class="nav" id="nav">
       <div class="nav-container">
         <a href="#" class="logo">
-          <div class="logo-icon"><i class="fas fa-car"></i></div>
-          Got It <span>Motors</span>
+          <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html" class="active">Home</a></li>
@@ -2271,70 +2166,37 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-      <div class="hero-bg"></div>
-      <div class="hero-particles" id="particles"></div>
-      <div class="hero-container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <i class="fas fa-award"></i>
-            Trusted Dealership • LMCT: 12258
-          </div>
-          <h1 class="hero-title">
-            New Beginnings in a <span class="highlight">Car of Your Own</span>
+    <section class="hero-split" id="home">
+      <a
+        class="hero-panel hero-panel-buy"
+        href="https://listing.gotitmotors.com.au/"
+        target="_blank"
+        rel="noopener"
+      >
+        <div class="hero-panel-bg"></div>
+        <div class="hero-panel-inner">
+          <h1 class="hero-panel-title">
+            New Beginnings in a car<br />of your own
           </h1>
-          <p class="hero-subtitle">
-            Your trusted dealership for quality, affordable cars with unbeatable
-            customer service and after-sales support. More than 100+ happy
-            customers and counting.
+          <p class="hero-panel-sub">
+            Trusted dealership with more than 100 reviews
           </p>
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="stat-number">100+</div>
-              <div class="stat-label">Happy Customers</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number">150</div>
-              <div class="stat-label">Points Inspected</div>
-            </div>
-            <div class="stat">
-              <div class="stat-number">1000+</div>
-              <div class="stat-label">Licensed Buyers</div>
-            </div>
-          </div>
-          <div class="hero-buttons">
-            <a href="#vehicles" class="btn btn-primary">
-              <i class="fas fa-car"></i> Buy Now
-            </a>
-            <a href="#sell" class="btn btn-secondary">
-              <i class="fas fa-hand-holding-dollar"></i> Sell Your Car
-            </a>
-          </div>
+          <span class="hero-panel-btn">BUY</span>
         </div>
-        <div class="hero-visual">
-          <div class="hero-3d-container">
-            <canvas id="hero-three"></canvas>
-          </div>
-          <div class="floating-card card-1">
-            <div class="floating-card-icon">
-              <i class="fas fa-shield-halved"></i>
-            </div>
-            <div class="floating-card-text">
-              <h4>Warranty Included</h4>
-              <p>Peace of mind guaranteed</p>
-            </div>
-          </div>
-          <div class="floating-card card-2">
-            <div class="floating-card-icon">
-              <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="floating-card-text">
-              <h4>150-Point Inspection</h4>
-              <p>Quality assured vehicles</p>
-            </div>
-          </div>
+      </a>
+      <a class="hero-panel hero-panel-sell" href="sell-car.html">
+        <div class="hero-panel-bg"></div>
+        <div class="hero-panel-inner">
+          <h1 class="hero-panel-title">
+            Sell Your Car For The<br />Best Price
+          </h1>
+          <p class="hero-panel-sub">Get instant cash for your car</p>
+          <span class="hero-panel-btn">SELL</span>
         </div>
-      </div>
+      </a>
+      <a href="#why-choose" class="hero-scroll-cue" aria-label="Scroll down">
+        <i class="fas fa-chevron-down"></i>
+      </a>
     </section>
 
     <!-- Why Choose Us Section -->
@@ -2345,8 +2207,8 @@
         </div>
         <h2 class="section-title">Why Got It Motors?</h2>
         <p class="section-subtitle">
-          Your trusted dealership for quality, affordable cars with unbeatable
-          customer service and after-sales support.
+          Affordable, quality used cars with honest advice, straightforward
+          service and dependable support from your local Werribee team.
         </p>
       </div>
       <div class="features-grid">
@@ -2925,8 +2787,7 @@
       <div class="footer-container">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <div class="logo-icon"><i class="fas fa-car"></i></div>
-            Got It <span>Motors</span>
+            <img src="assets/logo.png" alt="Got It Motors" class="logo-img" />
           </a>
           <p>
             Got It Motors is committed to establishing long-term relationships
@@ -3158,110 +3019,11 @@
       }
       animate()
 
-      // ============ HERO THREE.JS ============
-      const heroCanvas = document.getElementById('hero-three')
-      const heroScene = new THREE.Scene()
-      const heroCamera = new THREE.PerspectiveCamera(
-        75,
-        heroCanvas.clientWidth / heroCanvas.clientHeight,
-        0.1,
-        1000
-      )
-      const heroRenderer = new THREE.WebGLRenderer({
-        canvas: heroCanvas,
-        alpha: true,
-        antialias: true,
-      })
-      heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight)
-
-      // Create a stylized car-like shape
-      const carGroup = new THREE.Group()
-
-      // Car body
-      const bodyGeometry = new THREE.BoxGeometry(4, 1.2, 2)
-      const bodyMaterial = new THREE.MeshBasicMaterial({
-        color: primaryColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.6,
-      })
-      const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
-      carGroup.add(body)
-
-      // Car top
-      const topGeometry = new THREE.BoxGeometry(2, 0.8, 1.8)
-      const topMaterial = new THREE.MeshBasicMaterial({
-        color: primaryColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.6,
-      })
-      const carTop = new THREE.Mesh(topGeometry, topMaterial)
-      carTop.position.set(-0.3, 0.9, 0)
-      carGroup.add(carTop)
-
-      // Wheels
-      const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 16)
-      const wheelMaterial = new THREE.MeshBasicMaterial({
-        color: primaryColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.8,
-      })
-
-      const wheelPositions = [
-        { x: 1.3, y: -0.5, z: 1 },
-        { x: 1.3, y: -0.5, z: -1 },
-        { x: -1.3, y: -0.5, z: 1 },
-        { x: -1.3, y: -0.5, z: -1 },
-      ]
-
-      wheelPositions.forEach((pos) => {
-        const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial)
-        wheel.rotation.x = Math.PI / 2
-        wheel.position.set(pos.x, pos.y, pos.z)
-        carGroup.add(wheel)
-      })
-
-      heroScene.add(carGroup)
-
-      // Add floating rings
-      const ringGeometry = new THREE.TorusGeometry(3, 0.05, 16, 100)
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        color: primaryColor,
-        transparent: true,
-        opacity: 0.3,
-      })
-
-      for (let i = 0; i < 3; i++) {
-        const ring = new THREE.Mesh(ringGeometry, ringMaterial)
-        ring.rotation.x = Math.PI / 2
-        ring.position.y = -1 + i * 0.5
-        ring.scale.setScalar(1 + i * 0.2)
-        heroScene.add(ring)
-      }
-
-      heroCamera.position.set(3, 2, 5)
-      heroCamera.lookAt(0, 0, 0)
-
-      function animateHero() {
-        requestAnimationFrame(animateHero)
-        carGroup.rotation.y += 0.005
-        heroRenderer.render(heroScene, heroCamera)
-      }
-      animateHero()
-
       // ============ WINDOW RESIZE ============
       window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight
         camera.updateProjectionMatrix()
         renderer.setSize(window.innerWidth, window.innerHeight)
-
-        if (heroCanvas.clientWidth > 0) {
-          heroCamera.aspect = heroCanvas.clientWidth / heroCanvas.clientHeight
-          heroCamera.updateProjectionMatrix()
-          heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight)
-        }
       })
 
       // ============ THEME TOGGLE ============
@@ -3348,24 +3110,6 @@
 
       document.querySelectorAll('.animate-on-scroll').forEach((el) => {
         observer.observe(el)
-      })
-
-      // ============ PARTICLES ============
-      const particlesContainer = document.getElementById('particles')
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div')
-        particle.className = 'particle'
-        particle.style.left = Math.random() * 100 + '%'
-        particle.style.animationDelay = Math.random() * 15 + 's'
-        particle.style.animationDuration = Math.random() * 10 + 10 + 's'
-        particlesContainer.appendChild(particle)
-      }
-
-      // ============ LOADER ============
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.getElementById('loader').classList.add('hidden')
-        }, 2000)
       })
 
       // ============ CONTACT FORM ============
