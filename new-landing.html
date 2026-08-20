@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Got It Motors — Quality Used Cars in Werribee</title>
+    <meta
+      name="description"
+      content="Affordable, quality used cars with honest advice, straightforward service and dependable support from your local Werribee team."
+    />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/favicon.png" />
+    <link rel="alternate icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0b1410;
+        --ink-soft: #14211a;
+        --green-deep: #2f5d1f;
+        --green-wash: #f1f5ea;
+        --ivory: #f7f4ee;
+        --paper: #fffdfa;
+        --muted: #6e7570;
+        --muted-light: rgba(247, 244, 238, 0.62);
+        --line: rgba(15, 19, 17, 0.14);
+        --line-light: rgba(247, 244, 238, 0.22);
+        --accent: #7dd13f;
+        --accent-deep: #4c8a20;
+
+        --display: 'Instrument Serif', 'Times New Roman', serif;
+        --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+        --gutter: clamp(1.5rem, 5vw, 5.5rem);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: var(--sans);
+        font-weight: 300;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--ink);
+        background: var(--ivory);
+        overflow-x: hidden;
+      }
+
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--ink);
+      }
+
+      ::-webkit-scrollbar {
+        width: 9px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--ivory);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(15, 19, 17, 0.25);
+        border-radius: 99px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--ink);
+      }
+
+      /* ---------- Type primitives ---------- */
+      .eyebrow {
+        font-family: var(--sans);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .eyebrow--light {
+        color: var(--muted-light);
+      }
+
+      .display {
+        font-family: var(--display);
+        font-weight: 400;
+        line-height: 0.98;
+        letter-spacing: -0.015em;
+      }
+
+      .display em {
+        font-style: italic;
+      }
+
+      .lede {
+        font-size: clamp(1.02rem, 1.1vw, 1.18rem);
+        color: var(--muted);
+        max-width: 46ch;
+      }
+
+      /* ---------- Buttons / links ---------- */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 1.05rem 2rem;
+        border-radius: 999px;
+        font-family: var(--sans);
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        background: var(--ink);
+        color: var(--ivory);
+        border: 1px solid var(--ink);
+        transition: background 0.5s var(--ease), color 0.5s var(--ease),
+          transform 0.5s var(--ease);
+      }
+
+      .btn:hover {
+        background: var(--accent-deep);
+        border-color: var(--accent-deep);
+        color: var(--paper);
+        transform: translateY(-2px);
+      }
+
+      .btn--ghost {
+        background: transparent;
+        color: var(--ivory);
+        border-color: var(--line-light);
+      }
+
+      .btn--ghost:hover {
+        background: var(--ivory);
+        color: var(--ink);
+        border-color: var(--ivory);
+      }
+
+      .btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .link-line {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding-bottom: 0.45rem;
+        position: relative;
+      }
+
+      .link-line::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 1px;
+        width: 100%;
+        background: currentColor;
+        transform-origin: right;
+        transform: scaleX(1);
+        transition: transform 0.6s var(--ease);
+      }
+
+      .link-line:hover::after {
+        transform-origin: left;
+        animation: lineSweep 0.7s var(--ease);
+      }
+
+      @keyframes lineSweep {
+        0% {
+          transform: scaleX(1);
+          transform-origin: right;
+        }
+        49% {
+          transform: scaleX(0);
+          transform-origin: right;
+        }
+        50% {
+          transform: scaleX(0);
+          transform-origin: left;
+        }
+        100% {
+          transform: scaleX(1);
+          transform-origin: left;
+        }
+      }
+
+      .link-line svg {
+        width: 13px;
+        height: 13px;
+        transition: transform 0.5s var(--ease);
+      }
+
+      .link-line:hover svg {
+        transform: translateX(4px);
+      }
+
+      .section:not(.section--ink) .link-line:hover,
+      .stock .link-line:hover {
+        color: var(--accent-deep);
+      }
+
+      /* ---------- Navigation ---------- */
+      .nav {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 1.5rem var(--gutter);
+        transition: padding 0.5s var(--ease), background 0.5s var(--ease),
+          box-shadow 0.5s var(--ease);
+      }
+
+      .nav.is-stuck {
+        padding: 0.9rem var(--gutter);
+        background: rgba(247, 244, 238, 0.86);
+        backdrop-filter: blur(18px) saturate(150%);
+        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        box-shadow: 0 1px 0 var(--line);
+      }
+
+      .nav__logo img {
+        height: 34px;
+        width: auto;
+        transition: opacity 0.4s var(--ease);
+      }
+
+      .nav__logo:hover img {
+        opacity: 0.7;
+      }
+
+      .nav__links {
+        display: flex;
+        align-items: center;
+        gap: 2.4rem;
+        list-style: none;
+      }
+
+      .nav__links a {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--ink);
+        opacity: 0.62;
+        position: relative;
+        transition: opacity 0.4s var(--ease);
+      }
+
+      .nav__links a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        height: 1px;
+        width: 0;
+        background: currentColor;
+        transition: width 0.5s var(--ease);
+      }
+
+      .nav__links a:hover {
+        opacity: 1;
+      }
+
+      .nav__links a:hover::after {
+        width: 100%;
+      }
+
+      .nav__right {
+        display: flex;
+        align-items: center;
+        gap: 1.6rem;
+      }
+
+      .nav__phone {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        font-weight: 500;
+      }
+
+      .nav__cta {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.7rem;
+      }
+
+      .nav__toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+      }
+
+      .nav__toggle span {
+        display: block;
+        width: 24px;
+        height: 1.5px;
+        background: var(--ink);
+        transition: transform 0.4s var(--ease), opacity 0.3s var(--ease);
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        display: grid;
+        grid-template-columns: 1.02fr 1fr;
+        min-height: 100svh;
+        background: var(--ivory);
+      }
+
+      .hero__copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 9rem var(--gutter) 3.5rem;
+      }
+
+      .hero__eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero__eyebrow::before {
+        content: '';
+        width: 46px;
+        height: 1px;
+        background: var(--accent-deep);
+      }
+
+      .hero__title {
+        font-size: clamp(3.1rem, 5.6vw, 5.6rem);
+        margin-bottom: 1.8rem;
+      }
+
+      .hero__title em {
+        color: var(--accent-deep);
+      }
+
+      .hero__actions {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 2.6rem;
+      }
+
+      .hero__facts {
+        display: flex;
+        gap: clamp(1.5rem, 3vw, 3.5rem);
+        flex-wrap: wrap;
+        margin-top: 4rem;
+        padding-top: 1.8rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .fact__value {
+        font-family: var(--display);
+        font-size: 1.9rem;
+        line-height: 1;
+        display: block;
+        color: var(--accent-deep);
+      }
+
+      .fact__label {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.5rem;
+        display: block;
+      }
+
+      .hero__media {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        background: var(--ink);
+      }
+
+      /* grayscale photo + a green colour layer = duotone, not a green wash */
+      .hero__media::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: var(--green-deep);
+        mix-blend-mode: color;
+        opacity: 0.5;
+      }
+
+      .hero__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 78% center;
+        /* lifestyle photography runs monochrome; green is reserved for type */
+        filter: grayscale(1) contrast(1.2) brightness(0.92);
+        transform: scale(1.06);
+        animation: heroSettle 2.4s var(--ease) forwards;
+      }
+
+      @keyframes heroSettle {
+        to {
+          transform: scale(1);
+        }
+      }
+
+      .hero__media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+          185deg,
+          rgba(15, 19, 17, 0) 45%,
+          rgba(15, 19, 17, 0.72) 100%
+        );
+      }
+
+      .hero__caption {
+        position: absolute;
+        left: 2rem;
+        bottom: 2rem;
+        z-index: 3;
+        color: var(--ivory);
+        max-width: 20rem;
+        font-size: 0.82rem;
+        line-height: 1.6;
+      }
+
+      .hero__caption span {
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+
+      /* ---------- Marquee ---------- */
+      .marquee {
+        background: var(--ink);
+        color: var(--ivory);
+        padding: 1.15rem 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .marquee__track {
+        display: inline-flex;
+        gap: 3.5rem;
+        animation: marquee 34s linear infinite;
+      }
+
+      .marquee__track span {
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 3.5rem;
+      }
+
+      .marquee__track span::after {
+        content: '';
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      @keyframes marquee {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ---------- Section scaffolding ---------- */
+      .section {
+        padding: clamp(5rem, 11vw, 9.5rem) var(--gutter);
+      }
+
+      .section--ink {
+        background: var(--ink);
+        color: var(--ivory);
+      }
+
+      .section--paper {
+        background: var(--paper);
+      }
+
+      .section__head {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: clamp(2rem, 6vw, 6rem);
+        align-items: end;
+        margin-bottom: clamp(2.8rem, 5vw, 4.5rem);
+      }
+
+      .section__title {
+        font-size: clamp(2.3rem, 4vw, 3.9rem);
+      }
+
+      .section--ink .lede {
+        color: var(--muted-light);
+      }
+
+      /* ---------- Statement ---------- */
+      .statement {
+        max-width: 62rem;
+        font-size: clamp(1.6rem, 3.1vw, 3rem);
+        line-height: 1.22;
+      }
+
+      .statement .lead-in {
+        color: var(--accent-deep);
+      }
+
+      .statement .dim {
+        color: var(--muted);
+      }
+
+      .statement__foot {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        margin-top: 3.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--line);
+      }
+
+      /* ---------- Split tiles (buy / sell) ---------- */
+      .tiles {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+      }
+
+      .tile {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: clamp(26rem, 44vw, 36rem);
+        padding: clamp(2rem, 4vw, 3.2rem);
+        overflow: hidden;
+        background: var(--ink);
+        color: var(--ivory);
+      }
+
+      .tile__img {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        isolation: isolate;
+      }
+
+      .tile__img::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--green-deep);
+        mix-blend-mode: color;
+        opacity: 0.7;
+        transition: opacity 0.9s var(--ease);
+      }
+
+      .tile:hover .tile__img::after {
+        opacity: 0.45;
+      }
+
+      .tile__img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.06);
+        transition: transform 1.4s var(--ease), filter 1.2s var(--ease);
+      }
+
+      .tile::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 19, 17, 0.15) 0%,
+          rgba(15, 19, 17, 0.78) 78%
+        );
+        transition: opacity 0.7s var(--ease);
+      }
+
+      .tile:hover .tile__img img {
+        transform: scale(1.06);
+        filter: grayscale(0.2) contrast(1.06);
+      }
+
+      .tile:hover::after {
+        opacity: 0.86;
+      }
+
+      .tile__body {
+        position: relative;
+        z-index: 2;
+      }
+
+      .tile__index {
+        font-family: var(--display);
+        font-size: 0.95rem;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      .tile__title {
+        font-size: clamp(2rem, 3.2vw, 3rem);
+        margin-bottom: 0.9rem;
+      }
+
+      .tile__text {
+        color: var(--muted-light);
+        max-width: 32ch;
+        font-size: 0.95rem;
+        margin-bottom: 1.8rem;
+      }
+
+      /* ---------- Stock grid ---------- */
+      .stock {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+
+      .card {
+        display: block;
+      }
+
+      .card__frame {
+        position: relative;
+        overflow: hidden;
+        background: var(--ivory);
+        aspect-ratio: 4 / 3;
+      }
+
+      .card__frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1.3s var(--ease);
+      }
+
+      .card:hover .card__frame img {
+        transform: scale(1.05);
+      }
+
+      .card__name {
+        transition: color 0.4s var(--ease);
+      }
+
+      .card:hover .card__name {
+        color: var(--accent-deep);
+      }
+
+      .card__meta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .card__name {
+        font-family: var(--display);
+        font-size: 1.35rem;
+        line-height: 1.2;
+      }
+
+      .card__tag {
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .stock__foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-top: 3.2rem;
+      }
+
+      /* ---------- Services ---------- */
+      .services {
+        border-top: 1px solid var(--line-light);
+      }
+
+      .service {
+        display: grid;
+        grid-template-columns: 5rem 1.1fr 1fr;
+        gap: clamp(1.5rem, 4vw, 4rem);
+        align-items: center;
+        padding: clamp(2rem, 3.5vw, 3rem) 0;
+        border-bottom: 1px solid var(--line-light);
+        transition: background 0.6s var(--ease);
+      }
+
+      .service:hover {
+        background: rgba(125, 209, 63, 0.07);
+      }
+
+      .service__no {
+        font-family: var(--display);
+        font-size: 1.1rem;
+        color: var(--accent);
+      }
+
+      .service__title {
+        font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+        margin-bottom: 0.6rem;
+      }
+
+      .service__price {
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted-light);
+      }
+
+      .service__aside {
+        display: flex;
+        align-items: center;
+        gap: 1.8rem;
+      }
+
+      .service__thumb {
+        width: 122px;
+        height: 82px;
+        flex-shrink: 0;
+        overflow: hidden;
+        background: var(--ink-soft);
+      }
+
+      .service__thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+        transition: transform 1.2s var(--ease), opacity 0.6s var(--ease);
+      }
+
+      .service:hover .service__thumb img {
+        transform: scale(1.07);
+        opacity: 1;
+      }
+
+      .service__text {
+        color: var(--muted-light);
+        font-size: 0.92rem;
+        max-width: 34ch;
+      }
+
+      /* ---------- Yard band ---------- */
+      .band {
+        position: relative;
+        min-height: clamp(24rem, 52vw, 34rem);
+        display: flex;
+        align-items: flex-end;
+        padding: clamp(2.5rem, 6vw, 5rem) var(--gutter);
+        overflow: hidden;
+        color: var(--ivory);
+      }
+
+      .band img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 62%;
+      }
+
+      .band::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(11, 20, 16, 0.34) 0%,
+          rgba(13, 32, 18, 0.58) 42%,
+          rgba(11, 20, 16, 0.93) 100%
+        );
+      }
+
+      .band__body {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: clamp(1.5rem, 5vw, 5rem);
+        align-items: end;
+        width: 100%;
+      }
+
+      .band__title {
+        font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+        text-shadow: 0 2px 24px rgba(15, 19, 17, 0.55);
+      }
+
+      .band__meta p {
+        color: rgba(247, 244, 238, 0.78);
+        font-size: 0.92rem;
+        text-shadow: 0 1px 12px rgba(15, 19, 17, 0.6);
+      }
+
+      .band__meta strong {
+        display: block;
+        font-weight: 400;
+        color: var(--ivory);
+        font-family: var(--display);
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+      }
+
+      /* ---------- Testimonials ---------- */
+      .quotes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+
+      .quote {
+        background: var(--paper);
+        padding: clamp(1.8rem, 3vw, 2.8rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2.5rem;
+        transition: background 0.6s var(--ease);
+      }
+
+      .quote:hover {
+        background: var(--green-wash);
+      }
+
+      .quote__mark {
+        font-family: var(--display);
+        font-size: 3rem;
+        line-height: 0.6;
+        color: var(--accent);
+      }
+
+      .quote__text {
+        font-family: var(--display);
+        font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+        line-height: 1.35;
+        margin-top: 1.2rem;
+      }
+
+      .quote__by {
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ---------- Closing CTA ---------- */
+      .closing {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2.2rem;
+      }
+
+      .closing__title {
+        font-size: clamp(2.6rem, 6vw, 5.5rem);
+        max-width: 18ch;
+      }
+
+      .closing__actions {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* ---------- Footer ---------- */
+      .footer {
+        background: var(--ink);
+        color: var(--ivory);
+        padding: clamp(3.5rem, 7vw, 6rem) var(--gutter) 2.5rem;
+      }
+
+      .footer__grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: clamp(2rem, 4vw, 3.5rem);
+        padding-bottom: 3.5rem;
+        border-bottom: 1px solid var(--line-light);
+      }
+
+      .footer__brand img {
+        height: 42px;
+        width: auto;
+        background: var(--ivory);
+        border-radius: 8px;
+        padding: 6px 10px;
+        margin-bottom: 1.4rem;
+      }
+
+      .footer__brand p {
+        color: var(--muted-light);
+        font-size: 0.92rem;
+        max-width: 34ch;
+      }
+
+      .footer h4 {
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-light);
+        margin-bottom: 1.3rem;
+      }
+
+      .footer ul {
+        list-style: none;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .footer li a,
+      .footer address a {
+        font-size: 0.94rem;
+        opacity: 0.82;
+        transition: opacity 0.4s var(--ease), padding-left 0.4s var(--ease);
+      }
+
+      .footer li a:hover {
+        opacity: 1;
+        padding-left: 5px;
+      }
+
+      .footer address {
+        font-style: normal;
+        font-size: 0.94rem;
+        color: var(--muted-light);
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .footer__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding-top: 2rem;
+        font-size: 0.76rem;
+        color: var(--muted-light);
+        letter-spacing: 0.04em;
+      }
+
+      /* ---------- Reveal ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 1s var(--ease), transform 1s var(--ease);
+        transition-delay: var(--delay, 0ms);
+      }
+
+      .reveal.is-in {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 1080px) {
+        .stock {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .footer__grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .section__head {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .nav__links,
+        .nav__phone {
+          display: none;
+        }
+
+        .nav__toggle {
+          display: flex;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+
+        .hero__copy {
+          padding-top: 7.5rem;
+          order: 2;
+        }
+
+        .hero__media {
+          order: 1;
+          min-height: 58vh;
+        }
+
+        .tiles,
+        .quotes {
+          grid-template-columns: 1fr;
+        }
+
+        .service {
+          grid-template-columns: 3rem 1fr;
+          align-items: start;
+        }
+
+        .service__aside {
+          grid-column: 2 / -1;
+          margin-top: 1.2rem;
+        }
+
+        .band__body {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .stock {
+          grid-template-columns: 1fr;
+        }
+
+        .footer__grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero__facts {
+          gap: 1.6rem 2.4rem;
+        }
+
+        .service__thumb {
+          width: 96px;
+          height: 68px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ NAV ============ -->
+    <header class="nav" id="nav">
+      <a href="index.html" class="nav__logo" aria-label="Got It Motors home">
+        <img src="assets/logo.png" alt="Got It Motors" />
+      </a>
+
+      <nav>
+        <ul class="nav__links">
+          <li><a href="buy-car.html">Buy</a></li>
+          <li><a href="sell-car.html">Sell</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="warranty.html">Warranty</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__right">
+        <a href="tel:1300136110" class="nav__phone">1300 136 110</a>
+        <a href="sell-car.html" class="btn nav__cta">Value my car</a>
+        <button class="nav__toggle" id="navToggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__copy">
+        <div class="hero__eyebrow">
+          <span class="eyebrow">Werribee · LMCT 12258</span>
+        </div>
+
+        <h1 class="display hero__title">
+          New beginnings<br />
+          in a car of<br />
+          <em>your own.</em>
+        </h1>
+
+        <p class="lede">
+          Affordable, quality used cars with honest advice, straightforward
+          service and dependable support from your local Werribee team.
+        </p>
+
+        <div class="hero__actions">
+          <a href="buy-car.html" class="btn">
+            Browse the stock
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a href="sell-car.html" class="link-line">Sell your car</a>
+        </div>
+
+        <div class="hero__facts">
+          <div class="fact">
+            <span class="fact__value">100+</span>
+            <span class="fact__label">Happy customers</span>
+          </div>
+          <div class="fact">
+            <span class="fact__value">150</span>
+            <span class="fact__label">Point inspection</span>
+          </div>
+          <div class="fact">
+            <span class="fact__value">1000+</span>
+            <span class="fact__label">Licensed buyers</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__media">
+        <img
+          src="assets/hero-buy.webp"
+          alt="Happy customers collecting their car from Got It Motors"
+        />
+        <p class="hero__caption">
+          <span class="eyebrow eyebrow--light">Since day one</span>
+          Every car handed over the way we would want our own family treated.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Warranty included</span>
+        <span>150-point inspection</span>
+        <span>Finance available</span>
+        <span>Trade-ins welcome</span>
+        <span>Free pick-up</span>
+        <span>Detailing &amp; tinting</span>
+        <span>Warranty included</span>
+        <span>150-point inspection</span>
+        <span>Finance available</span>
+        <span>Trade-ins welcome</span>
+        <span>Free pick-up</span>
+        <span>Detailing &amp; tinting</span>
+      </div>
+    </div>
+
+    <!-- ============ STATEMENT ============ -->
+    <section class="section">
+      <p class="display statement reveal">
+        <span class="lead-in">Buying a used car should feel calm.</span>
+        <span class="dim"
+          >So we inspect properly, price fairly, explain everything in plain
+          language and stay reachable long after you drive away.</span
+        >
+      </p>
+
+      <div class="statement__foot">
+        <div class="reveal" style="--delay: 80ms">
+          <span class="eyebrow">Established dealership</span>
+          <p class="lede" style="margin-top: 0.8rem">
+            Licensed motor car trader 12258, serving Werribee and the western
+            suburbs.
+          </p>
+        </div>
+        <div class="reveal" style="--delay: 160ms">
+          <a href="about.html" class="link-line">
+            Our story
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BUY / SELL TILES ============ -->
+    <section class="tiles">
+      <a class="tile reveal" href="buy-car.html">
+        <div class="tile__img">
+          <img src="assets/hero-buy.webp" alt="Used cars ready for sale" />
+        </div>
+        <div class="tile__body">
+          <span class="tile__index">01</span>
+          <h2 class="display tile__title">Find your next car</h2>
+          <p class="tile__text">
+            Inspected, road-ready and honestly described. Browse what is on the
+            lot this week.
+          </p>
+          <span class="link-line">
+            Browse stock
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <a class="tile reveal" href="sell-car.html" style="--delay: 120ms">
+        <div class="tile__img">
+          <img src="assets/hero-sell.webp" alt="Handing over car keys" />
+        </div>
+        <div class="tile__body">
+          <span class="tile__index">02</span>
+          <h2 class="display tile__title">Sell it without the hassle</h2>
+          <p class="tile__text">
+            More than 1000 licensed buyers compete for your car. We handle the
+            negotiation, you take the best offer.
+          </p>
+          <span class="link-line">
+            Get an offer
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ============ STOCK ============ -->
+    <section class="section section--paper" id="stock">
+      <div class="section__head">
+        <div class="reveal">
+          <span class="eyebrow">On the lot</span>
+          <h2 class="display section__title" style="margin-top: 1rem">
+            A few of this<br />week's arrivals
+          </h2>
+        </div>
+        <p class="lede reveal" style="--delay: 100ms">
+          Stock moves quickly and changes every week. Come by the yard on
+          Railway Avenue, or see the full range online.
+        </p>
+      </div>
+
+      <div class="stock">
+        <a class="card reveal" href="buy-car.html">
+          <div class="card__frame">
+            <img src="assets/stock-mazda3.jpg" alt="Mazda 3 sedan" />
+          </div>
+          <div class="card__meta">
+            <span class="card__name">Mazda 3</span>
+            <span class="card__tag">Sedan</span>
+          </div>
+        </a>
+
+        <a class="card reveal" href="buy-car.html" style="--delay: 90ms">
+          <div class="card__frame">
+            <img src="assets/stock-tiida.jpg" alt="Nissan Tiida hatchback" />
+          </div>
+          <div class="card__meta">
+            <span class="card__name">Nissan Tiida</span>
+            <span class="card__tag">Hatch</span>
+          </div>
+        </a>
+
+        <a class="card reveal" href="buy-car.html" style="--delay: 180ms">
+          <div class="card__frame">
+            <img src="assets/stock-lancer.jpg" alt="Mitsubishi Lancer sedan" />
+          </div>
+          <div class="card__meta">
+            <span class="card__name">Mitsubishi Lancer</span>
+            <span class="card__tag">Sedan</span>
+          </div>
+        </a>
+
+        <a class="card reveal" href="buy-car.html" style="--delay: 270ms">
+          <div class="card__frame">
+            <img src="assets/stock-crv.jpg" alt="Honda CR-V wagon" />
+          </div>
+          <div class="card__meta">
+            <span class="card__name">Honda CR-V</span>
+            <span class="card__tag">SUV</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="stock__foot reveal">
+        <p class="lede" style="max-width: 40ch">
+          Not seeing the right one? Tell us what you are after and we will keep
+          an eye out.
+        </p>
+        <a href="buy-car.html" class="btn">
+          See all vehicles
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section section--ink" id="services">
+      <div class="section__head">
+        <div class="reveal">
+          <span class="eyebrow eyebrow--light">In-house services</span>
+          <h2 class="display section__title" style="margin-top: 1rem">
+            Looked after,<br />before and after
+          </h2>
+        </div>
+        <p class="lede reveal" style="--delay: 100ms">
+          The same workshop that prepares our cars is open to yours — detailing,
+          tinting and camera fit-outs, booked online.
+        </p>
+      </div>
+
+      <div class="services">
+        <a class="service reveal" href="car-detailing.html">
+          <span class="service__no">01</span>
+          <div>
+            <h3 class="display service__title">Car detailing</h3>
+            <span class="service__price">From $189</span>
+          </div>
+          <div class="service__aside">
+            <div class="service__thumb">
+              <img src="assets/detail-interior.jpg" alt="Detailed car interior" />
+            </div>
+            <p class="service__text">
+              Gold, silver and bronze packages — from a wash and vacuum to a full
+              cut, buff and wax.
+            </p>
+          </div>
+        </a>
+
+        <a class="service reveal" href="car-tinting.html" style="--delay: 90ms">
+          <span class="service__no">02</span>
+          <div>
+            <h3 class="display service__title">Window tinting</h3>
+            <span class="service__price">From $199</span>
+          </div>
+          <div class="service__aside">
+            <div class="service__thumb">
+              <img src="assets/service-tinting.webp" alt="Car window tinting" />
+            </div>
+            <p class="service__text">
+              Heat rejection, glare reduction and privacy, with quality film
+              fitted properly.
+            </p>
+          </div>
+        </a>
+
+        <a class="service reveal" href="dash-camera.html" style="--delay: 180ms">
+          <span class="service__no">03</span>
+          <div>
+            <h3 class="display service__title">Dash &amp; reverse cameras</h3>
+            <span class="service__price">From $299</span>
+          </div>
+          <div class="service__aside">
+            <div class="service__thumb">
+              <img src="assets/service-dashcam.jpg" alt="Dash camera installation" />
+            </div>
+            <p class="service__text">
+              Front and rear coverage, wired in cleanly for confident everyday
+              driving.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ YARD BAND ============ -->
+    <section class="band">
+      <img src="assets/yard.jpg" alt="The Got It Motors yard in Werribee" />
+      <div class="band__body">
+        <h2 class="display band__title reveal">
+          Come and walk the yard.<br />
+          No pressure, no theatre.
+        </h2>
+        <div class="band__meta reveal" style="--delay: 120ms">
+          <p>
+            <strong>115–117 Railway Ave</strong>
+            Werribee VIC 3030
+          </p>
+          <p style="margin-top: 1.2rem">
+            <strong>1300 136 110</strong>
+            Open seven days
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section">
+      <div class="section__head">
+        <div class="reveal">
+          <span class="eyebrow">In their words</span>
+          <h2 class="display section__title" style="margin-top: 1rem">
+            More than 100 reviews
+          </h2>
+        </div>
+        <p class="lede reveal" style="--delay: 100ms">
+          Most of our week comes from someone telling a friend. That is the part
+          we are proudest of.
+        </p>
+      </div>
+
+      <div class="quotes">
+        <blockquote class="quote reveal">
+          <div>
+            <span class="quote__mark">&ldquo;</span>
+            <p class="quote__text">
+              Excellent service from start to finish. The team was professional
+              and helped me find the perfect car within my budget.
+            </p>
+          </div>
+          <footer class="quote__by">John D. — Werribee</footer>
+        </blockquote>
+
+        <blockquote class="quote reveal" style="--delay: 90ms">
+          <div>
+            <span class="quote__mark">&ldquo;</span>
+            <p class="quote__text">
+              Sold my car in just 2 days. The process was smooth and I got a
+              better price than I expected.
+            </p>
+          </div>
+          <footer class="quote__by">Sarah M. — Point Cook</footer>
+        </blockquote>
+
+        <blockquote class="quote reveal" style="--delay: 180ms">
+          <div>
+            <span class="quote__mark">&ldquo;</span>
+            <p class="quote__text">
+              The 150-point inspection gave me confidence in my purchase.
+              Fantastic after-sales support too.
+            </p>
+          </div>
+          <footer class="quote__by">Michael K. — Hoppers Crossing</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING ============ -->
+    <section class="section section--paper">
+      <div class="closing">
+        <span class="eyebrow reveal">Let's get you moving</span>
+        <h2 class="display closing__title reveal" style="--delay: 80ms">
+          Your next car is closer than you think.
+        </h2>
+        <div class="closing__actions reveal" style="--delay: 160ms">
+          <a href="buy-car.html" class="btn">Browse the stock</a>
+          <a href="tel:1300136110" class="link-line" style="align-self: center"
+            >Call 1300 136 110</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.png" alt="Got It Motors" />
+          <p>
+            Committed to long-term relationships with our customers — treating
+            everyone who walks in as a guest in our home.
+          </p>
+        </div>
+
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="buy-car.html">Buy a car</a></li>
+            <li><a href="sell-car.html">Sell a car</a></li>
+            <li><a href="warranty.html">Warranty</a></li>
+            <li><a href="blogs.html">Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="car-detailing.html">Detailing</a></li>
+            <li><a href="car-tinting.html">Tinting</a></li>
+            <li><a href="dash-camera.html">Dash cameras</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Visit</h4>
+          <address>
+            115–117 Railway Ave<br />
+            Werribee VIC 3030
+            <a href="tel:1300136110">1300 136 110</a>
+          </address>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 Got It Motors · LMCT 12258</span>
+        <span>Designed &amp; developed by Novareach Solutions</span>
+      </div>
+    </footer>
+
+    <script>
+      // Nav state on scroll
+      const nav = document.getElementById('nav')
+      const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 40)
+      onScroll()
+      window.addEventListener('scroll', onScroll, { passive: true })
+
+      // Scroll reveals
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in')
+              io.unobserve(entry.target)
+            }
+          })
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+      )
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
+
+      // Small-screen menu: jump to the footer links rather than ship a half-menu
+      document.getElementById('navToggle').addEventListener('click', () => {
+        document.querySelector('.footer').scrollIntoView({ behavior: 'smooth' })
+      })
+    </script>
+  </body>
+</html>
